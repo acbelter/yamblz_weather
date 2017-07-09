@@ -1,0 +1,5 @@
+<resources>
+    <string name="nav_weather">Погода</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_about">О приложении</string>
+</resources>
