@@ -20,10 +20,10 @@ public class NavigationActivity extends AppCompatActivity
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
 
-    @BindView(R.id.nav_view)
+    @BindView(R.id.navigationView)
     NavigationView navigationView;
 
 
@@ -34,20 +34,23 @@ public class NavigationActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_weather);
-        replaceFragment(WeatherFragment.newInstance());
+
+        if (savedInstanceState == null) {
+            MenuItem item = navigationView.getMenu().findItem(R.id.nav_weather);
+            item.setChecked(true);
+            onNavigationItemSelected(item);
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -59,6 +62,7 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_weather:
                 replaceFragment(WeatherFragment.newInstance());
                 break;
+
             case R.id.nav_settings:
                 replaceFragment(SettingsFragment.newInstance());
                 break;
@@ -68,7 +72,7 @@ public class NavigationActivity extends AppCompatActivity
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
