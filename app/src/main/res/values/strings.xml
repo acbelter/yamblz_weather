@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Yamblz.Weather</string>
+    <string name="app_name">Weather</string>
 
     <string name="nav_weather">Weather</string>
     <string name="nav_settings">Settings</string>
