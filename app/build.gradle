@@ -1,6 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        retrolambda_version = '3.6.1'
+    }
+
+    dependencies {
+        classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'key'
+            keyPassword '123456'
+            storeFile file('../cert/keystore.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
@@ -12,15 +35,29 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            debuggable true
+            applicationIdSuffix ".debug"
         }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
 ext {
     support_version = '26.0.0-alpha1'
+    butterknife_version = '8.7.0'
 }
 
 dependencies {
@@ -31,4 +68,10 @@ dependencies {
 
     // Support Library
     compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+    compile "com.android.support:support-v4:$support_version"
+
+    // Butter Knife
+    compile "com.jakewharton:butterknife:$butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 }
