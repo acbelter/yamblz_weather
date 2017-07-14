@@ -1,14 +1,19 @@
 buildscript {
+    apply from: 'versions.gradle'
+
     repositories {
         mavenCentral()
     }
 
-    ext {
-        retrolambda_version = '3.6.1'
-    }
-
     dependencies {
         classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.google.com' }
     }
 }
 
@@ -55,23 +60,36 @@ android {
     }
 }
 
-ext {
-    support_version = '26.0.0-alpha1'
-    butterknife_version = '8.7.0'
-}
-
 dependencies {
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-
     // Support Library
     compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:design:$support_version"
-    compile "com.android.support:support-v4:$support_version"
+
+    // Moxy
+    compile "com.arello-mobile:moxy:$moxy_version"
+    compile "com.arello-mobile:moxy-app-compat:$moxy_version"
+    annotationProcessor "com.arello-mobile:moxy-compiler:$moxy_version"
 
     // Butter Knife
     compile "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
+
+    // Gson
+    compile "com.google.code.gson:gson:$gson_version"
+
+    // Retrofit
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    // RxJava 2
+    compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    // RxAndroid
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
+    // Dagger
+    compile "com.google.dagger:dagger-android:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 }

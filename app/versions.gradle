@@ -1,0 +1,12 @@
+ext {
+    retrolambda_version = '3.6.1'
+
+    support_version = '26.0.0-beta2'
+    moxy_version = '1.5.3'
+    butterknife_version = '8.7.0'
+    gson_version = '2.8.1'
+    retrofit_version = '2.3.0'
+    rxjava_version = '2.1.1'
+    rxandroid_version = '2.0.1'
+    dagger_version = '2.11'
+}
