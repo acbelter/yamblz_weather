@@ -1,4 +1,4 @@
-package me.maximpestryakov.yamblzweather;
+package me.maximpestryakov.yamblzweather.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,24 +8,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.maximpestryakov.yamblzweather.R;
 
-public class WeatherFragment extends Fragment {
+
+public class AboutFragment extends Fragment {
 
     @NonNull
-    public static WeatherFragment newInstance() {
-        return new WeatherFragment();
+    public static AboutFragment newInstance() {
+        return new AboutFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return inflater.inflate(R.layout.fragment_about, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().setTitle(R.string.nav_weather);
+        getActivity().setTitle(R.string.nav_about);
     }
 }
+

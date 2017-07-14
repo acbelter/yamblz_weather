@@ -1,4 +1,4 @@
-package me.maximpestryakov.yamblzweather;
+package me.maximpestryakov.yamblzweather.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.maximpestryakov.yamblzweather.R;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
