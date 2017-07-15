@@ -28,11 +28,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     private void fetchWeather() {
+        getViewState().setLoading(true);
         api.getWeather(MOSCOW_ID, "metric", "ru")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {
                     double temp = weather.getMain().getTemp();
+                    getViewState().setLoading(false);
                     getViewState().showWeather(temp);
                 }, throwable -> {
                     //
