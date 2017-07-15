@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.util.NetworkUtil;
+import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -47,6 +49,12 @@ public class AppModule {
                             .build();
 
                     return chain.proceed(request);
+                })
+                .addInterceptor(chain -> {
+                    if (!NetworkUtil.isConnected()) {
+                        throw new NoInternetException();
+                    }
+                    return chain.proceed(chain.request());
                 })
                 .build();
     }
