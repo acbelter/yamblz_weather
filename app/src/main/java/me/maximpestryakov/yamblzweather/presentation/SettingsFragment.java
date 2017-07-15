@@ -3,15 +3,16 @@ package me.maximpestryakov.yamblzweather.presentation;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+
 import me.maximpestryakov.yamblzweather.R;
 
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends MvpAppCompatFragment {
 
     @NonNull
     public static SettingsFragment newInstance() {
