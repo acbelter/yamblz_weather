@@ -47,6 +47,14 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
         }
+        prodDebug {
+            minifyEnabled true
+            shrinkResources true
+            debuggable true
+            applicationIdSuffix ".prodDebug"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-debug.pro'
+            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled true
             shrinkResources true
