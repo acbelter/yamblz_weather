@@ -1,0 +1,21 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/weather_settings">
+
+        <CheckBoxPreference
+            android:key="weather_schedule_enabled"
+            android:title="@string/update_on_schedule"/>
+
+        <ListPreference
+            android:defaultValue="30"
+            android:dependency="weather_schedule_enabled"
+            android:entries="@array/weather_schedule_interval_titles"
+            android:entryValues="@array/weather_schedule_interval_values"
+            android:key="weather_schedule_interval"
+            android:title="@string/update_interval"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

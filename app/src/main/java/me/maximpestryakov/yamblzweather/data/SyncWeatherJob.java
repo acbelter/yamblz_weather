@@ -26,11 +26,12 @@ public class SyncWeatherJob extends Job {
 
     private static final String FILE_NAME = "weather.json";
 
-    public static void schedule() {
+    public static void schedule(int periodicMinutes) {
         new JobRequest.Builder(TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(15))
+                .setPeriodic(TimeUnit.MINUTES.toMillis(periodicMinutes))
                 .setPersisted(true)
                 .setUpdateCurrent(true)
+                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .build()
                 .schedule();
     }

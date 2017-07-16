@@ -66,6 +66,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:design:$support_version"
+    compile "com.android.support:preference-v7:$support_version"
 
     // Moxy
     compile "com.arello-mobile:moxy:$moxy_version"

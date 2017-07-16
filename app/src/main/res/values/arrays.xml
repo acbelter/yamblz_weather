@@ -1,0 +1,23 @@
+<resources>
+
+    <string-array name="weather_schedule_interval_titles">
+        <item>@string/interval_30_minutes</item>
+        <item>@string/interval_1_hour</item>
+        <item>@string/interval_2_hours</item>
+        <item>@string/interval_4_hours</item>
+        <item>@string/interval_6_hours</item>
+        <item>@string/interval_12_hours</item>
+        <item>@string/interval_1_day</item>
+    </string-array>
+
+    <string-array name="weather_schedule_interval_values">
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>240</item>
+        <item>360</item>
+        <item>720</item>
+        <item>1440</item>
+    </string-array>
+
+</resources>
