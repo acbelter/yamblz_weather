@@ -13,10 +13,15 @@ import android.widget.TextView;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.maximpestryakov.yamblzweather.R;
+import me.maximpestryakov.yamblzweather.data.model.Weather;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
 
@@ -26,8 +31,13 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.temp)
-    TextView tempTextView;
+    @BindView(R.id.temperature)
+    TextView temperature;
+
+    @BindView(R.id.time)
+    TextView time;
+
+    private final DateFormat dateFormat = SimpleDateFormat.getTimeInstance();
 
     private Unbinder unbinder;
 
@@ -64,8 +74,9 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void showWeather(double temp) {
-        tempTextView.setText("Temperature: " + temp);
+    public void showWeather(Weather weather) {
+        temperature.setText("Temperature: " + weather.getMain().getTemperature());
+        time.setText("Time: " + dateFormat.format(new Date(weather.getTime() * 1000)));
     }
 
     @Override

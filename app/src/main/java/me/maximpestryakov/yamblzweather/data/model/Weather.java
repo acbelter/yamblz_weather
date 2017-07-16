@@ -7,17 +7,24 @@ public class Weather {
     @SerializedName("main")
     private Main main;
 
+    @SerializedName("dt")
+    private Long time;
+
     public Main getMain() {
         return main;
+    }
+
+    public Long getTime() {
+        return time;
     }
 
     public static class Main {
 
         @SerializedName("temp")
-        private double temp;
+        private double temperature;
 
-        public double getTemp() {
-            return temp;
+        public double getTemperature() {
+            return temperature;
         }
     }
 }
