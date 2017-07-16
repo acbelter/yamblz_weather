@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import com.evernote.android.job.JobManager;
+
+import me.maximpestryakov.yamblzweather.data.SyncWeatherJob;
+import me.maximpestryakov.yamblzweather.data.SyncWeatherJobCreator;
 import me.maximpestryakov.yamblzweather.di.AppComponent;
 import me.maximpestryakov.yamblzweather.di.AppModule;
 import me.maximpestryakov.yamblzweather.di.DaggerAppComponent;
@@ -30,7 +34,11 @@ public class App extends Application {
         context = getApplicationContext();
 
         appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(getApplicationContext()))
+                .appModule(new AppModule(context))
                 .build();
+
+        JobManager.create(context).addJobCreator(new SyncWeatherJobCreator());
+
+        SyncWeatherJob.schedule();
     }
 }
