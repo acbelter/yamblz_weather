@@ -75,8 +75,8 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
     @Override
     public void showWeather(Weather weather) {
-        temperature.setText("Temperature: " + weather.getMain().getTemperature());
-        time.setText("Time: " + dateFormat.format(new Date(weather.getTime() * 1000)));
+        temperature.setText(getString(R.string.temperature, Math.round(weather.getMain().getTemperature())));
+        time.setText(getString(R.string.time, dateFormat.format(new Date(weather.getTime() * 1000))));
     }
 
     @Override
