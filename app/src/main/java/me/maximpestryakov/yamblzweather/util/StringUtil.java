@@ -8,21 +8,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 
 public class StringUtil {
 
-    public static String getErrorMessage(Throwable throwable) {
-        Context context = App.getContext();
+    private final Context context;
+
+    public StringUtil(Context context) {
+        this.context = context;
+    }
+
+    public String getErrorMessage(Throwable throwable) {
         if (throwable instanceof NoInternetException) {
             return context.getString(R.string.error_no_internet);
         }
         return context.getString(R.string.error_unknown);
     }
 
-    public static String readFromFile(String filename) throws IOException {
-        Context context = App.getContext();
+    public String readFromFile(String filename) throws IOException {
         try (InputStream inputStream = context.openFileInput(filename)) {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
                 StringBuilder sb = new StringBuilder();
@@ -36,8 +39,7 @@ public class StringUtil {
         }
     }
 
-    public static void writeToFile(String filename, String content) throws IOException {
-        Context context = App.getContext();
+    public void writeToFile(String filename, String content) throws IOException {
         try (OutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
             outputStream.write(content.getBytes());
         }

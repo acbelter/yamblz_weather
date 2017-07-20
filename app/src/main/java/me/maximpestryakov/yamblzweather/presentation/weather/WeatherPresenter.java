@@ -34,6 +34,9 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     @Inject
     Gson gson;
 
+    @Inject
+    StringUtil stringUtil;
+
     WeatherPresenter() {
         App.getAppComponent().inject(this);
         fetchWeather();
@@ -47,7 +50,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         getViewState().setLoading(true);
         Weather localWeather = null;
         try {
-            String json = StringUtil.readFromFile(FILE_NAME);
+            String json = stringUtil.readFromFile(FILE_NAME);
             localWeather = gson.fromJson(json, Weather.class);
         } catch (IOException e) {
             // empty
@@ -61,11 +64,11 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(weather -> {
                     getViewState().setLoading(false);
                     getViewState().showWeather(weather);
-                    StringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
+                    stringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
                 }, throwable -> {
                     throwable.printStackTrace();
                     getViewState().setLoading(false);
-                    getViewState().showError(StringUtil.getErrorMessage(throwable));
+                    getViewState().showError(stringUtil.getErrorMessage(throwable));
                 });
     }
 }

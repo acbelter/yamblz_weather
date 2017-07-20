@@ -1,8 +1,6 @@
 package me.maximpestryakov.yamblzweather;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
@@ -16,14 +14,7 @@ import me.maximpestryakov.yamblzweather.di.DaggerAppComponent;
 
 public class App extends Application {
 
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
-
     private static AppComponent appComponent;
-
-    public static Context getContext() {
-        return context;
-    }
 
     public static AppComponent getAppComponent() {
         return appComponent;
@@ -33,15 +24,13 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        context = getApplicationContext();
-
         appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(context))
+                .appModule(new AppModule(this))
                 .build();
 
-        JobManager.create(context).addJobCreator(new SyncWeatherJobCreator());
+        JobManager.create(this).addJobCreator(new SyncWeatherJobCreator());
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (sharedPreferences.getBoolean("weather_schedule_enabled", false)) {
             int interval = Integer.valueOf(sharedPreferences.getString("weather_schedule_interval", "30"));

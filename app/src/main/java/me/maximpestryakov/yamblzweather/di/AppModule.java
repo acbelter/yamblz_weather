@@ -11,6 +11,7 @@ import dagger.Provides;
 import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
+import me.maximpestryakov.yamblzweather.util.StringUtil;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -34,7 +35,7 @@ public class AppModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient() {
+    OkHttpClient provideOkHttpClient(NetworkUtil networkUtil) {
         return new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
@@ -51,7 +52,7 @@ public class AppModule {
                     return chain.proceed(request);
                 })
                 .addInterceptor(chain -> {
-                    if (!NetworkUtil.isConnected()) {
+                    if (!networkUtil.isConnected()) {
                         throw new NoInternetException();
                     }
                     return chain.proceed(chain.request());
@@ -75,5 +76,17 @@ public class AppModule {
                 .baseUrl(OpenWeatherMapService.URL)
                 .build()
                 .create(OpenWeatherMapService.class);
+    }
+
+    @Singleton
+    @Provides
+    NetworkUtil provideNetworkUtil(Context context) {
+        return new NetworkUtil(context);
+    }
+
+    @Singleton
+    @Provides
+    StringUtil provideStringUtil(Context context) {
+        return new StringUtil(context);
     }
 }

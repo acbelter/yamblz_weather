@@ -45,6 +45,12 @@ public class SyncWeatherJob extends Job {
     @Inject
     Gson gson;
 
+    @Inject
+    NetworkUtil networkUtil;
+
+    @Inject
+    StringUtil stringUtil;
+
     SyncWeatherJob() {
         App.getAppComponent().inject(this);
     }
@@ -52,14 +58,14 @@ public class SyncWeatherJob extends Job {
     @NonNull
     @Override
     protected Result onRunJob(Params params) {
-        if (!NetworkUtil.isConnected()) {
+        if (!networkUtil.isConnected()) {
             return Result.FAILURE;
         }
         api.getWeather(MOSCOW_ID, "metric", context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {
-                    StringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
+                    stringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
                 }, throwable -> {
                     // empty
                 });
