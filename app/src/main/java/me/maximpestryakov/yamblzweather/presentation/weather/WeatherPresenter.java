@@ -66,7 +66,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                     getViewState().showWeather(weather);
                     stringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
                 }, throwable -> {
-                    throwable.printStackTrace();
                     getViewState().setLoading(false);
                     getViewState().showError(stringUtil.getErrorMessage(throwable));
                 });

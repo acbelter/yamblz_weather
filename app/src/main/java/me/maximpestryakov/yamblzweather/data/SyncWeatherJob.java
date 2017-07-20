@@ -26,16 +26,6 @@ public class SyncWeatherJob extends Job {
 
     private static final String FILE_NAME = "weather.json";
 
-    public static void schedule(int periodicMinutes) {
-        new JobRequest.Builder(TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(periodicMinutes))
-                .setPersisted(true)
-                .setUpdateCurrent(true)
-                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
-                .build()
-                .schedule();
-    }
-
     @Inject
     Context context;
 
@@ -53,6 +43,16 @@ public class SyncWeatherJob extends Job {
 
     SyncWeatherJob() {
         App.getAppComponent().inject(this);
+    }
+
+    public static void schedule(int periodicMinutes) {
+        new JobRequest.Builder(TAG)
+                .setPeriodic(TimeUnit.MINUTES.toMillis(periodicMinutes))
+                .setPersisted(true)
+                .setUpdateCurrent(true)
+                .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
+                .build()
+                .schedule();
     }
 
     @NonNull

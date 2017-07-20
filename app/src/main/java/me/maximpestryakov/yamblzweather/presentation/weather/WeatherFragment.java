@@ -25,20 +25,15 @@ import me.maximpestryakov.yamblzweather.data.model.Weather;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
 
+    private final DateFormat dateFormat = SimpleDateFormat.getTimeInstance();
     @InjectPresenter
     WeatherPresenter weatherPresenter;
-
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-
     @BindView(R.id.temperature)
     TextView temperature;
-
     @BindView(R.id.time)
     TextView time;
-
-    private final DateFormat dateFormat = SimpleDateFormat.getTimeInstance();
-
     private Unbinder unbinder;
 
     @NonNull

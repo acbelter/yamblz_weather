@@ -8,13 +8,13 @@ public class Weather {
     private Main main;
 
     @SerializedName("dt")
-    private Long time;
+    private long time;
 
     public Main getMain() {
         return main;
     }
 
-    public Long getTime() {
+    public long getTime() {
         return time;
     }
 
