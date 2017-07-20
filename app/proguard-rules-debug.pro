@@ -1,3 +1,6 @@
+# Debug
+-keepattributes SourceFile,LineNumberTable
+
 # Retrolambda
 -dontwarn java.lang.invoke.*
 -dontwarn **$$Lambda$*

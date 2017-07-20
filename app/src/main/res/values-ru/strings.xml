@@ -4,4 +4,24 @@
     <string name="nav_weather">Погода</string>
     <string name="nav_settings">Настройки</string>
     <string name="nav_about">О приложении</string>
+
+    <string name="lang">ru</string>
+
+    <string name="error_no_internet">Отсутствует подключение к интернету</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+
+    <string name="weather_settings">Настройки погоды</string>
+    <string name="update_on_schedule">Обновление по расписанию</string>
+    <string name="update_interval">Промежуток обновления</string>
+
+    <string name="interval_30_minutes">30 минут</string>
+    <string name="interval_1_hour">1 час</string>
+    <string name="interval_2_hours">2 часа</string>
+    <string name="interval_4_hours">4 часа</string>
+    <string name="interval_6_hours">6 часов</string>
+    <string name="interval_12_hours">12 часов</string>
+    <string name="interval_1_day">1 день</string>
+
+    <string name="temperature">Температура: %d</string>
+    <string name="time">Время: %s</string>
 </resources>
