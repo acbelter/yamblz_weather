@@ -24,7 +24,7 @@
     <string name="interval_12_hours">12 часов</string>
     <string name="interval_1_day">1 день</string>
 
-    <string name="temperature">Температура: %d</string>
+    <string name="temperature">Температура: %d ºC</string>
     <string name="time">Время: %s</string>
     <string name="hint_city_name">Введите название города</string>
 </resources>

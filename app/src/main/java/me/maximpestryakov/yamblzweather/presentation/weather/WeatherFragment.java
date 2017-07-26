@@ -35,8 +35,8 @@ import timber.log.Timber;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
     private static final long TEXT_TYPE_DELAY = 300;
-    private final DateFormat dateFormat =
-            SimpleDateFormat.getTimeInstance(DateFormat.SHORT, Locale.getDefault());
+    private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
     @InjectPresenter
     WeatherPresenter weatherPresenter;
     @BindView(R.id.swipeRefreshLayout)

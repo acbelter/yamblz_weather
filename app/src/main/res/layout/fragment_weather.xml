@@ -35,6 +35,7 @@
             android:layout_margin="16dp"
             android:hint="@string/hint_city_name"
             android:maxLines="1"
+            android:imeOptions="flagNoFullscreen"
             android:singleLine="true"
             tools:ignore="LabelFor">
 
