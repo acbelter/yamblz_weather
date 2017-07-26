@@ -15,6 +15,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
+import me.maximpestryakov.yamblzweather.data.model.place.Location;
+import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
 
@@ -22,12 +24,13 @@ public class SyncWeatherJob extends Job {
 
     public static final String TAG = "SyncWeatherJob";
 
-    private static final int MOSCOW_ID = 524901;
-
     private static final String FILE_NAME = "weather.json";
 
     @Inject
     Context context;
+
+    @Inject
+    PreferencesStorage prefs;
 
     @Inject
     OpenWeatherMapService api;
@@ -61,7 +64,14 @@ public class SyncWeatherJob extends Job {
         if (!networkUtil.isConnected()) {
             return Result.FAILURE;
         }
-        api.getWeather(MOSCOW_ID, "metric", context.getString(R.string.lang))
+
+        Place place = prefs.loadPlace();
+        if (place == null) {
+            return Result.FAILURE;
+        }
+
+        Location location = place.getGeometry().getLocation();
+        api.getWeather(location.getLat(), location.getLng(), context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {

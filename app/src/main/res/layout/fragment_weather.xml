@@ -13,7 +13,8 @@
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             tools:text="Temperature: +25"/>
 
         <TextView
@@ -24,6 +25,21 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             tools:text="Time: 18:30"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/placeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/time"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:hint="@string/hint_city_name"
+            android:maxLines="1"
+            android:singleLine="true"
+            tools:ignore="LabelFor">
+
+            <requestFocus/>
+        </AutoCompleteTextView>
 
     </RelativeLayout>
 

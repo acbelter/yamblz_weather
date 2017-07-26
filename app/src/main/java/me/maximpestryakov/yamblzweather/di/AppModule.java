@@ -8,13 +8,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
 import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,24 +33,15 @@ public class AppModule {
         return applicationContext;
     }
 
+    @Provides
+    PreferencesStorage providePreferences(Context context, Gson gson) {
+        return new PreferencesStorage(context, gson);
+    }
+
     @Singleton
     @Provides
     OkHttpClient provideOkHttpClient(NetworkUtil networkUtil) {
         return new OkHttpClient.Builder()
-                .addInterceptor(chain -> {
-                    Request originalRequest = chain.request();
-                    HttpUrl originalUrl = originalRequest.url();
-
-                    HttpUrl url = originalUrl.newBuilder()
-                            .addQueryParameter("appid", OpenWeatherMapService.APP_ID)
-                            .build();
-
-                    Request request = originalRequest.newBuilder()
-                            .url(url)
-                            .build();
-
-                    return chain.proceed(request);
-                })
                 .addInterceptor(chain -> {
                     if (!networkUtil.isConnected()) {
                         throw new NoInternetException();
@@ -76,6 +67,18 @@ public class AppModule {
                 .baseUrl(OpenWeatherMapService.URL)
                 .build()
                 .create(OpenWeatherMapService.class);
+    }
+
+    @Singleton
+    @Provides
+    GooglePlacesService provideGooglePlacesService(OkHttpClient client, Gson gson) {
+        return new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .baseUrl(GooglePlacesService.URL)
+                .build()
+                .create(GooglePlacesService.class);
     }
 
     @Singleton

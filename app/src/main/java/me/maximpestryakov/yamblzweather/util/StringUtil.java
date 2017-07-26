@@ -8,21 +8,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import me.maximpestryakov.yamblzweather.R;
-
 public class StringUtil {
 
     private final Context context;
 
     public StringUtil(Context context) {
         this.context = context;
-    }
-
-    public String getErrorMessage(Throwable throwable) {
-        if (throwable instanceof NoInternetException) {
-            return context.getString(R.string.error_no_internet);
-        }
-        return context.getString(R.string.error_unknown);
     }
 
     public String readFromFile(String filename) throws IOException {

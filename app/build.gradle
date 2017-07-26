@@ -99,10 +99,16 @@ dependencies {
     // RxAndroid
     compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
+    // RxBinding
+    compile "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version"
+
     // Dagger
     compile "com.google.dagger:dagger-android:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Android Job
     compile "com.evernote:android-job:$androidjob_version"
+
+    // Timber
+    compile "com.jakewharton.timber:timber:$timber_version"
 }

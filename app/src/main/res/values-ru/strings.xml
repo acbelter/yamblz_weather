@@ -8,7 +8,9 @@
     <string name="lang">ru</string>
 
     <string name="error_no_internet">Отсутствует подключение к интернету</string>
-    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="error_place_predictions_api">Ошибка при загрузке данных о месте</string>
+    <string name="error_place_api">Ошибка при загрузке данных о месте</string>
+    <string name="error_weather_api">Ошибка при загрузке данных о погоде</string>
 
     <string name="weather_settings">Настройки погоды</string>
     <string name="update_on_schedule">Обновление по расписанию</string>
@@ -24,4 +26,5 @@
 
     <string name="temperature">Температура: %d</string>
     <string name="time">Время: %s</string>
+    <string name="hint_city_name">Введите название города</string>
 </resources>

@@ -11,6 +11,7 @@ import me.maximpestryakov.yamblzweather.data.SyncWeatherJobCreator;
 import me.maximpestryakov.yamblzweather.di.AppComponent;
 import me.maximpestryakov.yamblzweather.di.AppModule;
 import me.maximpestryakov.yamblzweather.di.DaggerAppComponent;
+import timber.log.Timber;
 
 public class App extends Application {
 
@@ -27,6 +28,10 @@ public class App extends Application {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
 
         JobManager.create(this).addJobCreator(new SyncWeatherJobCreator());
 

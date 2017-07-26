@@ -8,7 +8,9 @@
     <string name="lang">en</string>
 
     <string name="error_no_internet">No internet connection</string>
-    <string name="error_unknown">Unknown error</string>
+    <string name="error_place_predictions_api">Fail to load place predictions</string>
+    <string name="error_place_api">Fail to load place</string>
+    <string name="error_weather_api">Fail to load weather data</string>
 
     <string name="weather_settings">Weather settings</string>
     <string name="update_on_schedule">Update on schedule</string>
@@ -24,4 +26,5 @@
 
     <string name="temperature">Temperature: %d</string>
     <string name="time">Time: %s</string>
+    <string name="hint_city_name">Enter city name</string>
 </resources>
