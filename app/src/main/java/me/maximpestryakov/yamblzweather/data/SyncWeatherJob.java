@@ -65,7 +65,7 @@ public class SyncWeatherJob extends Job {
             return Result.FAILURE;
         }
 
-        Place place = prefs.loadPlace();
+        Place place = prefs.getPlace();
         if (place == null) {
             return Result.FAILURE;
         }

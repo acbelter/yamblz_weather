@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import timber.log.Timber;
+
 public class StringUtil {
 
     private final Context context;
@@ -31,6 +33,7 @@ public class StringUtil {
     }
 
     public void writeToFile(String filename, String content) throws IOException {
+        Timber.d("Save data to file: %s", content);
         try (OutputStream outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
             outputStream.write(content.getBytes());
         }

@@ -9,9 +9,12 @@ import com.google.gson.Gson;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 
 public class PreferencesStorage {
-    private static final String KEY_PLACE_NAME = "place_name";
-    private static final String KEY_PLACE_ID = "place_id";
-    private static final String KEY_PLACE = "place";
+    public static final String KEY_PLACE_NAME = "place_name";
+    public static final String KEY_PLACE_ID = "place_id";
+    public static final String KEY_PLACE = "place";
+
+    public static final String KEY_WEATHER_SCHEDULE_ENABLED = "weather_schedule_enabled";
+    public static final String KEY_WEATHER_SCHEDULE_INTERVAL = "weather_schedule_interval";
 
     private SharedPreferences prefs;
     private Gson gson;
@@ -21,31 +24,41 @@ public class PreferencesStorage {
         this.gson = gson;
     }
 
-    public void savePlaceName(String placeName) {
+    public PreferencesStorage() {}
+
+    public void setPlaceName(String placeName) {
         prefs.edit().putString(KEY_PLACE_NAME, placeName).apply();
     }
 
-    public String loadPlaceName() {
+    public String getPlaceName() {
         return prefs.getString(KEY_PLACE_NAME, null);
     }
 
-    public void savePlaceId(String placeId) {
+    public void setPlaceId(String placeId) {
         prefs.edit().putString(KEY_PLACE_ID, placeId).apply();
     }
 
-    public String loadPlaceId() {
+    public String getPlaceId() {
         return prefs.getString(KEY_PLACE_ID, null);
     }
 
-    public void savePlace(Place place) {
+    public void setPlace(Place place) {
         prefs.edit().putString(KEY_PLACE, gson.toJson(place)).apply();
     }
 
-    public Place loadPlace() {
+    public Place getPlace() {
         if (!prefs.contains(KEY_PLACE)) {
             return null;
         }
 
         return gson.fromJson(prefs.getString(KEY_PLACE, null), Place.class);
+    }
+
+    public boolean isWeatherScheduleEnabled() {
+        return prefs.getBoolean(PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED, false);
+    }
+
+    public int getWeatherScheduleInterval() {
+        return Integer.valueOf(prefs.getString("weather_schedule_interval", "30"));
     }
 }

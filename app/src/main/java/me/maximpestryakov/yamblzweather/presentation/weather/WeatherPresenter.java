@@ -53,9 +53,9 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     WeatherPresenter() {
         App.getAppComponent().inject(this);
-        placeName = prefs.loadPlaceName();
-        placeId = prefs.loadPlaceId();
-        place = prefs.loadPlace();
+        placeName = prefs.getPlaceName();
+        placeId = prefs.getPlaceId();
+        place = prefs.getPlace();
     }
 
     void start() {
@@ -64,7 +64,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     void refreshData() {
         if (place != null) {
-            fetchWeather(place);
+            fetchWeather(place, false);
         } else if (placeId != null) {
             fetchPlace(placeId);
         }
@@ -73,16 +73,16 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     void processPlacePredictionSelection(Prediction prediction) {
         Timber.d("Selected place prediction: %s", prediction);
         placeName = prediction.getDescription();
-        prefs.savePlaceName(placeName);
+        prefs.setPlaceName(placeName);
 
         placeId = prediction.getPlaceId();
-        prefs.savePlaceId(placeId);
+        prefs.setPlaceId(placeId);
         fetchPlace(placeId);
     }
 
     void onUpdateWeather() {
         if (place != null) {
-            fetchWeather(place);
+            fetchWeather(place, true);
         }
     }
 
@@ -99,6 +99,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                         getViewState().showError(R.string.error_place_predictions_api);
                     }
                 }, throwable -> {
+                    Timber.d(throwable);
                     getViewState().showPlacePredictions(new ArrayList<>(0));
                     getViewState().showError(R.string.error_place_predictions_api);
                 });
@@ -111,18 +112,19 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribe(result -> {
                     if ("OK".equals(result.getStatus())) {
                         place = result.getPlace();
-                        prefs.savePlace(place);
-                        fetchWeather(place);
+                        prefs.setPlace(place);
+                        fetchWeather(place, true);
                     } else {
                         getViewState().showError(R.string.error_place_api);
                     }
                 }, throwable -> {
+                    Timber.d(throwable);
                     getViewState().showError(R.string.error_place_api);
                 });
     }
 
-    private void fetchWeather(Place place) {
-        Timber.d("Start fetch weather: " + place.getVicinity());
+    private void fetchWeather(Place place, boolean forceRefresh) {
+        Timber.d("Start fetch weather for place %s: ", place.getVicinity());
         getViewState().setLoading(true);
         Weather localWeather = null;
         try {
@@ -132,10 +134,18 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         } catch (IOException e) {
             // empty
         }
-        if (localWeather != null) {
-            getViewState().showWeather(localWeather);
-        }
 
+        if (localWeather == null) {
+            fetchWeather(place);
+        } else if (forceRefresh) {
+            fetchWeather(place);
+        } else {
+            getViewState().showWeather(localWeather);
+            getViewState().setLoading(false);
+        }
+    }
+
+    private void fetchWeather(Place place) {
         Location location = place.getGeometry().getLocation();
         weatherApi.getWeather(location.getLat(), location.getLng(), context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
@@ -147,6 +157,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                     getViewState().showWeather(weather);
                     stringUtil.writeToFile(FILE_NAME, json);
                 }, throwable -> {
+                    Timber.d(throwable);
                     getViewState().setLoading(false);
                     getViewState().showError(R.string.error_weather_api);
                 });
