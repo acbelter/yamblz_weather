@@ -38,7 +38,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "me.maximpestryakov.CustomRunner"
+//        testInstrumentationRunner "me.maximpestryakov.CustomRunner"
     }
     buildTypes {
         debug {
@@ -71,40 +71,40 @@ android {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
         resolutionStrategy.force 'com.android.support:support-annotations:25.4.0'
     }
-    sourceSets {
-        String sharedTestSrcDir = 'src/sharedTest/java'
-        test {
-            java.srcDir sharedTestSrcDir
-        }
-        androidTest {
-            java.srcDir sharedTestSrcDir
-        }
-    }
+//    sourceSets {
+//        String sharedTestSrcDir = 'src/sharedTest/java'
+//        test {
+//            java.srcDir sharedTestSrcDir
+//        }
+//        androidTest {
+//            java.srcDir sharedTestSrcDir
+//        }
+//    }
 }
 
-android.applicationVariants.all {
-    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
-    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
-}
+//android.applicationVariants.all {
+//    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+//    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+//}
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:2.8.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.8.0'
-    // Dagger for test
-    testCompile "com.google.dagger:dagger-android:$dagger_version"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.1'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
-    androidTestCompile 'com.android.support.test:runner:1.0.0'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.0'
-    // Dagger for androidTest
-    androidTestCompile "com.google.dagger:dagger-android:$dagger_version"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+//    testCompile 'junit:junit:4.12'
+//    testCompile 'org.assertj:assertj-core:2.8.0'
+//    testCompile 'org.mockito:mockito-core:1.10.19'
+//    testCompile 'com.squareup.okhttp3:mockwebserver:3.8.0'
+//    // Dagger for test
+//    testCompile "com.google.dagger:dagger-android:$dagger_version"
+//    testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+//
+//    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+//    androidTestCompile 'com.google.dexmaker:dexmaker:1.1'
+//    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
+//    androidTestCompile 'com.android.support.test:runner:1.0.0'
+//    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
+//    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.0'
+//    // Dagger for androidTest
+//    androidTestCompile "com.google.dagger:dagger-android:$dagger_version"
+//    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Support Library
     compile "com.android.support:appcompat-v7:$support_version"
