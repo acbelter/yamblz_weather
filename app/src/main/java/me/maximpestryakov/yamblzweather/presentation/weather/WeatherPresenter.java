@@ -51,18 +51,18 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     private String placeId;
     private Place place;
 
-    WeatherPresenter() {
+    public WeatherPresenter() {
         App.getAppComponent().inject(this);
         placeName = prefs.getPlaceName();
         placeId = prefs.getPlaceId();
         place = prefs.getPlace();
     }
 
-    void start() {
+    public void start() {
         getViewState().showPlaceName(placeName);
     }
 
-    void refreshData() {
+    public void refreshData() {
         if (place != null) {
             fetchWeather(place, false);
         } else if (placeId != null) {
@@ -70,7 +70,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         }
     }
 
-    void processPlacePredictionSelection(Prediction prediction) {
+    public void processPlacePredictionSelection(Prediction prediction) {
         Timber.d("Selected place prediction: %s", prediction);
         placeName = prediction.getDescription();
         prefs.setPlaceName(placeName);
@@ -80,13 +80,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         fetchPlace(placeId);
     }
 
-    void onUpdateWeather() {
+    public void onUpdateWeather() {
         if (place != null) {
             fetchWeather(place, true);
         }
     }
 
-    void fetchPlacePredictions(String input) {
+    public void fetchPlacePredictions(String input) {
         placesApi.getPlacePredictions(input, context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
