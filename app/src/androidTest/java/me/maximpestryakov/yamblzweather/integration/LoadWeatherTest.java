@@ -18,9 +18,9 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;
@@ -54,9 +54,9 @@ public class LoadWeatherTest {
     @Inject
     PreferencesStorage prefs;
     @Inject
-    GooglePlacesService placesApi;
+    GooglePlacesApi placesApi;
     @Inject
-    OpenWeatherMapService weatherApi;
+    WeatherApi weatherApi;
 
     private String placeId;
     private Place place;

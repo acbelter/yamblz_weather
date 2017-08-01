@@ -5,9 +5,8 @@ import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface OpenWeatherMapService {
-
-    String URL = "http://api.openweathermap.org/data/2.5/";
+public interface WeatherApi {
+    String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
     String APP_ID = "72c4739d285455a62f672a3a98a113ab";
 

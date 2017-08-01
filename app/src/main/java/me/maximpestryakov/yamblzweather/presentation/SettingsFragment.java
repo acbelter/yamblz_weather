@@ -7,9 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import me.maximpestryakov.yamblzweather.R;
 
-
 public class SettingsFragment extends PreferenceFragmentCompat {
-
     @NonNull
     public static SettingsFragment newInstance() {
         return new SettingsFragment();

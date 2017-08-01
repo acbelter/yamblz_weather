@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import timber.log.Timber;
 
 public class StringUtil {
-
     private final Context context;
 
     public StringUtil(Context context) {

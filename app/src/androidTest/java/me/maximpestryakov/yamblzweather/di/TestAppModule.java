@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import io.reactivex.Single;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
 import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
@@ -70,18 +70,18 @@ public class TestAppModule extends AppModule {
     }
 
     @Override
-    OpenWeatherMapService provideOpenWeatherMapService(OkHttpClient client,
-                                                       Gson gson) {
-        OpenWeatherMapService service = mock(OpenWeatherMapService.class);
+    WeatherApi provideOpenWeatherMapService(OkHttpClient client,
+                                            Gson gson) {
+        WeatherApi service = mock(WeatherApi.class);
         when(service.getWeather(anyFloat(), anyFloat(), anyString()))
                 .thenAnswer(invocation -> weatherMock);
         return service;
     }
 
     @Override
-    GooglePlacesService provideGooglePlacesService(OkHttpClient client,
-                                                   Gson gson) {
-        GooglePlacesService service = mock(GooglePlacesService.class);
+    GooglePlacesApi provideGooglePlacesService(OkHttpClient client,
+                                               Gson gson) {
+        GooglePlacesApi service = mock(GooglePlacesApi.class);
         when(service.getPlacePredictions(anyString(), anyString()))
                 .thenAnswer(invocation -> placePredictionsMock);
         when(service.getPlaceData(anyString(), anyString()))

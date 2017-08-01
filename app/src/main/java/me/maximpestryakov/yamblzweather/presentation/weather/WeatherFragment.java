@@ -34,7 +34,7 @@ import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
 import timber.log.Timber;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
-    private static final long TEXT_TYPE_DELAY = 300;
+    private static final long TEXT_TYPE_DELAY = 300L;
     private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
     @InjectPresenter
@@ -57,7 +57,8 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_weather, container, false);
     }

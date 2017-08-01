@@ -11,9 +11,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 
 import me.maximpestryakov.yamblzweather.R;
 
-
 public class AboutFragment extends MvpAppCompatFragment {
-
     @NonNull
     public static AboutFragment newInstance() {
         return new AboutFragment();

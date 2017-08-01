@@ -15,9 +15,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Location;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
@@ -36,10 +36,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     PreferencesStorage prefs;
 
     @Inject
-    OpenWeatherMapService weatherApi;
+    WeatherApi weatherApi;
 
     @Inject
-    GooglePlacesService placesApi;
+    GooglePlacesApi placesApi;
 
     @Inject
     Gson gson;

@@ -29,11 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GooglePlacesServiceTest {
+public class GooglePlacesApiTest {
     @Mock
     Context mockContext;
     @Inject
-    GooglePlacesService placesApi;
+    GooglePlacesApi placesApi;
     @Inject
     NetworkUtil networkUtil;
     private ResReader resReader;

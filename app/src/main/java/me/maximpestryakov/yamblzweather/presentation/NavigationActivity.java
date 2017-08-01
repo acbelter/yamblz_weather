@@ -16,18 +16,14 @@ import butterknife.ButterKnife;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherFragment;
 
-public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public class NavigationActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-
     @BindView(R.id.navigationView)
     NavigationView navigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +60,13 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_weather:
                 replaceFragment(WeatherFragment.newInstance());
                 break;
-
             case R.id.nav_settings:
                 replaceFragment(SettingsFragment.newInstance());
                 break;
-
             case R.id.nav_about:
                 replaceFragment(AboutFragment.newInstance());
                 break;
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

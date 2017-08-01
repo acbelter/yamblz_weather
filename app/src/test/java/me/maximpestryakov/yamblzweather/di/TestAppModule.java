@@ -6,8 +6,8 @@ import com.google.gson.Gson;
 
 import org.mockito.Mockito;
 
-import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.MockWebServer;
@@ -28,27 +28,27 @@ public class TestAppModule extends AppModule {
     }
 
     @Override
-    OpenWeatherMapService provideOpenWeatherMapService(OkHttpClient client,
-                                                       Gson gson) {
+    WeatherApi provideOpenWeatherMapService(OkHttpClient client,
+                                            Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .baseUrl(mockWebServer.url("/"))
                 .build()
-                .create(OpenWeatherMapService.class);
+                .create(WeatherApi.class);
     }
 
     @Override
-    GooglePlacesService provideGooglePlacesService(OkHttpClient client,
-                                                   Gson gson) {
+    GooglePlacesApi provideGooglePlacesService(OkHttpClient client,
+                                               Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .baseUrl(mockWebServer.url("/"))
                 .build()
-                .create(GooglePlacesService.class);
+                .create(GooglePlacesApi.class);
     }
 
     @Override

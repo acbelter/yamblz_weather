@@ -25,11 +25,11 @@ import okhttp3.mockwebserver.MockWebServer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OpenWeatherMapServiceTest {
+public class WeatherApiTest {
     @Mock
     Context mockContext;
     @Inject
-    OpenWeatherMapService weatherApi;
+    WeatherApi weatherApi;
     @Inject
     NetworkUtil networkUtil;
     private ResReader resReader;

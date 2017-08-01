@@ -8,9 +8,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesService;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
+import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
@@ -59,26 +59,26 @@ public class AppModule {
 
     @Singleton
     @Provides
-    OpenWeatherMapService provideOpenWeatherMapService(OkHttpClient client, Gson gson) {
+    WeatherApi provideOpenWeatherMapService(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
-                .baseUrl(OpenWeatherMapService.URL)
+                .baseUrl(WeatherApi.BASE_URL)
                 .build()
-                .create(OpenWeatherMapService.class);
+                .create(WeatherApi.class);
     }
 
     @Singleton
     @Provides
-    GooglePlacesService provideGooglePlacesService(OkHttpClient client, Gson gson) {
+    GooglePlacesApi provideGooglePlacesService(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
-                .baseUrl(GooglePlacesService.URL)
+                .baseUrl(GooglePlacesApi.BASE_URL)
                 .build()
-                .create(GooglePlacesService.class);
+                .create(GooglePlacesApi.class);
     }
 
     @Singleton

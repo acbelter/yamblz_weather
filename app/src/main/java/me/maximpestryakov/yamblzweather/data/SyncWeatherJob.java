@@ -21,26 +21,20 @@ import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
 
 public class SyncWeatherJob extends Job {
-
     public static final String TAG = "SyncWeatherJob";
-
+    // FIXME
     private static final String FILE_NAME = "weather.json";
 
     @Inject
     Context context;
-
     @Inject
     PreferencesStorage prefs;
-
     @Inject
-    OpenWeatherMapService api;
-
+    WeatherApi api;
     @Inject
     Gson gson;
-
     @Inject
     NetworkUtil networkUtil;
-
     @Inject
     StringUtil stringUtil;
 
