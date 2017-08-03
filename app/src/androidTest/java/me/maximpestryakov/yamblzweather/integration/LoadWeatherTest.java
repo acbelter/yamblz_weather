@@ -18,9 +18,9 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
-import me.maximpestryakov.yamblzweather.data.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;

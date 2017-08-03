@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.inject.Inject;
 
 import io.reactivex.observers.TestObserver;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
@@ -26,24 +27,25 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.offset;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlacesApiTest {
+    private static final float LATITUDE = -33.8669710f;
+    private static final float LONGITUDE = 151.1958750f;
+
     @Mock
     Context mockContext;
     @Inject
     PlacesApi placesApi;
     @Inject
     NetworkUtil networkUtil;
-    private ResReader resReader;
+    private ResReader resReader = new ResReader();
     private MockWebServer mockWebServer;
 
     @Before
     public void setUp() {
         TestAppModule testAppModule = new TestAppModule(mockContext);
         mockWebServer = testAppModule.getMockWebServer();
-        resReader = new ResReader();
 
         TestAppComponent component = DaggerTestAppComponent.builder()
                 .appModule(testAppModule)
@@ -104,8 +106,8 @@ public class PlacesApiTest {
         Place p = result.place;
         assertThat(p.geometry).isNotNull();
         assertThat(p.geometry.location).isNotNull();
-        assertThat(p.geometry.location.lat).isEqualTo(-33.8669710f, offset(1e-5f));
-        assertThat(p.geometry.location.lng).isEqualTo(151.1958750f, offset(1e-5f));
+        assertThat(p.geometry.location.lat).isEqualTo(LATITUDE);
+        assertThat(p.geometry.location.lng).isEqualTo(LONGITUDE);
         assertThat(p.placeId).isEqualTo("ChIJN1t_tDeuEmsRUsoyG83frY4");
         assertThat(p.vicinity).isEqualTo("48 Pirrama Road, Pyrmont");
     }

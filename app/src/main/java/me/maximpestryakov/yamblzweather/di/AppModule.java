@@ -1,6 +1,7 @@
 package me.maximpestryakov.yamblzweather.di;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 
@@ -8,12 +9,15 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
-import me.maximpestryakov.yamblzweather.data.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.db.DatabaseHelper;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
+import nl.nl2312.rxcupboard2.RxCupboard;
+import nl.nl2312.rxcupboard2.RxDatabase;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -81,13 +85,13 @@ public class AppModule {
                 .create(PlacesApi.class);
     }
 
-//    @Singleton
-//    @Provides
-//    RxDatabase provideDatabase(Context context) {
-//        DatabaseHelper dbHelper = new DatabaseHelper(context);
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        return RxCupboard.withDefault(db);
-//    }
+    @Singleton
+    @Provides
+    RxDatabase provideDatabase(Context context) {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        return RxCupboard.withDefault(db);
+    }
 
     @Singleton
     @Provides

@@ -15,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Location;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;

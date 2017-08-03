@@ -21,6 +21,5 @@ public class ForecastResult {
     public int count;
     @SerializedName("list")
     @Expose
-    public List<ForecastItem> forecastItem = new ArrayList<>();
-
+    public List<ForecastItem> forecast = new ArrayList<>();
 }

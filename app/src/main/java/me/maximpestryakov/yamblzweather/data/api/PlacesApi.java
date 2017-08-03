@@ -1,4 +1,4 @@
-package me.maximpestryakov.yamblzweather.data;
+package me.maximpestryakov.yamblzweather.data.api;
 
 import io.reactivex.Single;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;

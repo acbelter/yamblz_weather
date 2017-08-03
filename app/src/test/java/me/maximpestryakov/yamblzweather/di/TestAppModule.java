@@ -6,8 +6,8 @@ import com.google.gson.Gson;
 
 import org.mockito.Mockito;
 
-import me.maximpestryakov.yamblzweather.data.PlacesApi;
-import me.maximpestryakov.yamblzweather.data.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.MockWebServer;

@@ -1,6 +1,7 @@
-package me.maximpestryakov.yamblzweather.data;
+package me.maximpestryakov.yamblzweather.data.api;
 
 import io.reactivex.Single;
+import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastResult;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -14,4 +15,9 @@ public interface WeatherApi {
     Single<WeatherResult> getWeather(@Query("lat") float lat,
                                      @Query("lon") float lng,
                                      @Query("lang") String lang);
+
+    @GET("forecast?APPID=" + APP_ID)
+    Single<ForecastResult> getForecast(@Query("lat") float lat,
+                                       @Query("lon") float lng,
+                                       @Query("lang") String lang);
 }

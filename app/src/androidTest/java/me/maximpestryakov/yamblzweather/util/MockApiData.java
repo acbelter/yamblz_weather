@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Single;
+import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastResult;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
@@ -27,6 +28,18 @@ public final class MockApiData {
     public static Single<WeatherResult> createWeatherFailureMock() {
         return Single.<WeatherResult>error(
                 new IOException("Fake server error while loading weather"))
+                .delay(DELAY, DELAY_TIME_UNIT);
+    }
+
+    public static Single<ForecastResult> createForecastSuccessMock() {
+        return Single.just(gson.fromJson(
+                resReader.readString("json/forecast.json"), ForecastResult.class))
+                .delay(DELAY, DELAY_TIME_UNIT);
+    }
+
+    public static Single<ForecastResult> createForecastFailureMock() {
+        return Single.<ForecastResult>error(
+                new IOException("Fake server error while loading forecast"))
                 .delay(DELAY, DELAY_TIME_UNIT);
     }
 

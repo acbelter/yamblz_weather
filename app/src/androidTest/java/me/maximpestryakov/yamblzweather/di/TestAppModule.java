@@ -7,8 +7,9 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import io.reactivex.Single;
-import me.maximpestryakov.yamblzweather.data.PlacesApi;
-import me.maximpestryakov.yamblzweather.data.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastResult;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
@@ -26,12 +27,15 @@ import static org.mockito.Mockito.when;
 public class TestAppModule extends AppModule {
     private Single<WeatherResult> weatherSuccessMock;
     private Single<WeatherResult> weatherFailureMock;
+    private Single<ForecastResult> forecastSuccessMock;
+    private Single<ForecastResult> forecastFailureMock;
     private Single<PlacesPredictionsResult> placePredictionsSuccessMock;
     private Single<PlacesPredictionsResult> placePredictionsFailureMock;
     private Single<PlaceResult> placeSuccessMock;
     private Single<PlaceResult> placeFailureMock;
 
     private Single<WeatherResult> weatherMock;
+    private Single<ForecastResult> forecastMock;
     private Single<PlacesPredictionsResult> placePredictionsMock;
     private Single<PlaceResult> placeMock;
 
@@ -39,6 +43,8 @@ public class TestAppModule extends AppModule {
         super(applicationContext);
         weatherSuccessMock = MockApiData.createWeatherSuccessMock();
         weatherFailureMock = MockApiData.createWeatherFailureMock();
+        forecastSuccessMock = MockApiData.createForecastSuccessMock();
+        forecastFailureMock = MockApiData.createForecastFailureMock();
         placePredictionsSuccessMock = MockApiData.createPlacePredictionsSuccessMock();
         placePredictionsFailureMock = MockApiData.createPlacePredictionsFailureMock();
         placeSuccessMock = MockApiData.createPlaceSuccessMock();
@@ -51,6 +57,14 @@ public class TestAppModule extends AppModule {
 
     public void useWeatherFailureMock() {
         weatherMock = weatherFailureMock;
+    }
+
+    public void useForecastSuccessMock() {
+        forecastMock = forecastSuccessMock;
+    }
+
+    public void useForecastFailureMock() {
+        forecastMock = forecastFailureMock;
     }
 
     public void usePlacePredictionsSuccessMock() {
