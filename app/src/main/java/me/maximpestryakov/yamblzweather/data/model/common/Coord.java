@@ -1,14 +1,14 @@
 
-package me.maximpestryakov.yamblzweather.data.model.place;
+package me.maximpestryakov.yamblzweather.data.model.common;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location {
+public class Coord {
+    @SerializedName("lon")
+    @Expose
+    public float lon;
     @SerializedName("lat")
     @Expose
     public float lat;
-    @SerializedName("lng")
-    @Expose
-    public float lng;
 }

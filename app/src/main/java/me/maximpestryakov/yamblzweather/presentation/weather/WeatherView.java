@@ -10,11 +10,11 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import java.util.List;
 
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 
 interface WeatherView extends MvpView {
     @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void showWeather(Weather weather);
+    void showWeather(WeatherResult weather);
 
     @StateStrategyType(value = AddToEndSingleStrategy.class)
     void setLoading(boolean loading);

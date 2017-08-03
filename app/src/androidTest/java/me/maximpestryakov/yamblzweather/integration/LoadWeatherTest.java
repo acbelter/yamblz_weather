@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
 import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
@@ -54,7 +54,7 @@ public class LoadWeatherTest {
     @Inject
     PreferencesStorage prefs;
     @Inject
-    GooglePlacesApi placesApi;
+    PlacesApi placesApi;
     @Inject
     WeatherApi weatherApi;
 
@@ -76,7 +76,7 @@ public class LoadWeatherTest {
 
         ResReader resReader = new ResReader();
         Place place = gson.fromJson(
-                resReader.readString("json/place_data.json"), PlaceResult.class).getPlace();
+                resReader.readString("json/place_data.json"), PlaceResult.class).place;
         prefs.setPlaceId("12345");
         prefs.setPlace(place);
         prefs.setPlaceName("Moscow");
@@ -107,7 +107,7 @@ public class LoadWeatherTest {
         // Check screen content
         ViewInteraction temperature = onView(withId(R.id.temperature));
         temperature.check(matches(isDisplayed()));
-        String temperatureText = TestUtils.getString(activityRule, R.string.temperature, 30);
+        String temperatureText = TestUtils.getString(activityRule, R.string.temperature, 293);
         temperature.check(matches(withText(temperatureText)));
 
         ViewInteraction time = onView(withId(R.id.time));

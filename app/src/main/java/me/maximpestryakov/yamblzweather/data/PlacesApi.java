@@ -6,7 +6,7 @@ import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsR
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface GooglePlacesApi {
+public interface PlacesApi {
     String BASE_URL = "https://maps.googleapis.com/maps/api/place/";
 
     String API_KEY = "AIzaSyCnD976NTKjdu4oE0y06yXRoIk9XnYJxw0";

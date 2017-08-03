@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 
 import org.mockito.Mockito;
 
-import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import okhttp3.OkHttpClient;
@@ -40,15 +40,15 @@ public class TestAppModule extends AppModule {
     }
 
     @Override
-    GooglePlacesApi provideGooglePlacesService(OkHttpClient client,
-                                               Gson gson) {
+    PlacesApi provideGooglePlacesService(OkHttpClient client,
+                                         Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .baseUrl(mockWebServer.url("/"))
                 .build()
-                .create(GooglePlacesApi.class);
+                .create(PlacesApi.class);
     }
 
     @Override

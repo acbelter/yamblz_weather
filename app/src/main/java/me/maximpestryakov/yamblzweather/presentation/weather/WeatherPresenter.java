@@ -15,13 +15,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
 import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.Location;
 import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.util.StringUtil;
 import timber.log.Timber;
 
@@ -39,7 +39,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     WeatherApi weatherApi;
 
     @Inject
-    GooglePlacesApi placesApi;
+    PlacesApi placesApi;
 
     @Inject
     Gson gson;
@@ -72,10 +72,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     public void processPlacePredictionSelection(Prediction prediction) {
         Timber.d("Selected place prediction: %s", prediction);
-        placeName = prediction.getDescription();
+        placeName = prediction.description;
         prefs.setPlaceName(placeName);
 
-        placeId = prediction.getPlaceId();
+        placeId = prediction.placeId;
         prefs.setPlaceId(placeId);
         fetchPlace(placeId);
     }
@@ -91,10 +91,10 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                    Timber.d("Find predictions status: %s", result.getStatus());
-                    if ("OK".equals(result.getStatus()) ||
-                            "ZERO_RESULTS".equals(result.getStatus())) {
-                        getViewState().showPlacePredictions(result.getPredictions());
+                    Timber.d("Find predictions status: %s", result.status);
+                    if ("OK".equals(result.status) ||
+                            "ZERO_RESULTS".equals(result.status)) {
+                        getViewState().showPlacePredictions(result.predictions);
                     } else {
                         getViewState().showError(R.string.error_place_predictions_api);
                     }
@@ -110,8 +110,8 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-                    if ("OK".equals(result.getStatus())) {
-                        place = result.getPlace();
+                    if ("OK".equals(result.status)) {
+                        place = result.place;
                         prefs.setPlace(place);
                         fetchWeather(place, true);
                     } else {
@@ -124,13 +124,13 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     private void fetchWeather(Place place, boolean forceRefresh) {
-        Timber.d("Start fetch weather for place %s: ", place.getVicinity());
+        Timber.d("Start fetch weather for place %s: ", place.vicinity);
         getViewState().setLoading(true);
-        Weather localWeather = null;
+        WeatherResult localWeather = null;
         try {
             String json = stringUtil.readFromFile(FILE_NAME);
             Timber.d("Fetch weather from file: %s", json);
-            localWeather = gson.fromJson(json, Weather.class);
+            localWeather = gson.fromJson(json, WeatherResult.class);
         } catch (IOException e) {
             // empty
         }
@@ -146,8 +146,8 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     }
 
     private void fetchWeather(Place place) {
-        Location location = place.getGeometry().getLocation();
-        weatherApi.getWeather(location.getLat(), location.getLng(), context.getString(R.string.lang))
+        Location location = place.geometry.location;
+        weatherApi.getWeather(location.lat, location.lng, context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {

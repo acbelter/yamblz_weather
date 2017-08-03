@@ -26,11 +26,12 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import timber.log.Timber;
 
 public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
@@ -91,6 +92,11 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         }
     }
 
+    @OnClick(R.id.btn_test)
+    public void test(View view) {
+
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -105,9 +111,9 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void showWeather(Weather weather) {
-        temperature.setText(getString(R.string.temperature, Math.round(weather.getMain().getTemperature())));
-        time.setText(getString(R.string.time, dateFormat.format(new Date(weather.getTime() * 1000))));
+    public void showWeather(WeatherResult weather) {
+        temperature.setText(getString(R.string.temperature, Math.round(weather.main.temp)));
+        time.setText(getString(R.string.time, dateFormat.format(new Date(weather.dataTimestamp * 1000))));
     }
 
     @Override
@@ -135,7 +141,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         adapter.notifyDataSetChanged();
 
         for (Prediction p : predictions) {
-            Timber.d("\t%s", p.getDescription());
+            Timber.d("\t%s", p.description);
         }
     }
 }

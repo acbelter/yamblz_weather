@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
 import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
@@ -71,15 +71,23 @@ public class AppModule {
 
     @Singleton
     @Provides
-    GooglePlacesApi provideGooglePlacesService(OkHttpClient client, Gson gson) {
+    PlacesApi provideGooglePlacesService(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
-                .baseUrl(GooglePlacesApi.BASE_URL)
+                .baseUrl(PlacesApi.BASE_URL)
                 .build()
-                .create(GooglePlacesApi.class);
+                .create(PlacesApi.class);
     }
+
+//    @Singleton
+//    @Provides
+//    RxDatabase provideDatabase(Context context) {
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        return RxCupboard.withDefault(db);
+//    }
 
     @Singleton
     @Provides

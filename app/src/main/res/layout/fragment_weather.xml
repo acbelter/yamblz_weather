@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,7 +15,6 @@
             android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             tools:text="Temperature: +25"/>
 
@@ -21,8 +22,6 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/temperature"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             tools:text="Time: 18:30"/>
 
@@ -30,8 +29,6 @@
             android:id="@+id/placeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/time"
-            android:layout_centerHorizontal="true"
             android:layout_margin="16dp"
             android:hint="@string/hint_city_name"
             android:maxLines="1"
@@ -42,6 +39,12 @@
             <requestFocus/>
         </AutoCompleteTextView>
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/btn_test"
+            android:text="TEST"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

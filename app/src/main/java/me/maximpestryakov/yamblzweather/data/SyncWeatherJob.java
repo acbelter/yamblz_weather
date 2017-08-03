@@ -64,8 +64,8 @@ public class SyncWeatherJob extends Job {
             return Result.FAILURE;
         }
 
-        Location location = place.getGeometry().getLocation();
-        api.getWeather(location.getLat(), location.getLng(), context.getString(R.string.lang))
+        Location location = place.geometry.location;
+        api.getWeather(location.lat, location.lng, context.getString(R.string.lang))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weather -> {

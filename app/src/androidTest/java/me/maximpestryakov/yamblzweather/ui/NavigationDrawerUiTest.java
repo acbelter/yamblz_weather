@@ -59,7 +59,7 @@ public class NavigationDrawerUiTest {
 
         ResReader resReader = new ResReader();
         Place place = gson.fromJson(
-                resReader.readString("json/place_data.json"), PlaceResult.class).getPlace();
+                resReader.readString("json/place_data.json"), PlaceResult.class).place;
         prefs.setPlaceId("12345");
         prefs.setPlace(place);
         prefs.setPlaceName("Moscow");

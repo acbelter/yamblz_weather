@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.inject.Inject;
 
 import io.reactivex.observers.TestObserver;
-import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.di.DaggerTestAppComponent;
 import me.maximpestryakov.yamblzweather.di.TestAppComponent;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;
@@ -54,22 +54,22 @@ public class WeatherApiTest {
         mockWebServer.enqueue(new MockResponse().setResponseCode(200)
                 .setBody(resReader.readString("json/weather.json")));
 
-        TestObserver<Weather> observer = weatherApi.getWeather(1, 1, "en").test();
+        TestObserver<WeatherResult> observer = weatherApi.getWeather(1, 1, "en").test();
         observer.assertNoErrors();
 
-        Weather result = observer.values().get(0);
+        WeatherResult result = observer.values().get(0);
 
-        assertThat(result.getTime()).isEqualTo(1435658272L);
-        assertThat(result.getName()).isEqualTo("Cairns");
-        assertThat(result.getMain()).isNotNull();
-        assertThat(result.getMain().getTemperature()).isEqualTo(30.25);
+        assertThat(result.dataTimestamp).isEqualTo(1435658272L);
+        assertThat(result.name).isEqualTo("Cairns");
+        assertThat(result.main).isNotNull();
+        assertThat(result.main.temp).isEqualTo(293.25f);
     }
 
     @Test
     public void testGetWeatherFailureResponse() {
         mockWebServer.enqueue(new MockResponse().setResponseCode(404));
 
-        TestObserver<Weather> observer = weatherApi.getWeather(1, 1, "en").test();
+        TestObserver<WeatherResult> observer = weatherApi.getWeather(1, 1, "en").test();
         observer.assertError(throwable -> true);
     }
 

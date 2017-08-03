@@ -7,11 +7,11 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import io.reactivex.Single;
-import me.maximpestryakov.yamblzweather.data.GooglePlacesApi;
+import me.maximpestryakov.yamblzweather.data.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
-import me.maximpestryakov.yamblzweather.data.model.weather.Weather;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.util.MockApiData;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.ResReader;
@@ -24,14 +24,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TestAppModule extends AppModule {
-    private Single<Weather> weatherSuccessMock;
-    private Single<Weather> weatherFailureMock;
+    private Single<WeatherResult> weatherSuccessMock;
+    private Single<WeatherResult> weatherFailureMock;
     private Single<PlacesPredictionsResult> placePredictionsSuccessMock;
     private Single<PlacesPredictionsResult> placePredictionsFailureMock;
     private Single<PlaceResult> placeSuccessMock;
     private Single<PlaceResult> placeFailureMock;
 
-    private Single<Weather> weatherMock;
+    private Single<WeatherResult> weatherMock;
     private Single<PlacesPredictionsResult> placePredictionsMock;
     private Single<PlaceResult> placeMock;
 
@@ -79,9 +79,9 @@ public class TestAppModule extends AppModule {
     }
 
     @Override
-    GooglePlacesApi provideGooglePlacesService(OkHttpClient client,
-                                               Gson gson) {
-        GooglePlacesApi service = mock(GooglePlacesApi.class);
+    PlacesApi provideGooglePlacesService(OkHttpClient client,
+                                         Gson gson) {
+        PlacesApi service = mock(PlacesApi.class);
         when(service.getPlacePredictions(anyString(), anyString()))
                 .thenAnswer(invocation -> placePredictionsMock);
         when(service.getPlaceData(anyString(), anyString()))

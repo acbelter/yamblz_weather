@@ -29,11 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GooglePlacesApiTest {
+public class PlacesApiTest {
     @Mock
     Context mockContext;
     @Inject
-    GooglePlacesApi placesApi;
+    PlacesApi placesApi;
     @Inject
     NetworkUtil networkUtil;
     private ResReader resReader;
@@ -63,21 +63,21 @@ public class GooglePlacesApiTest {
         observer.assertNoErrors();
 
         PlacesPredictionsResult result = observer.values().get(0);
-        assertThat(result.getStatus()).isEqualTo("OK");
-        assertThat(result.getPredictions()).isNotNull();
-        assertThat(result.getPredictions().size()).isEqualTo(3);
+        assertThat(result.status).isEqualTo("OK");
+        assertThat(result.predictions).isNotNull();
+        assertThat(result.predictions.size()).isEqualTo(3);
 
-        Prediction p0 = result.getPredictions().get(0);
-        assertThat(p0.getDescription()).isEqualTo("Paris, France");
-        assertThat(p0.getPlaceId()).isEqualTo("ChIJD7fiBh9u5kcRYJSMaMOCCwQ");
+        Prediction p0 = result.predictions.get(0);
+        assertThat(p0.description).isEqualTo("Paris, France");
+        assertThat(p0.placeId).isEqualTo("ChIJD7fiBh9u5kcRYJSMaMOCCwQ");
 
-        Prediction p1 = result.getPredictions().get(1);
-        assertThat(p1.getDescription()).isEqualTo("Paris Avenue, Earlwood, New South Wales, Australia");
-        assertThat(p1.getPlaceId()).isEqualTo("ChIJrU3KAHG6EmsR5Uwfrk7azrI");
+        Prediction p1 = result.predictions.get(1);
+        assertThat(p1.description).isEqualTo("Paris Avenue, Earlwood, New South Wales, Australia");
+        assertThat(p1.placeId).isEqualTo("ChIJrU3KAHG6EmsR5Uwfrk7azrI");
 
-        Prediction p2 = result.getPredictions().get(2);
-        assertThat(p2.getDescription()).isEqualTo("Paris Street, Carlton, New South Wales, Australia");
-        assertThat(p2.getPlaceId()).isEqualTo("ChIJCfeffMi5EmsRp7ykjcnb3VY");
+        Prediction p2 = result.predictions.get(2);
+        assertThat(p2.description).isEqualTo("Paris Street, Carlton, New South Wales, Australia");
+        assertThat(p2.placeId).isEqualTo("ChIJCfeffMi5EmsRp7ykjcnb3VY");
     }
 
     @Test
@@ -98,16 +98,16 @@ public class GooglePlacesApiTest {
         observer.assertNoErrors();
 
         PlaceResult result = observer.values().get(0);
-        assertThat(result.getStatus()).isEqualTo("OK");
-        assertThat(result.getPlace()).isNotNull();
+        assertThat(result.status).isEqualTo("OK");
+        assertThat(result.place).isNotNull();
 
-        Place p = result.getPlace();
-        assertThat(p.getGeometry()).isNotNull();
-        assertThat(p.getGeometry().getLocation()).isNotNull();
-        assertThat(p.getGeometry().getLocation().getLat()).isEqualTo(-33.8669710f, offset(1e-5f));
-        assertThat(p.getGeometry().getLocation().getLng()).isEqualTo(151.1958750f, offset(1e-5f));
-        assertThat(p.getPlaceId()).isEqualTo("ChIJN1t_tDeuEmsRUsoyG83frY4");
-        assertThat(p.getVicinity()).isEqualTo("48 Pirrama Road, Pyrmont");
+        Place p = result.place;
+        assertThat(p.geometry).isNotNull();
+        assertThat(p.geometry.location).isNotNull();
+        assertThat(p.geometry.location.lat).isEqualTo(-33.8669710f, offset(1e-5f));
+        assertThat(p.geometry.location.lng).isEqualTo(151.1958750f, offset(1e-5f));
+        assertThat(p.placeId).isEqualTo("ChIJN1t_tDeuEmsRUsoyG83frY4");
+        assertThat(p.vicinity).isEqualTo("48 Pirrama Road, Pyrmont");
     }
 
     @Test

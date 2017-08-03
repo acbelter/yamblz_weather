@@ -13,13 +13,11 @@
   ],
   "base": "cmc stations",
   "main": {
-    "temp": 30.25,
+    "temp": 293.25,
     "pressure": 1019,
     "humidity": 83,
-    "temp_min": 20.82,
-    "temp_max": 35.37,
-    "sea_level": 295.37,
-    "grnd_level": 295.37
+    "temp_min": 289.82,
+    "temp_max": 295.37
   },
   "wind": {
     "speed": 5.1,
@@ -29,9 +27,6 @@
     "all": 75
   },
   "rain": {
-    "3h": 3
-  },
-  "snow": {
     "3h": 3
   },
   "dt": 1435658272,
