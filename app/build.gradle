@@ -1,26 +1,26 @@
-buildscript {
-    apply from: 'versions.gradle'
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        maven { url 'https://maven.google.com' }
-    }
-}
-
+apply from: 'versions.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.fernandocejas.frodo'
 
 android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "me.maximpestryakov.yamblzweather"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "me.maximpestryakov.CustomRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
     signingConfigs {
         release {
             keyAlias 'key'
@@ -29,23 +29,16 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
-    defaultConfig {
-        applicationId "me.maximpestryakov.yamblzweather"
-        minSdkVersion 19
-        //noinspection OldTargetApi
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "me.maximpestryakov.CustomRunner"
-    }
+
     buildTypes {
         debug {
             minifyEnabled false
             shrinkResources false
             debuggable true
             applicationIdSuffix ".debug"
+            frodo {
+                enabled = true
+            }
         }
         prodDebug {
             minifyEnabled true
@@ -54,6 +47,9 @@ android {
             applicationIdSuffix ".prodDebug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-debug.pro'
             signingConfig signingConfigs.release
+            frodo {
+                enabled = true
+            }
         }
         release {
             minifyEnabled true
@@ -61,16 +57,32 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            frodo {
+                enabled = false
+            }
+
         }
     }
+
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
+
     configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
-        resolutionStrategy.force 'com.android.support:support-annotations:25.4.0'
+        resolutionStrategy {
+            force "com.google.code.findbugs:jsr305:1.3.9"
+            force "com.android.support:support-annotations:$support_version"
+            force "com.android.support:support-compat:$support_version"
+            force "com.android.support:support-core-utils:$support_version"
+        }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     sourceSets {
         String sharedTestSrcDir = 'src/sharedTest/java'
         test {
@@ -78,6 +90,7 @@ android {
         }
         androidTest {
             java.srcDir sharedTestSrcDir
+            assets.srcDirs += files("$projectDir/schemas".toString())
         }
     }
 }
@@ -88,22 +101,23 @@ android.applicationVariants.all {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.assertj:assertj-core:2.8.0'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.8.0'
+    testCompile "junit:junit:4.12"
+    testCompile "org.assertj:assertj-core:$assertj_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    testCompile "com.squareup.okhttp3:mockwebserver:3.8.0"
+    testCompile "android.arch.persistence.room:testing:$room_version"
     // Dagger for test
     testCompile "com.google.dagger:dagger-android:$dagger_version"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.1'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.1'
-    androidTestCompile 'com.android.support.test:runner:1.0.0'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:3.0.0'
-    // Cupboard
-    androidTestCompile 'nl.qbusict:cupboard:2.2.0'
+    androidTestCompile "org.assertj:assertj-core:$assertj_version"
+    androidTestCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmaker_version"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmaker_version"
+    androidTestCompile "com.android.support.test:runner:1.0.0"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+    androidTestCompile "android.arch.persistence.room:testing:$room_version"
     // Dagger for androidTest
     androidTestCompile "com.google.dagger:dagger-android:$dagger_version"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
@@ -124,7 +138,7 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     // Gson
-    compile "com.google.code.gson:gson:$gson_version"
+    compile "com.google.code.gson:gson:2.8.0"
 
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -132,25 +146,26 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     // RxJava 2
-    compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    compile "io.reactivex.rxjava2:rxjava:2.1.1"
 
     // RxAndroid
-    compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
 
     // RxBinding
-    compile "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version"
+    compile "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
     // Dagger
     compile "com.google.dagger:dagger-android:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
+    // Room
+    compile "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    compile "android.arch.persistence.room:rxjava2:$room_version"
+
     // Android Job
-    compile "com.evernote:android-job:$androidjob_version"
+    compile "com.evernote:android-job:1.1.11"
 
     // Timber
-    compile "com.jakewharton.timber:timber:$timber_version"
-
-    // Cupboard
-    compile 'nl.qbusict:cupboard:2.2.0'
-    compile 'nl.2312:rxcupboard2:2.0'
+    compile "com.jakewharton.timber:timber:4.5.1"
 }

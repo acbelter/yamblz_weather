@@ -109,7 +109,7 @@ public class PlacesApiTest {
         assertThat(p.geometry.location.lat).isEqualTo(LATITUDE);
         assertThat(p.geometry.location.lng).isEqualTo(LONGITUDE);
         assertThat(p.placeId).isEqualTo("ChIJN1t_tDeuEmsRUsoyG83frY4");
-        assertThat(p.vicinity).isEqualTo("48 Pirrama Road, Pyrmont");
+        assertThat(p.name).isEqualTo("48 Pirrama Road, Pyrmont");
     }
 
     @Test

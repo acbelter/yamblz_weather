@@ -9,10 +9,11 @@ import java.util.List;
 import me.maximpestryakov.yamblzweather.data.model.common.Clouds;
 import me.maximpestryakov.yamblzweather.data.model.common.Coord;
 import me.maximpestryakov.yamblzweather.data.model.common.Main;
+import me.maximpestryakov.yamblzweather.data.model.common.Result;
 import me.maximpestryakov.yamblzweather.data.model.common.Weather;
 import me.maximpestryakov.yamblzweather.data.model.common.Wind;
 
-public class WeatherResult {
+public class WeatherResult implements Result {
     @SerializedName("coord")
     @Expose
     public Coord coord;
@@ -46,4 +47,14 @@ public class WeatherResult {
     @SerializedName("cod")
     @Expose
     public int code;
+
+    @Override
+    public boolean success() {
+        return code == 200 && !weather.isEmpty();
+    }
+
+    @Override
+    public boolean fail() {
+        return !success();
+    }
 }

@@ -1,22 +1,21 @@
 package me.maximpestryakov.yamblzweather.di;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 import io.reactivex.Single;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
+import me.maximpestryakov.yamblzweather.data.db.AppDatabase;
+import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
 import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastResult;
 import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
 import me.maximpestryakov.yamblzweather.data.model.prediction.PlacesPredictionsResult;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.util.MockApiData;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
-import me.maximpestryakov.yamblzweather.util.ResReader;
-import me.maximpestryakov.yamblzweather.util.StringUtil;
 import okhttp3.OkHttpClient;
 
 import static org.mockito.Matchers.anyFloat;
@@ -89,6 +88,8 @@ public class TestAppModule extends AppModule {
         WeatherApi service = mock(WeatherApi.class);
         when(service.getWeather(anyFloat(), anyFloat(), anyString()))
                 .thenAnswer(invocation -> weatherMock);
+        when(service.getForecast(anyFloat(), anyFloat(), anyString()))
+                .thenAnswer(invocation -> forecastMock);
         return service;
     }
 
@@ -104,21 +105,15 @@ public class TestAppModule extends AppModule {
     }
 
     @Override
-    NetworkUtil provideNetworkUtil(Context context) {
-        NetworkUtil util = mock(NetworkUtil.class);
-        when(util.isConnected()).thenReturn(true);
-        return util;
+    WeatherDatabase provideDatabase(Context context) {
+        AppDatabase db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
+        return db.weatherDatabase();
     }
 
     @Override
-    StringUtil provideStringUtil(Context context) {
-        StringUtil util = mock(StringUtil.class);
-        String localWeather = new ResReader().readString("json/local_weather.json");
-        try {
-            when(util.readFromFile(anyString())).thenReturn(localWeather);
-        } catch (IOException e) {
-            // Ignore
-        }
+    NetworkUtil provideNetworkUtil(Context context) {
+        NetworkUtil util = mock(NetworkUtil.class);
+        when(util.isConnected()).thenReturn(true);
         return util;
     }
 }

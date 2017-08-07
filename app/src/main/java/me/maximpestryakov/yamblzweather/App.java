@@ -3,9 +3,10 @@ package me.maximpestryakov.yamblzweather;
 import android.app.Application;
 
 import com.evernote.android.job.JobManager;
-import com.google.gson.Gson;
 
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import javax.inject.Inject;
+
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.SyncWeatherJob;
 import me.maximpestryakov.yamblzweather.data.SyncWeatherJobCreator;
 import me.maximpestryakov.yamblzweather.di.AppComponent;
@@ -15,6 +16,9 @@ import timber.log.Timber;
 
 public class App extends Application {
     private static AppComponent appComponent;
+
+    @Inject
+    PrefsRepository prefsRepository;
 
     public static AppComponent getAppComponent() {
         return appComponent;
@@ -31,15 +35,16 @@ public class App extends Application {
         super.onCreate();
         appComponent = initAppComponent();
 
+        appComponent.inject(this);
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
 
         JobManager.create(this).addJobCreator(new SyncWeatherJobCreator());
 
-        PreferencesStorage prefs = new PreferencesStorage(this, new Gson());
-        if (prefs.isWeatherScheduleEnabled()) {
-            SyncWeatherJob.schedule(prefs.getWeatherScheduleInterval());
+        if (prefsRepository.isWeatherScheduleEnabled()) {
+            SyncWeatherJob.schedule(prefsRepository.getWeatherScheduleInterval());
         }
     }
 }

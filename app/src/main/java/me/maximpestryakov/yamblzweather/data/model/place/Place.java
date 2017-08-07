@@ -13,5 +13,5 @@ public class Place {
     public String placeId;
     @SerializedName("vicinity")
     @Expose
-    public String vicinity;
+    public String name;
 }

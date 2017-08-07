@@ -3,28 +3,25 @@ package me.maximpestryakov.yamblzweather.presentation.weather;
 import android.support.annotation.StringRes;
 
 import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import java.util.List;
 
+import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 
 interface WeatherView extends MvpView {
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void showWeather(WeatherResult weather);
+    void showPlaceSelectionUi();
 
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void setLoading(boolean loading);
+    void showLoading(boolean loading);
+
+    void showPlaceName(String name);
+
+    void showPlacePredictions(List<Prediction> predictions);
+
+    void showWeather(FullWeatherData weatherData);
 
     @StateStrategyType(value = SkipStrategy.class)
     void showError(@StringRes int errorStrId);
-
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void showPlaceName(String name);
-
-    @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void showPlacePredictions(List<Prediction> predictions);
 }

@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.presentation.NavigationActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -47,17 +47,17 @@ public class SettingsUiTest {
     @Before
     public void setUp() {
         prefs = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity());
-        if (prefs.contains(PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED)) {
+        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)) {
             weatherScheduleEnabled =
-                    prefs.getBoolean(PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED, false);
+                    prefs.getBoolean(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, false);
         }
-        if (prefs.contains(PreferencesStorage.KEY_WEATHER_SCHEDULE_INTERVAL)) {
+        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)) {
             weatherScheduleInterval =
-                    prefs.getString(PreferencesStorage.KEY_WEATHER_SCHEDULE_INTERVAL, null);
+                    prefs.getString(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, null);
         }
         prefs.edit()
-                .remove(PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED)
-                .remove(PreferencesStorage.KEY_WEATHER_SCHEDULE_INTERVAL)
+                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)
+                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)
                 .commit();
 
         onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
@@ -101,11 +101,11 @@ public class SettingsUiTest {
     public void tearDown() throws Exception {
         if (weatherScheduleEnabled != null) {
             prefs.edit().putBoolean(
-                    PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED, weatherScheduleEnabled).commit();
+                    PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, weatherScheduleEnabled).commit();
         }
         if (weatherScheduleInterval != null) {
             prefs.edit().putString(
-                    PreferencesStorage.KEY_WEATHER_SCHEDULE_INTERVAL, weatherScheduleInterval).commit();
+                    PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, weatherScheduleInterval).commit();
         }
     }
 }

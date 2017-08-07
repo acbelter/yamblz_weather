@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.google.gson.Gson;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.DateFormat;
@@ -30,6 +31,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 import me.maximpestryakov.yamblzweather.R;
+import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import timber.log.Timber;
@@ -43,9 +45,9 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     @BindView(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.temperature)
-    TextView temperature;
+    TextView temperatureText;
     @BindView(R.id.time)
-    TextView time;
+    TextView timeText;
     @BindView(R.id.placeText)
     AutoCompleteTextView placeText;
     private Unbinder unbinder;
@@ -69,7 +71,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
-        swipeRefreshLayout.setOnRefreshListener(weatherPresenter::onUpdateWeather);
+        swipeRefreshLayout.setOnRefreshListener(weatherPresenter::refreshWeather);
         placeTextDisposable = RxTextView.textChanges(placeText)
                 .filter(s -> !placeText.isPerformingCompletion())
                 .debounce(TEXT_TYPE_DELAY, TimeUnit.MILLISECONDS)
@@ -77,7 +79,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
                 .subscribe(s -> {
                     Timber.d("Input: %s", s);
                     if (!TextUtils.isEmpty(s)) {
-                        weatherPresenter.fetchPlacePredictions(s.toString());
+                        weatherPresenter.loadPlacePredictions(s.toString());
                     }
                 });
 
@@ -88,7 +90,7 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
         weatherPresenter.start();
         if (savedInstanceState == null) {
-            weatherPresenter.refreshData();
+            weatherPresenter.refreshWeather();
         }
     }
 
@@ -111,21 +113,13 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
     }
 
     @Override
-    public void showWeather(WeatherResult weather) {
-        temperature.setText(getString(R.string.temperature, Math.round(weather.main.temp)));
-        time.setText(getString(R.string.time, dateFormat.format(new Date(weather.dataTimestamp * 1000))));
+    public void showPlaceSelectionUi() {
+
     }
 
     @Override
-    public void setLoading(boolean loading) {
+    public void showLoading(boolean loading) {
         swipeRefreshLayout.setRefreshing(loading);
-    }
-
-    @Override
-    public void showError(int errorStrId) {
-        if (getView() != null) {
-            Snackbar.make(getView(), errorStrId, Snackbar.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -142,6 +136,23 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
 
         for (Prediction p : predictions) {
             Timber.d("\t%s", p.description);
+        }
+    }
+
+    @Override
+    public void showWeather(FullWeatherData weatherData) {
+        Gson gson = new Gson();
+        WeatherResult weather = weatherData.getWeather().getParsedWeatherData(gson);
+        int temperature = Math.round(weather.main.temp);
+        temperatureText.setText(getString(R.string.temperature, temperature));
+        String time =  dateFormat.format(new Date(weather.dataTimestamp * 1000));
+        timeText.setText(getString(R.string.time, time));
+    }
+
+    @Override
+    public void showError(int errorStrId) {
+        if (getView() != null) {
+            Snackbar.make(getView(), errorStrId, Snackbar.LENGTH_LONG).show();
         }
     }
 }

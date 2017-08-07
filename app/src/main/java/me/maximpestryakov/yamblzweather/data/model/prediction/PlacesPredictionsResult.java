@@ -14,4 +14,8 @@ public class PlacesPredictionsResult {
     @SerializedName("predictions")
     @Expose
     public List<Prediction> predictions = new ArrayList<>();
+
+    public boolean success() {
+        return "OK".equals(status) || "ZERO_RESULTS".equals(status);
+    }
 }

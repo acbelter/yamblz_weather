@@ -1,8 +1,6 @@
 package me.maximpestryakov.yamblzweather.ui;
 
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -18,12 +16,12 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
-import me.maximpestryakov.yamblzweather.data.model.place.Place;
-import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
+import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
+import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;
 import me.maximpestryakov.yamblzweather.presentation.NavigationActivity;
-import me.maximpestryakov.yamblzweather.util.ResReader;
+import me.maximpestryakov.yamblzweather.util.DbTestUtils;
 import me.maximpestryakov.yamblzweather.util.TestUtils;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
@@ -36,6 +34,7 @@ import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static me.maximpestryakov.yamblzweather.util.TestUtils.performDrawerNavigation;
 
 @RunWith(AndroidJUnit4.class)
 public class WeatherUiTest {
@@ -46,13 +45,12 @@ public class WeatherUiTest {
     @Inject
     Gson gson;
     @Inject
-    PreferencesStorage prefs;
-
-    private String placeId;
-    private Place place;
-    private String placeName;
+    WeatherDatabase weatherDatabase;
+    @Inject
+    PrefsRepository prefs;
 
     private TestAppModule testAppModule;
+    private PlaceData testPlace;
 
     @Before
     public void setUp() {
@@ -60,20 +58,13 @@ public class WeatherUiTest {
         app.getTestAppComponent().inject(this);
         testAppModule = app.getTestAppModule();
 
-        placeId = prefs.getPlaceId();
-        place = prefs.getPlace();
-        placeName = prefs.getPlaceName();
 
-        ResReader resReader = new ResReader();
-        Place place = gson.fromJson(
-                resReader.readString("json/place_data.json"), PlaceResult.class).place;
-        prefs.setPlaceId("12345");
-        prefs.setPlace(place);
-        prefs.setPlaceName("Moscow");
+        testPlace = DbTestUtils.createPlace1();
+        testPlace.placeId = "ChIJD7fiBh9u5kcRYJSMaMOCCwQ";
+        prefs.setPlaceId(testPlace.placeId);
+        weatherDatabase.insertPlaceData(testPlace);
 
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
-        onView(withId(R.id.navigationView)).perform(
-                NavigationViewActions.navigateTo(R.id.nav_weather));
+        performDrawerNavigation(R.id.nav_weather);
     }
 
     @Test
@@ -97,9 +88,8 @@ public class WeatherUiTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        prefs.setPlaceId(placeId);
-        prefs.setPlace(place);
-        prefs.setPlaceName(placeName);
+    public void tearDown() {
+        prefs.setPlaceId(null);
+        weatherDatabase.deletePlaceData(testPlace.placeId);
     }
 }

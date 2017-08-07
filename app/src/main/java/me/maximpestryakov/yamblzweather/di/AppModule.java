@@ -1,7 +1,7 @@
 package me.maximpestryakov.yamblzweather.di;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 
@@ -9,15 +9,15 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.DataRepository;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
-import me.maximpestryakov.yamblzweather.data.db.DatabaseHelper;
+import me.maximpestryakov.yamblzweather.data.db.AppDatabase;
+import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
+import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
-import me.maximpestryakov.yamblzweather.util.StringUtil;
-import nl.nl2312.rxcupboard2.RxCupboard;
-import nl.nl2312.rxcupboard2.RxDatabase;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -25,21 +25,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class AppModule {
+    private final Context appContext;
 
-    private final Context applicationContext;
-
-    public AppModule(Context applicationContext) {
-        this.applicationContext = applicationContext;
+    public AppModule(Context appContext) {
+        this.appContext = appContext.getApplicationContext();
     }
 
     @Provides
     Context provideApplicationContext() {
-        return applicationContext;
+        return appContext;
     }
 
     @Provides
-    PreferencesStorage providePreferences(Context context, Gson gson) {
-        return new PreferencesStorage(context, gson);
+    PrefsRepository providePrefsRepository(Context context, Gson gson) {
+        return new PrefsRepository(context, gson);
     }
 
     @Singleton
@@ -87,21 +86,33 @@ public class AppModule {
 
     @Singleton
     @Provides
-    RxDatabase provideDatabase(Context context) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        return RxCupboard.withDefault(db);
+    DataConverter provideDataConverter(Gson gson) {
+        return new DataConverter(gson);
+    }
+
+    @Singleton
+    @Provides
+    WeatherDatabase provideDatabase(Context context) {
+        AppDatabase db = Room.databaseBuilder(
+                context,
+                AppDatabase.class,
+                "app_database")
+                .build();
+        return db.weatherDatabase();
+    }
+
+    @Singleton
+    @Provides
+    DataRepository provideDataRepository(DataConverter dataConverter,
+                                         WeatherDatabase database,
+                                         PlacesApi placesApi,
+                                         WeatherApi weatherApi) {
+        return new DataRepository(dataConverter, database, placesApi, weatherApi);
     }
 
     @Singleton
     @Provides
     NetworkUtil provideNetworkUtil(Context context) {
         return new NetworkUtil(context);
-    }
-
-    @Singleton
-    @Provides
-    StringUtil provideStringUtil(Context context) {
-        return new StringUtil(context);
     }
 }

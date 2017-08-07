@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForecastResult {
+import me.maximpestryakov.yamblzweather.data.model.common.Result;
+
+public class ForecastResult implements Result {
     @SerializedName("city")
     @Expose
     public City city;
@@ -22,4 +24,14 @@ public class ForecastResult {
     @SerializedName("list")
     @Expose
     public List<ForecastItem> forecast = new ArrayList<>();
+
+    @Override
+    public boolean success() {
+        return "200".equals(code);
+    }
+
+    @Override
+    public boolean fail() {
+        return !success();
+    }
 }

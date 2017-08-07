@@ -10,5 +10,6 @@ import me.maximpestryakov.yamblzweather.data.WeatherApiTest;
 @Component(modules = {AppModule.class})
 public interface TestAppComponent extends AppComponent {
     void inject(WeatherApiTest test);
+
     void inject(PlacesApiTest test);
 }

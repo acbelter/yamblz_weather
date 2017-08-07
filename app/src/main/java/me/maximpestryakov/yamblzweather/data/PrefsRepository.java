@@ -6,12 +6,11 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
-import me.maximpestryakov.yamblzweather.data.model.place.Place;
+import java.util.Locale;
 
-public class PreferencesStorage {
-    public static final String KEY_PLACE_NAME = "place_name";
+public class PrefsRepository {
+    public static final String KEY_LANG = "lang";
     public static final String KEY_PLACE_ID = "place_id";
-    public static final String KEY_PLACE = "place";
 
     public static final String KEY_WEATHER_SCHEDULE_ENABLED = "weather_schedule_enabled";
     public static final String KEY_WEATHER_SCHEDULE_INTERVAL = "weather_schedule_interval";
@@ -19,19 +18,19 @@ public class PreferencesStorage {
     private SharedPreferences prefs;
     private Gson gson;
 
-    public PreferencesStorage(Context context, Gson gson) {
+    public PrefsRepository(Context context, Gson gson) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         this.gson = gson;
     }
 
-    public PreferencesStorage() {}
+    public PrefsRepository() {}
 
-    public void setPlaceName(String placeName) {
-        prefs.edit().putString(KEY_PLACE_NAME, placeName).apply();
+    public void setLang(String lang) {
+        prefs.edit().putString(KEY_LANG, lang).apply();
     }
 
-    public String getPlaceName() {
-        return prefs.getString(KEY_PLACE_NAME, null);
+    public String getLang() {
+        return prefs.getString(KEY_LANG, Locale.getDefault().getLanguage());
     }
 
     public void setPlaceId(String placeId) {
@@ -42,20 +41,8 @@ public class PreferencesStorage {
         return prefs.getString(KEY_PLACE_ID, null);
     }
 
-    public void setPlace(Place place) {
-        prefs.edit().putString(KEY_PLACE, gson.toJson(place)).apply();
-    }
-
-    public Place getPlace() {
-        if (!prefs.contains(KEY_PLACE)) {
-            return null;
-        }
-
-        return gson.fromJson(prefs.getString(KEY_PLACE, null), Place.class);
-    }
-
     public boolean isWeatherScheduleEnabled() {
-        return prefs.getBoolean(PreferencesStorage.KEY_WEATHER_SCHEDULE_ENABLED, false);
+        return prefs.getBoolean(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, false);
     }
 
     public int getWeatherScheduleInterval() {

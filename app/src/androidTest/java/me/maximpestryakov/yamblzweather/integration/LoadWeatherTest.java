@@ -1,8 +1,6 @@
 package me.maximpestryakov.yamblzweather.integration;
 
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -18,14 +16,14 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
-import me.maximpestryakov.yamblzweather.data.model.place.Place;
-import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
+import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
+import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;
 import me.maximpestryakov.yamblzweather.presentation.NavigationActivity;
-import me.maximpestryakov.yamblzweather.util.ResReader;
+import me.maximpestryakov.yamblzweather.util.DbTestUtils;
 import me.maximpestryakov.yamblzweather.util.TestUtils;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
@@ -39,6 +37,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static me.maximpestryakov.yamblzweather.util.TestUtils.checkSnackbarIsDisplayed;
+import static me.maximpestryakov.yamblzweather.util.TestUtils.performDrawerNavigation;
 
 @RunWith(AndroidJUnit4.class)
 public class LoadWeatherTest {
@@ -52,17 +51,16 @@ public class LoadWeatherTest {
     @Inject
     Gson gson;
     @Inject
-    PreferencesStorage prefs;
+    WeatherDatabase weatherDatabase;
+    @Inject
+    PrefsRepository prefs;
     @Inject
     PlacesApi placesApi;
     @Inject
     WeatherApi weatherApi;
 
-    private String placeId;
-    private Place place;
-    private String placeName;
-
     private TestAppModule testAppModule;
+    private PlaceData testPlace;
 
     @Before
     public void setUp() {
@@ -70,20 +68,12 @@ public class LoadWeatherTest {
         app.getTestAppComponent().inject(this);
         testAppModule = app.getTestAppModule();
 
-        placeId = prefs.getPlaceId();
-        place = prefs.getPlace();
-        placeName = prefs.getPlaceName();
+        testPlace = DbTestUtils.createPlace1();
+        testPlace.placeId = "ChIJD7fiBh9u5kcRYJSMaMOCCwQ";
+        prefs.setPlaceId(testPlace.placeId);
+        weatherDatabase.insertPlaceData(testPlace);
 
-        ResReader resReader = new ResReader();
-        Place place = gson.fromJson(
-                resReader.readString("json/place_data.json"), PlaceResult.class).place;
-        prefs.setPlaceId("12345");
-        prefs.setPlace(place);
-        prefs.setPlaceName("Moscow");
-
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
-        onView(withId(R.id.navigationView)).perform(
-                NavigationViewActions.navigateTo(R.id.nav_weather));
+        performDrawerNavigation(R.id.nav_weather);
     }
 
     @Test
@@ -94,7 +84,7 @@ public class LoadWeatherTest {
 
         ViewInteraction placeText = onView(withId(R.id.placeText));
         placeText.check(matches(isDisplayed()));
-        placeText.check(matches(withText("Moscow")));
+        placeText.check(matches(withText(testPlace.placeName)));
 
         // Only replaceText() + closeSoftKeyboard() works for showing popup!
         placeText.perform(replaceText("Paris"), closeSoftKeyboard());
@@ -124,7 +114,7 @@ public class LoadWeatherTest {
 
         ViewInteraction placeText = onView(withId(R.id.placeText));
         placeText.check(matches(isDisplayed()));
-        placeText.check(matches(withText("Moscow")));
+        placeText.check(matches(withText(testPlace.placeName)));
 
         // Only replaceText() + closeSoftKeyboard() works for showing popup!
         placeText.perform(replaceText("Paris"), closeSoftKeyboard());
@@ -140,7 +130,7 @@ public class LoadWeatherTest {
 
         ViewInteraction placeText = onView(withId(R.id.placeText));
         placeText.check(matches(isDisplayed()));
-        placeText.check(matches(withText("Moscow")));
+        placeText.check(matches(withText(testPlace.placeName)));
 
         // Only replaceText() + closeSoftKeyboard() works for showing popup!
         placeText.perform(replaceText("Paris"), closeSoftKeyboard());
@@ -161,7 +151,7 @@ public class LoadWeatherTest {
 
         ViewInteraction placeText = onView(withId(R.id.placeText));
         placeText.check(matches(isDisplayed()));
-        placeText.check(matches(withText("Moscow")));
+        placeText.check(matches(withText(testPlace.placeName)));
 
         // Only replaceText() + closeSoftKeyboard() works for showing popup!
         placeText.perform(replaceText("Paris"), closeSoftKeyboard());
@@ -176,8 +166,7 @@ public class LoadWeatherTest {
 
     @After
     public void tearDown() {
-        prefs.setPlaceId(placeId);
-        prefs.setPlace(place);
-        prefs.setPlaceName(placeName);
+        prefs.setPlaceId(null);
+        weatherDatabase.deletePlaceData(testPlace.placeId);
     }
 }

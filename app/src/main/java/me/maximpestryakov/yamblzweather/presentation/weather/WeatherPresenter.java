@@ -6,7 +6,6 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -15,86 +14,94 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
+import me.maximpestryakov.yamblzweather.data.DataRepository;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
-import me.maximpestryakov.yamblzweather.data.model.place.Location;
-import me.maximpestryakov.yamblzweather.data.model.place.Place;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
-import me.maximpestryakov.yamblzweather.util.StringUtil;
 import timber.log.Timber;
 
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
-    private static final String FILE_NAME = "weather.json";
-
     @Inject
     Context context;
-
     @Inject
-    PreferencesStorage prefs;
-
+    PrefsRepository prefs;
+    @Inject
+    DataRepository dataRepository;
     @Inject
     WeatherApi weatherApi;
-
     @Inject
     PlacesApi placesApi;
-
     @Inject
     Gson gson;
 
-    @Inject
-    StringUtil stringUtil;
-
-    private String placeName;
-    private String placeId;
-    private Place place;
+    private String lang;
+    private String currentPlaceId;
 
     public WeatherPresenter() {
         App.getAppComponent().inject(this);
-        placeName = prefs.getPlaceName();
-        placeId = prefs.getPlaceId();
-        place = prefs.getPlace();
+        lang = prefs.getLang();
+        currentPlaceId = prefs.getPlaceId();
     }
 
     public void start() {
-        getViewState().showPlaceName(placeName);
+        Timber.d("Start weather presentation for place id: %s", currentPlaceId);
+        if (currentPlaceId == null) {
+            getViewState().showPlaceSelectionUi();
+        } else {
+            updatePlaceAndWeather(false, false);
+        }
     }
 
-    public void refreshData() {
-        if (place != null) {
-            fetchWeather(place, false);
-        } else if (placeId != null) {
-            fetchPlace(placeId);
+    private void updatePlaceAndWeather(boolean forceUpdatePlace, boolean forceUpdateWeather) {
+        getViewState().showLoading(true);
+        dataRepository.getPlaceData(currentPlaceId, lang, forceUpdatePlace)
+                .flatMap(placeData -> {
+                    currentPlaceId = placeData.placeId;
+                    prefs.setPlaceId(placeData.placeId);
+                    return dataRepository.getFullWeatherData(
+                            placeData.placeId, placeData.lat, placeData.lng, lang, forceUpdateWeather);
+
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(fullWeather -> {
+                    getViewState().showLoading(false);
+                    getViewState().showWeather(fullWeather);
+                }, throwable -> {
+                    Timber.d(throwable);
+                    getViewState().showLoading(false);
+                    getViewState().showError(R.string.error_weather_api);
+                });
+    }
+
+    public void refreshWeather() {
+        if (currentPlaceId == null) {
+            getViewState().showPlaceSelectionUi();
+        } else {
+            updatePlaceAndWeather(false, true);
         }
     }
 
     public void processPlacePredictionSelection(Prediction prediction) {
         Timber.d("Selected place prediction: %s", prediction);
-        placeName = prediction.description;
-        prefs.setPlaceName(placeName);
+//        placeName = prediction.description;
+//        prefs.setPlaceName(placeName);
 
-        placeId = prediction.placeId;
-        prefs.setPlaceId(placeId);
-        fetchPlace(placeId);
+        currentPlaceId = prediction.placeId;
+        prefs.setPlaceId(currentPlaceId);
+        updatePlaceAndWeather(true, true);
     }
 
-    public void onUpdateWeather() {
-        if (place != null) {
-            fetchWeather(place, true);
-        }
-    }
-
-    public void fetchPlacePredictions(String input) {
-        placesApi.getPlacePredictions(input, context.getString(R.string.lang))
+    public void loadPlacePredictions(String input) {
+        placesApi.getPlacePredictions(input, lang)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    Timber.d("Find predictions status: %s", result.status);
-                    if ("OK".equals(result.status) ||
-                            "ZERO_RESULTS".equals(result.status)) {
-                        getViewState().showPlacePredictions(result.predictions);
+                .subscribe(predictionsResult -> {
+                    Timber.d("Find predictions status: %s", predictionsResult.status);
+                    if (predictionsResult.success()) {
+                        getViewState().showPlacePredictions(predictionsResult.predictions);
                     } else {
                         getViewState().showError(R.string.error_place_predictions_api);
                     }
@@ -102,64 +109,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                     Timber.d(throwable);
                     getViewState().showPlacePredictions(new ArrayList<>(0));
                     getViewState().showError(R.string.error_place_predictions_api);
-                });
-    }
-
-    private void fetchPlace(String placeId) {
-        placesApi.getPlaceData(placeId, context.getString(R.string.lang))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    if ("OK".equals(result.status)) {
-                        place = result.place;
-                        prefs.setPlace(place);
-                        fetchWeather(place, true);
-                    } else {
-                        getViewState().showError(R.string.error_place_api);
-                    }
-                }, throwable -> {
-                    Timber.d(throwable);
-                    getViewState().showError(R.string.error_place_api);
-                });
-    }
-
-    private void fetchWeather(Place place, boolean forceRefresh) {
-        Timber.d("Start fetch weather for place %s: ", place.vicinity);
-        getViewState().setLoading(true);
-        WeatherResult localWeather = null;
-        try {
-            String json = stringUtil.readFromFile(FILE_NAME);
-            Timber.d("Fetch weather from file: %s", json);
-            localWeather = gson.fromJson(json, WeatherResult.class);
-        } catch (IOException e) {
-            // empty
-        }
-
-        if (localWeather == null) {
-            fetchWeather(place);
-        } else if (forceRefresh) {
-            fetchWeather(place);
-        } else {
-            getViewState().showWeather(localWeather);
-            getViewState().setLoading(false);
-        }
-    }
-
-    private void fetchWeather(Place place) {
-        Location location = place.geometry.location;
-        weatherApi.getWeather(location.lat, location.lng, context.getString(R.string.lang))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weather -> {
-                    String json = gson.toJson(weather);
-                    Timber.d("Fetch from network: %s", json);
-                    getViewState().setLoading(false);
-                    getViewState().showWeather(weather);
-                    stringUtil.writeToFile(FILE_NAME, json);
-                }, throwable -> {
-                    Timber.d(throwable);
-                    getViewState().setLoading(false);
-                    getViewState().showError(R.string.error_weather_api);
                 });
     }
 }

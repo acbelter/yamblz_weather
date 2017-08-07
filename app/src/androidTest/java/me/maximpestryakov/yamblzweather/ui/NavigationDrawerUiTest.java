@@ -1,15 +1,14 @@
 package me.maximpestryakov.yamblzweather.ui;
 
-import android.support.annotation.IdRes;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.AppCompatCheckBox;
 
 import com.google.gson.Gson;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,11 +18,11 @@ import javax.inject.Inject;
 
 import me.maximpestryakov.TestApp;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PreferencesStorage;
-import me.maximpestryakov.yamblzweather.data.model.place.Place;
-import me.maximpestryakov.yamblzweather.data.model.place.PlaceResult;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
+import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
+import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.presentation.NavigationActivity;
-import me.maximpestryakov.yamblzweather.util.ResReader;
+import me.maximpestryakov.yamblzweather.util.DbTestUtils;
 import me.maximpestryakov.yamblzweather.util.TestUtils;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
@@ -39,6 +38,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static me.maximpestryakov.yamblzweather.util.TestUtils.checkToolbarTitle;
 import static me.maximpestryakov.yamblzweather.util.TestUtils.checkViewWithIdIsDisplayed;
 import static me.maximpestryakov.yamblzweather.util.TestUtils.checkViewWithTextIsDisplayed;
+import static me.maximpestryakov.yamblzweather.util.TestUtils.performDrawerNavigation;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -50,19 +50,21 @@ public class NavigationDrawerUiTest {
     @Inject
     Gson gson;
     @Inject
-    PreferencesStorage prefs;
+    WeatherDatabase weatherDatabase;
+    @Inject
+    PrefsRepository prefs;
+
+    private PlaceData testPlace;
 
     @Before
     public void setUp() {
         TestApp app = TestUtils.getTestApp(getTargetContext());
         app.getTestAppComponent().inject(this);
 
-        ResReader resReader = new ResReader();
-        Place place = gson.fromJson(
-                resReader.readString("json/place_data.json"), PlaceResult.class).place;
-        prefs.setPlaceId("12345");
-        prefs.setPlace(place);
-        prefs.setPlaceName("Moscow");
+        testPlace = DbTestUtils.createPlace1();
+        testPlace.placeId = "ChIJD7fiBh9u5kcRYJSMaMOCCwQ";
+        prefs.setPlaceId(testPlace.placeId);
+        weatherDatabase.insertPlaceData(testPlace);
     }
 
     @Test
@@ -121,9 +123,9 @@ public class NavigationDrawerUiTest {
         checkViewWithIdIsDisplayed(R.id.about_text);
     }
 
-    private static void performDrawerNavigation(@IdRes int itemId) {
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
-        onView(withId(R.id.navigationView)).perform(
-                NavigationViewActions.navigateTo(itemId));
+    @After
+    public void tearDown() {
+        prefs.setPlaceId(null);
+        weatherDatabase.deletePlaceData(testPlace.placeId);
     }
 }
