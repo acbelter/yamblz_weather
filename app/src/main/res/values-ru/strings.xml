@@ -1,20 +1,21 @@
 <resources>
-    <string name="app_name">Погода</string>
+    <string name="app_name">Yamblz.Погода</string>
 
-    <string name="nav_weather">Погода</string>
-    <string name="nav_settings">Настройки</string>
-    <string name="nav_about">О приложении</string>
+    <string name="select_place">Выбор локации</string>
+    <string name="settings">Настройки</string>
+    <string name="refresh">Обновить</string>
 
-    <string name="lang">ru</string>
+    <string name="about_text">Иконки задизайнили Freepik и Vignesh Oviyan с Flaticon</string>
+
+    <string name="hint_find_place">Поиск</string>
 
     <string name="error_no_internet">Отсутствует подключение к интернету</string>
-    <string name="error_place_predictions_api">Ошибка при загрузке данных о месте</string>
+    <string name="error_place_predictions_api">Ошибка при загрузке подсказок о месте</string>
     <string name="error_place_api">Ошибка при загрузке данных о месте</string>
-    <string name="error_weather_api">Ошибка при загрузке данных о погоде</string>
+    <string name="error_weather_api">Данные о погоде недоступны</string>
 
-    <string name="weather_settings">Настройки погоды</string>
-    <string name="update_on_schedule">Обновление по расписанию</string>
-    <string name="update_interval">Промежуток обновления</string>
+    <string name="update_on_schedule">Обновлять погоду по расписанию</string>
+    <string name="update_interval">Интервал обновления</string>
 
     <string name="interval_30_minutes">30 минут</string>
     <string name="interval_1_hour">1 час</string>
@@ -23,8 +24,4 @@
     <string name="interval_6_hours">6 часов</string>
     <string name="interval_12_hours">12 часов</string>
     <string name="interval_1_day">1 день</string>
-
-    <string name="temperature">Температура: %d ºC</string>
-    <string name="time">Время: %s</string>
-    <string name="hint_city_name">Введите название города</string>
 </resources>

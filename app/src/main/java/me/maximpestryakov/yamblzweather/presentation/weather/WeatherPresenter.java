@@ -6,8 +6,6 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,7 +16,6 @@ import me.maximpestryakov.yamblzweather.data.DataRepository;
 import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
-import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
 import timber.log.Timber;
 
 @InjectViewState
@@ -84,31 +81,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         }
     }
 
-    public void processPlacePredictionSelection(Prediction prediction) {
-        Timber.d("Selected place prediction: %s", prediction);
-//        placeName = prediction.description;
-//        prefs.setPlaceName(placeName);
 
-        currentPlaceId = prediction.placeId;
-        prefs.setPlaceId(currentPlaceId);
-        updatePlaceAndWeather(true, true);
-    }
 
-    public void loadPlacePredictions(String input) {
-        placesApi.getPlacePredictions(input, lang)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(predictionsResult -> {
-                    Timber.d("Find predictions status: %s", predictionsResult.status);
-                    if (predictionsResult.success()) {
-                        getViewState().showPlacePredictions(predictionsResult.predictions);
-                    } else {
-                        getViewState().showError(R.string.error_place_predictions_api);
-                    }
-                }, throwable -> {
-                    Timber.d(throwable);
-                    getViewState().showPlacePredictions(new ArrayList<>(0));
-                    getViewState().showError(R.string.error_place_predictions_api);
-                });
-    }
 }

@@ -13,12 +13,13 @@ import me.maximpestryakov.yamblzweather.di.AppComponent;
 import me.maximpestryakov.yamblzweather.di.AppModule;
 import me.maximpestryakov.yamblzweather.di.DaggerAppComponent;
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class App extends Application {
     private static AppComponent appComponent;
 
     @Inject
-    PrefsRepository prefsRepository;
+    PrefsRepository prefs;
 
     public static AppComponent getAppComponent() {
         return appComponent;
@@ -33,6 +34,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/app_font.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+
         appComponent = initAppComponent();
 
         appComponent.inject(this);
@@ -43,8 +49,8 @@ public class App extends Application {
 
         JobManager.create(this).addJobCreator(new SyncWeatherJobCreator());
 
-        if (prefsRepository.isWeatherScheduleEnabled()) {
-            SyncWeatherJob.schedule(prefsRepository.getWeatherScheduleInterval());
+        if (prefs.isUpdateBySchedule()) {
+            SyncWeatherJob.schedule(prefs.getUpdateInterval());
         }
     }
 }

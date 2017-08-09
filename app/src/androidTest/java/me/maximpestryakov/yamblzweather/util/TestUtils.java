@@ -4,14 +4,11 @@ import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import me.maximpestryakov.TestApp;
-import me.maximpestryakov.yamblzweather.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -37,9 +34,9 @@ public final class TestUtils {
     }
 
     public static void performDrawerNavigation(@IdRes int itemId) {
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
-        onView(withId(R.id.navigationView)).perform(
-                NavigationViewActions.navigateTo(itemId));
+//        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
+//        onView(withId(R.id.navigationView)).perform(
+//                NavigationViewActions.navigateTo(itemId));
     }
 
     public static ViewInteraction checkToolbarTitle(@StringRes int titleTextId) {

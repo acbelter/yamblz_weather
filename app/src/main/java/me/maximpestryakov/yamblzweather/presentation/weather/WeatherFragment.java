@@ -4,52 +4,37 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
-
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.google.gson.Gson;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
-import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
-import timber.log.Timber;
 
-public class WeatherFragment extends MvpAppCompatFragment implements WeatherView {
-    private static final long TEXT_TYPE_DELAY = 300L;
+//import android.support.design.widget.Snackbar;
+
+public class WeatherFragment extends Fragment implements WeatherView {
     private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
-    @InjectPresenter
-    WeatherPresenter weatherPresenter;
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.temperature)
-    TextView temperatureText;
-    @BindView(R.id.time)
-    TextView timeText;
-    @BindView(R.id.placeText)
-    AutoCompleteTextView placeText;
+//    @InjectPresenter
+//    WeatherPresenter presenter;
+//    @BindView(R.id.swipeRefreshLayout)
+//    SwipeRefreshLayout swipeRefreshLayout;
+//    @BindView(R.id.temperature)
+//    TextView temperatureText;
+//    @BindView(R.id.time)
+//    TextView timeText;
+
     private Unbinder unbinder;
     private Disposable placeTextDisposable;
 
@@ -71,82 +56,44 @@ public class WeatherFragment extends MvpAppCompatFragment implements WeatherView
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
-        swipeRefreshLayout.setOnRefreshListener(weatherPresenter::refreshWeather);
-        placeTextDisposable = RxTextView.textChanges(placeText)
-                .filter(s -> !placeText.isPerformingCompletion())
-                .debounce(TEXT_TYPE_DELAY, TimeUnit.MILLISECONDS)
-                .skip(1)
-                .subscribe(s -> {
-                    Timber.d("Input: %s", s);
-                    if (!TextUtils.isEmpty(s)) {
-                        weatherPresenter.loadPlacePredictions(s.toString());
-                    }
-                });
-
-        placeText.setOnItemClickListener((parent, view1, position, id) -> {
-            Prediction prediction = (Prediction) parent.getAdapter().getItem(position);
-            weatherPresenter.processPlacePredictionSelection(prediction);
-        });
-
-        weatherPresenter.start();
-        if (savedInstanceState == null) {
-            weatherPresenter.refreshWeather();
-        }
-    }
-
-    @OnClick(R.id.btn_test)
-    public void test(View view) {
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getActivity().setTitle(R.string.nav_weather);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        placeTextDisposable.dispose();
+//        placeTextDisposable.dispose();
     }
 
     @Override
     public void showPlaceSelectionUi() {
-
+//        Intent intent = new Intent(getActivity(), SelectPlaceActivity.class);
+//        startActivity(intent);
     }
 
     @Override
     public void showLoading(boolean loading) {
-        swipeRefreshLayout.setRefreshing(loading);
+
     }
 
     @Override
     public void showPlaceName(String name) {
-        placeText.setText(name);
+
     }
 
     @Override
     public void showPlacePredictions(List<Prediction> predictions) {
-        ArrayAdapter<Prediction> adapter = new ArrayAdapter<>(
-                getContext(), android.R.layout.simple_spinner_dropdown_item, predictions);
-        placeText.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
-        for (Prediction p : predictions) {
-            Timber.d("\t%s", p.description);
-        }
     }
 
     @Override
     public void showWeather(FullWeatherData weatherData) {
-        Gson gson = new Gson();
-        WeatherResult weather = weatherData.getWeather().getParsedWeatherData(gson);
-        int temperature = Math.round(weather.main.temp);
-        temperatureText.setText(getString(R.string.temperature, temperature));
-        String time =  dateFormat.format(new Date(weather.dataTimestamp * 1000));
-        timeText.setText(getString(R.string.time, time));
+//        Gson gson = new Gson();
+//        WeatherResult weather = weatherData.getWeather().getParsedWeatherData(gson);
+//        int temperature = Math.round(weather.main.temp);
+//        temperatureText.setText(getString(R.string.temperature, temperature));
+//        String time =  dateFormat.format(new Date(weather.dataTimestamp * 1000));
+//        timeText.setText(getString(R.string.time, time));
     }
 
     @Override

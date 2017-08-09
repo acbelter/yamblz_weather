@@ -1,0 +1,3 @@
+<resources>
+    <integer name="anim_fade_duration">250</integer>
+</resources>

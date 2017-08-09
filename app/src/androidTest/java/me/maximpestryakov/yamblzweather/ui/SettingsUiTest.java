@@ -3,11 +3,8 @@ package me.maximpestryakov.yamblzweather.ui;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatCheckBox;
 
 import org.junit.After;
@@ -17,8 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.PrefsRepository;
-import me.maximpestryakov.yamblzweather.presentation.NavigationActivity;
+import me.maximpestryakov.yamblzweather.presentation.WeatherActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -27,7 +23,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static me.maximpestryakov.yamblzweather.util.TestUtils.checkViewWithTextIsDisplayed;
 import static org.hamcrest.CoreMatchers.is;
@@ -36,8 +31,8 @@ import static org.hamcrest.CoreMatchers.not;
 @RunWith(AndroidJUnit4.class)
 public class SettingsUiTest {
     @Rule
-    public ActivityTestRule<NavigationActivity> activityRule =
-            new ActivityTestRule<>(NavigationActivity.class);
+    public ActivityTestRule<WeatherActivity> activityRule =
+            new ActivityTestRule<>(WeatherActivity.class);
 
     private SharedPreferences prefs;
     private Boolean weatherScheduleEnabled;
@@ -46,23 +41,23 @@ public class SettingsUiTest {
     @SuppressLint("ApplySharedPref")
     @Before
     public void setUp() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity());
-        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)) {
-            weatherScheduleEnabled =
-                    prefs.getBoolean(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, false);
-        }
-        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)) {
-            weatherScheduleInterval =
-                    prefs.getString(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, null);
-        }
-        prefs.edit()
-                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)
-                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)
-                .commit();
+//        prefs = PreferenceManager.getDefaultSharedPreferences(activityRule.getActivity());
+//        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)) {
+//            weatherScheduleEnabled =
+//                    prefs.getBoolean(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, false);
+//        }
+//        if (prefs.contains(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)) {
+//            weatherScheduleInterval =
+//                    prefs.getString(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, null);
+//        }
+//        prefs.edit()
+//                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED)
+//                .remove(PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL)
+//                .commit();
 
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
-        onView(withId(R.id.navigationView)).perform(
-                NavigationViewActions.navigateTo(R.id.nav_settings));
+//        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open());
+//        onView(withId(R.id.navigationView)).perform(
+//                NavigationViewActions.navigateTo(R.id.nav_settings));
     }
 
     @Test
@@ -99,13 +94,13 @@ public class SettingsUiTest {
     @SuppressLint("ApplySharedPref")
     @After
     public void tearDown() throws Exception {
-        if (weatherScheduleEnabled != null) {
-            prefs.edit().putBoolean(
-                    PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, weatherScheduleEnabled).commit();
-        }
-        if (weatherScheduleInterval != null) {
-            prefs.edit().putString(
-                    PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, weatherScheduleInterval).commit();
-        }
+//        if (weatherScheduleEnabled != null) {
+//            prefs.edit().putBoolean(
+//                    PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, weatherScheduleEnabled).commit();
+//        }
+//        if (weatherScheduleInterval != null) {
+//            prefs.edit().putString(
+//                    PrefsRepository.KEY_WEATHER_SCHEDULE_INTERVAL, weatherScheduleInterval).commit();
+//        }
     }
 }

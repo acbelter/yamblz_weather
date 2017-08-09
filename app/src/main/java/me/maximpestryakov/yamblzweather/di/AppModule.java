@@ -37,8 +37,8 @@ public class AppModule {
     }
 
     @Provides
-    PrefsRepository providePrefsRepository(Context context, Gson gson) {
-        return new PrefsRepository(context, gson);
+    PrefsRepository providePrefsRepository(Context context) {
+        return new PrefsRepository(context);
     }
 
     @Singleton

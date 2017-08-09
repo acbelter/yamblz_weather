@@ -4,23 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.gson.Gson;
-
 import java.util.Locale;
 
 public class PrefsRepository {
     public static final String KEY_LANG = "lang";
     public static final String KEY_PLACE_ID = "place_id";
 
-    public static final String KEY_WEATHER_SCHEDULE_ENABLED = "weather_schedule_enabled";
-    public static final String KEY_WEATHER_SCHEDULE_INTERVAL = "weather_schedule_interval";
+    public static final String KEY_UPDATE_BY_SCHEDULE = "update_by_schedule";
+    public static final String KEY_UPDATE_INTERVAL = "update_interval";
 
     private SharedPreferences prefs;
-    private Gson gson;
 
-    public PrefsRepository(Context context, Gson gson) {
+    public PrefsRepository(Context context) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        this.gson = gson;
     }
 
     public PrefsRepository() {}
@@ -41,11 +37,19 @@ public class PrefsRepository {
         return prefs.getString(KEY_PLACE_ID, null);
     }
 
-    public boolean isWeatherScheduleEnabled() {
-        return prefs.getBoolean(PrefsRepository.KEY_WEATHER_SCHEDULE_ENABLED, false);
+    public void setUpdateBySchedule(boolean value) {
+        prefs.edit().putBoolean(KEY_UPDATE_BY_SCHEDULE, value).apply();
     }
 
-    public int getWeatherScheduleInterval() {
-        return Integer.valueOf(prefs.getString("weather_schedule_interval", "30"));
+    public boolean isUpdateBySchedule() {
+        return prefs.getBoolean(KEY_UPDATE_BY_SCHEDULE, false);
+    }
+
+    public void setUpdateInterval(int interval) {
+        prefs.edit().putInt(KEY_UPDATE_INTERVAL, interval).apply();
+    }
+
+    public int getUpdateInterval() {
+        return prefs.getInt(KEY_UPDATE_INTERVAL, 0);
     }
 }

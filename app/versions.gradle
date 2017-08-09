@@ -1,5 +1,5 @@
 ext {
-    support_version = '25.4.0'
+    support_version = '26.0.0'
     dagger_version = '2.11'
     moxy_version = '1.5.3'
     butterknife_version = '8.7.0'

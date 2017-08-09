@@ -5,6 +5,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.data.SyncWeatherJob;
+import me.maximpestryakov.yamblzweather.presentation.place.SelectPlacePresenter;
+import me.maximpestryakov.yamblzweather.presentation.settings.SettingsPresenter;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherPresenter;
 
 @Singleton
@@ -12,7 +14,11 @@ import me.maximpestryakov.yamblzweather.presentation.weather.WeatherPresenter;
 public interface AppComponent {
     void inject(App app);
 
-    void inject(WeatherPresenter weatherPresenter);
+    void inject(SettingsPresenter presenter);
 
-    void inject(SyncWeatherJob syncWeatherJob);
+    void inject(SelectPlacePresenter presenter);
+
+    void inject(WeatherPresenter presenter);
+
+    void inject(SyncWeatherJob job);
 }
