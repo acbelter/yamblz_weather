@@ -3,9 +3,10 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:focusableInTouchMode="true"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar_general"/>
+    <include layout="@layout/toolbar"/>
 
     <AutoCompleteTextView
         android:id="@+id/findPlaceText"

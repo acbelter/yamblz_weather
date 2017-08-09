@@ -33,6 +33,8 @@ public class WeatherActivity extends BaseActivity {
     TextView temperature;
     @BindView(R.id.date)
     TextView date;
+    @BindView(R.id.dayOfWeek)
+    TextView dayOfWeek;
     @BindView(R.id.humidity)
     TextView humidity;
     @BindView(R.id.wind)
@@ -68,7 +70,8 @@ public class WeatherActivity extends BaseActivity {
         title.setText("Moscow");
         weatherImage.setImageResource(R.drawable.sunny_day);
         temperature.setText("+21°");
-        date.setText("Sunday, 21 July");
+        dayOfWeek.setText("Sunday");
+        date.setText("21 July 2017");
         humidity.setText("50%");
         wind.setText("21 m/s");
         clouds.setText("30%");

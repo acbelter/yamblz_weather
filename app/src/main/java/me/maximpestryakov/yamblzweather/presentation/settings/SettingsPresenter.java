@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.PrefsRepository;
+import me.maximpestryakov.yamblzweather.data.SyncWeatherJob;
 import timber.log.Timber;
 
 @InjectViewState
@@ -71,8 +72,12 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     }
 
     public void saveChanges() {
+        Timber.d("Save settings changes");
         prefs.setUpdateBySchedule(updateBySchedule);
         prefs.setUpdateInterval(updateInterval);
-        Timber.d("Save settings changes");
+
+        if (updateBySchedule) {
+            SyncWeatherJob.schedule(updateInterval);
+        }
     }
 }

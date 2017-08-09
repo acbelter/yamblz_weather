@@ -6,8 +6,7 @@
     <color name="colorAccent">#FFDC61</color>
 
     <color name="colorBg">@android:color/white</color>
-    <color name="colorToolbarContent">@android:color/holo_red_dark</color>
-    <!--<color name="colorToolbarContent">@android:color/black</color>-->
+    <color name="colorToolbarContent">@android:color/black</color>
     <color name="colorTextDefault">@android:color/black</color>
 
     <color name="colorDivider">#80CBCBCB</color>
