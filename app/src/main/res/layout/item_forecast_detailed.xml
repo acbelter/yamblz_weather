@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/text_size_small"
+        tools:text="15:00"/>
+
+    <LinearLayout
+        android:id="@+id/temperatureContainer"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/temperatureMin"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="4dp"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_small"
+            tools:text="+21°"/>
+
+        <TextView
+            android:id="@+id/temperatureMax"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_small"
+            tools:text="+31°"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/weatherImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@id/temperatureContainer"
+        tools:src="@drawable/snow"/>
+
+    <TextView
+        android:id="@+id/cloudinessTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/cloudiness"
+        android:text="@string/cloudiness"/>
+
+    <TextView
+        android:id="@id/cloudiness"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/cloudinessTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:gravity="right"
+        tools:text="30%"/>
+
+    <TextView
+        android:id="@+id/windTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cloudiness"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/wind"
+        android:text="@string/wind"/>
+
+    <TextView
+        android:id="@id/wind"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/windTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:gravity="right"
+        tools:text="50%"/>
+
+    <TextView
+        android:id="@+id/humidityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/windTitle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/humidity"
+        android:text="@string/humidity"/>
+
+    <TextView
+        android:id="@id/humidity"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/humidityTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:gravity="right"
+        tools:text="70%"/>
+
+    <TextView
+        android:id="@+id/pressureTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/humidityTitle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/pressure"
+        android:text="@string/pressure"/>
+
+    <TextView
+        android:id="@id/pressure"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/pressureTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="right"
+        tools:text="90%"/>
+</RelativeLayout>

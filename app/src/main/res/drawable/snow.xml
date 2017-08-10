@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:better="http://schemas.android.com/apk/lib/me.maximpestryakov.yamblzweather"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:width="512.008dp"
+        android:height="512.008dp"
+        android:viewportHeight="512.008"
+        android:viewportWidth="512.008"
+        better:viewportHeight="512.008"
+        better:viewportWidth="512.008"
+        tools:ignore="NewApi">
+    <path
+        android:fillColor="#dfe6f4"
+        android:pathData="M417.44 132.924l-7.584 0C402.312 101.196 373.72 77.42 339.52 77.42c-8.312 0 -16.728 1.832 -23.696 4.152C299.096 34.1 253.792 0.004 200.376 0.004 132.744 0.004 77.92 54.548 77.92 121.844c0 4.24 0.232 8.416 0.64 12.552C34.112 142.044 0 180.732 0 227.06c0 51.776 42.576 94.16 94.608 94.16l322.792 0c52.032 0 94.608 -42.36 94.608 -94.16 0.032 -51.76 -42.536 -94.136 -94.568 -94.136z"
+        better:fillColor="#dfe6f4"
+        better:pathData="M417.44 132.924l-7.584 0C402.312 101.196 373.72 77.42 339.52 77.42c-8.312 0 -16.728 1.832 -23.696 4.152C299.096 34.1 253.792 0.004 200.376 0.004 132.744 0.004 77.92 54.548 77.92 121.844c0 4.24 0.232 8.416 0.64 12.552C34.112 142.044 0 180.732 0 227.06c0 51.776 42.576 94.16 94.608 94.16l322.792 0c52.032 0 94.608 -42.36 94.608 -94.16 0.032 -51.76 -42.536 -94.136 -94.568 -94.136z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M70.632004 362.724l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M70.632004 362.724l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M60.431999 383.58801l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M60.431999 383.58801l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M70.632004 462.31601l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M70.632004 462.31601l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M60.431999 483.20401l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M60.431999 483.20401l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M0 433.36401l49.688 0 0 8 -49.688 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M0 433.36401l49.688 0 0 8 -49.688 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M20.84 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M20.84 423.172l8 0 0 28.4 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M99.575996 433.36401l49.680004 0 0 8 -49.680004 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M99.575996 433.36401l49.680004 0 0 8 -49.680004 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M120.4 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M120.4 423.172l8 0 0 28.4 -8 0z"/>
+    <group
+        android:rotation="-45"
+        android:scaleX="0.9999904"
+        android:scaleY="0.9999904"
+        android:translateX="-40.33"
+        android:translateY="20.786"
+        better:translateX="-40.33"
+        better:translateY="20.786">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M-287.931 371.82401l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M-287.931 371.82401l49.688 0 0 8 -49.688 0z"/>
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M-267.091 361.664l8 0 0 28.408 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M-267.091 361.664l8 0 0 28.408 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="471.8672"
+        android:translateY="608.8821"
+        better:translateX="471.8672"
+        better:translateY="608.8821">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M84.986 398.168l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M84.986 398.168l49.688 0 0 8 -49.688 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="471.9259"
+        android:translateY="608.9031"
+        better:translateX="471.9259"
+        better:translateY="608.9031">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M105.855 387.995l8 0 0 28.392 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M105.855 387.995l8 0 0 28.392 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="521.6472"
+        android:translateY="729.0815"
+        better:translateX="521.6472"
+        better:translateY="729.0815">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M105.826 447.73401l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M105.826 447.73401l8 0 0 49.688 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="521.6267"
+        android:translateY="729.0731"
+        better:translateX="521.6267"
+        better:translateY="729.0731">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M95.617996 468.569l28.400004 0 0 8 -28.400004 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M95.617996 468.569l28.400004 0 0 8 -28.400004 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="351.785"
+        android:translateY="658.6813"
+        better:translateX="351.785"
+        better:translateY="658.6813">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M35.474998 377.354l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M35.474998 377.354l8 0 0 49.688 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="351.7236"
+        android:translateY="658.6559"
+        better:translateX="351.7236"
+        better:translateY="658.6559">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M25.25 398.172l28.4 0 0 8 -28.4 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M25.25 398.172l28.4 0 0 8 -28.4 0z"/>
+    </group>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M74.632 466.444l25.16 -14.536 0 -29.056 -25.16 -14.528 -25.168 14.528 0 29.056z"
+        better:fillColor="#629fd6"
+        better:pathData="M74.632 466.444l25.16 -14.536 0 -29.056 -25.16 -14.528 -25.168 14.528 0 29.056z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M252 362.724l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M252 362.724l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M241.84 383.58801l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M241.84 383.58801l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M252 462.31601l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M252 462.31601l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M241.84 483.20401l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M241.84 483.20401l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M181.37601 433.36401l49.68 0 0 8 -49.68 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M181.37601 433.36401l49.68 0 0 8 -49.68 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M202.20799 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M202.20799 423.172l8 0 0 28.4 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M280.95999 433.36401l49.688 0 0 8 -49.688 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M280.95999 433.36401l49.688 0 0 8 -49.688 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M301.784 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M301.784 423.172l8 0 0 28.4 -8 0z"/>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="711.0402"
+        android:translateY="650.6022"
+        better:translateX="711.0402"
+        better:translateY="650.6022">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M195.93201 468.56201l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M195.93201 468.56201l49.688 0 0 8 -49.688 0z"/>
+    </group>
+    <group
+        android:rotation="-44.9919"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="711.0983"
+        android:translateY="650.6506"
+        better:translateX="711.0983"
+        better:translateY="650.6506">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M216.82201 458.36899l8 0 0 28.4 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M216.82201 458.36899l8 0 0 28.4 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="781.5211"
+        android:translateY="480.5681"
+        better:translateX="781.5211"
+        better:translateY="480.5681">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M266.388 398.142l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M266.388 398.142l49.688 0 0 8 -49.688 0z"/>
+    </group>
+    <group
+        android:rotation="-45.0081"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="781.4353"
+        android:translateY="480.5753"
+        better:translateX="781.4353"
+        better:translateY="480.5753">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M287.16699 387.961l8 0 0 28.4 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M287.16699 387.961l8 0 0 28.4 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="0.9999904"
+        android:scaleY="0.9999904"
+        android:translateX="-31.11"
+        android:translateY="43.04"
+        better:translateX="-31.11"
+        better:translateY="43.04">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M-79.821999 506.78201l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M-79.821999 506.78201l8 0 0 49.688 -8 0z"/>
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M-90.029999 527.61401l28.408001 0 0 8 -28.408001 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M-90.029999 527.61401l28.408001 0 0 8 -28.408001 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="661.3616"
+        android:translateY="530.4446"
+        better:translateX="661.3616"
+        better:translateY="530.4446">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M216.82201 377.35101l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M216.82201 377.35101l8 0 0 49.688 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="661.2973"
+        android:translateY="530.426"
+        better:translateX="661.2973"
+        better:translateY="530.426">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M206.59801 398.172l28.392 0 0 8 -28.392 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M206.59801 398.172l28.392 0 0 8 -28.392 0z"/>
+    </group>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M256 466.444l25.168 -14.536 0 -29.056 -25.168 -14.528 -25.168 14.528 0 29.056z"
+        better:fillColor="#629fd6"
+        better:pathData="M256 466.444l25.168 -14.536 0 -29.056 -25.168 -14.528 -25.168 14.528 0 29.056z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M433.35999 362.724l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M433.35999 362.724l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M423.168 383.58801l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M423.168 383.58801l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M433.35999 462.31601l8 0 0 49.688 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M433.35999 462.31601l8 0 0 49.688 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M423.168 483.20401l28.4 0 0 8 -28.4 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M423.168 483.20401l28.4 0 0 8 -28.4 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M362.72 433.36401l49.688 0 0 8 -49.688 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M362.72 433.36401l49.688 0 0 8 -49.688 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M383.58401 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M383.58401 423.172l8 0 0 28.4 -8 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M462.31201 433.36401l49.688 0 0 8 -49.688 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M462.31201 433.36401l49.688 0 0 8 -49.688 0z"/>
+    <path
+        android:fillColor="#b5c0d6"
+        android:pathData="M483.12 423.172l8 0 0 28.4 -8 0z"
+        better:fillColor="#b5c0d6"
+        better:pathData="M483.12 423.172l8 0 0 28.4 -8 0z"/>
+    <group
+        android:rotation="-45"
+        android:scaleX="0.9999904"
+        android:scaleY="0.9999904"
+        android:translateX="-27.05"
+        android:translateY="52.849"
+        better:translateX="-27.05"
+        better:translateY="52.849">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M-18.127001 596.263l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M-18.127001 596.263l49.688 0 0 8 -49.688 0z"/>
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M2.681 586.10303l8 0 0 28.408 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M2.681 586.10303l8 0 0 28.408 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="1091.082"
+        android:translateY="352.3418"
+        better:translateX="1091.082"
+        better:translateY="352.3418">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M447.72501 398.14099l49.688 0 0 8 -49.688 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M447.72501 398.14099l49.688 0 0 8 -49.688 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="1091.121"
+        android:translateY="352.382"
+        better:translateX="1091.121"
+        better:translateY="352.382">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M468.57999 387.974l8 0 0 28.392 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M468.57999 387.974l8 0 0 28.392 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="1140.868"
+        android:translateY="472.5822"
+        better:translateX="1140.868"
+        better:translateY="472.5822">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M468.55899 447.729l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M468.55899 447.729l8 0 0 49.688 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="1140.875"
+        android:translateY="472.5054"
+        better:translateX="1140.875"
+        better:translateY="472.5054">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M458.379 468.53601l28.4 0 0 8 -28.4 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M458.379 468.53601l28.4 0 0 8 -28.4 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="970.9677"
+        android:translateY="402.1909"
+        better:translateX="970.9677"
+        better:translateY="402.1909">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M398.18701 377.34601l8 0 0 49.688 -8 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M398.18701 377.34601l8 0 0 49.688 -8 0z"/>
+    </group>
+    <group
+        android:rotation="-45"
+        android:scaleX="-0.9999904"
+        android:scaleY="-0.9999904"
+        android:translateX="970.929"
+        android:translateY="402.1108"
+        better:translateX="970.929"
+        better:translateY="402.1108">
+        <path
+            android:fillColor="#b5c0d6"
+            android:pathData="M387.98499 398.14099l28.39999 0 0 8 -28.39999 0z"
+            better:fillColor="#b5c0d6"
+            better:pathData="M387.98499 398.14099l28.39999 0 0 8 -28.39999 0z"/>
+    </group>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M437.368 466.444l25.168 -14.536 0 -29.056 -25.168 -14.528 -25.16 14.528 0 29.056z"
+        better:fillColor="#629fd6"
+        better:pathData="M437.368 466.444l25.168 -14.536 0 -29.056 -25.168 -14.528 -25.16 14.528 0 29.056z"/>
+</vector>

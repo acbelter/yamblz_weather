@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/temperature"
-            tools:src="@drawable/sunny_day"
+            tools:src="@drawable/sun"
             android:layout_alignBottom="@+id/date"
             android:layout_alignParentTop="true"/>
 
@@ -42,7 +42,7 @@
             android:layout_alignLeft="@id/temperature"
             android:layout_alignParentRight="true"
             android:layout_below="@id/temperature"
-            android:gravity="right"
+            android:gravity="center"
             android:paddingLeft="24dp"
             android:textColor="@color/colorTextDefault"
             android:textSize="@dimen/text_size_regular"
@@ -55,7 +55,7 @@
             android:layout_alignLeft="@id/temperature"
             android:layout_alignParentRight="true"
             android:layout_below="@id/dayOfWeek"
-            android:gravity="right"
+            android:gravity="center"
             android:paddingLeft="24dp"
             android:textColor="@color/colorTextDefault"
             android:textSize="16sp"

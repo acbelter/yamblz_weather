@@ -5,7 +5,7 @@
     <string name="settings">Настройки</string>
     <string name="refresh">Обновить</string>
 
-    <string name="about_text">Иконки задизайнили Freepik и Vignesh Oviyan с Flaticon</string>
+    <string name="about_text">Иконки задизайнил Alfredo Hernandez с Flaticon</string>
 
     <string name="hint_find_place">Найти другую локацию</string>
 
@@ -24,4 +24,9 @@
     <string name="interval_6_hours">6 часов</string>
     <string name="interval_12_hours">12 часов</string>
     <string name="interval_1_day">1 день</string>
+
+    <string name="cloudiness">Облачность</string>
+    <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
 </resources>

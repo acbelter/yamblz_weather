@@ -36,14 +36,13 @@ public class WeatherActivity extends BaseActivity {
     TextView date;
     @BindView(R.id.dayOfWeek)
     TextView dayOfWeek;
-    @BindView(R.id.humidity)
-    TextView humidity;
+    @BindView(R.id.cloudiness)
+    TextView cloudiness;
     @BindView(R.id.wind)
     TextView wind;
-    @BindView(R.id.clouds)
-    TextView clouds;
-    @BindView(R.id.pressure)
-    TextView pressure;
+    @BindView(R.id.humidity)
+    TextView humidity;
+
     @BindView(R.id.forecast)
     RecyclerView forecasts;
 
@@ -69,14 +68,13 @@ public class WeatherActivity extends BaseActivity {
 
     private void initTestUi() {
         title.setText("Moscow");
-        weatherImage.setImageResource(R.drawable.sunny_day);
+        weatherImage.setImageResource(R.drawable.sun);
         temperature.setText("+21°");
         dayOfWeek.setText("Sunday");
         date.setText("21 July 2017");
         humidity.setText("50%");
         wind.setText("21 m/s");
-        clouds.setText("30%");
-        pressure.setText("123 kPa");
+        cloudiness.setText("30%");
 
         List<PlaceData> places = new ArrayList<>();
         for (int i = 0; i < 25; i++) {

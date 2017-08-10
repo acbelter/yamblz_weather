@@ -28,22 +28,17 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/pour_rain"/>
+                android:src="@drawable/cloud"/>
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/windy_day"/>
+                android:src="@drawable/wind"/>
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/overcast_day"/>
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/barometer"/>
+                android:src="@drawable/humidity"/>
         </TableRow>
 
         <TableRow
@@ -52,7 +47,7 @@
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/humidity"
+                android:id="@+id/cloudiness"
                 style="@style/StatTextStyle"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -66,18 +61,11 @@
                 tools:text="25 m/s"/>
 
             <TextView
-                android:id="@+id/clouds"
+                android:id="@+id/humidity"
                 style="@style/StatTextStyle"
                 android:layout_weight="1"
                 android:gravity="center"
                 tools:text="50%"/>
-
-            <TextView
-                android:id="@+id/pressure"
-                style="@style/StatTextStyle"
-                android:layout_weight="1"
-                android:gravity="center"
-                tools:text="111 kPa"/>
         </TableRow>
     </TableLayout>
 <!--</android.support.v7.widget.CardView>-->

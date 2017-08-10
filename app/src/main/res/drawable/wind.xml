@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:better="http://schemas.android.com/apk/lib/me.maximpestryakov.yamblzweather"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:width="511.856dp"
+        android:height="511.856dp"
+        android:viewportHeight="511.856"
+        android:viewportWidth="511.856"
+        better:viewportHeight="511.856"
+        better:viewportWidth="511.856"
+        tools:ignore="NewApi">
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M48.383999 429.92001l387.519991 0 0 8 -387.519991 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M48.383999 429.92001l387.519991 0 0 8 -387.519991 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M101.696 73.935997l410.16 0 0 8 -410.16 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M101.696 73.935997l410.16 0 0 8 -410.16 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M0 370.56799l304.79999 0 0 8 -304.79999 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M0 370.56799l304.79999 0 0 8 -304.79999 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M0 311.25601l304.79999 0 0 8 -304.79999 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M0 311.25601l304.79999 0 0 8 -304.79999 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M0 192.56799l404.72 0 0 8 -404.72 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M0 192.56799l404.72 0 0 8 -404.72 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M0 133.26401l430.35999 0 0 8 -430.35999 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M0 133.26401l430.35999 0 0 8 -430.35999 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M101.696 251.92799l203.112 0 0 8 -203.112 0z"
+        better:fillColor="#629fd6"
+        better:pathData="M101.696 251.92799l203.112 0 0 8 -203.112 0z"/>
+</vector>
