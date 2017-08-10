@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:completionThreshold="1"
         android:hint="@string/hint_find_place"
         android:imeOptions="flagNoFullscreen"
         android:maxLines="1"

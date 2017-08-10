@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,8 @@ public class WeatherActivity extends BaseActivity {
 
     private void showSelectPlaceUi() {
         Intent intent = new Intent(WeatherActivity.this, SelectPlaceActivity.class);
-        startActivity(intent);
+        intent.putExtra(Consts.KEY_SELECT_FIRST_PLACE, true);
+        startActivityForResult(intent, Consts.REQUEST_CODE_SELECT_PLACE);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -125,5 +127,17 @@ public class WeatherActivity extends BaseActivity {
         Intent intent = new Intent(WeatherActivity.this, SettingsActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Consts.REQUEST_CODE_SELECT_PLACE:
+                    PlaceData selectedPlace = data.getParcelableExtra(Consts.KEY_SELECTED_PLACE);
+                    Toast.makeText(this, selectedPlace.placeName, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
     }
 }

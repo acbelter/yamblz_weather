@@ -45,6 +45,8 @@ public class DataRepository {
                             }
                             return Maybe.empty();
                         }).doOnSuccess(placeData -> database.insertPlaceData(placeData));
+//                        })
+//                        .concatMap(placeData -> database.insertPlaceData(placeData).toMaybe());
 
         if (forceNetwork) {
             return networkData.toSingle();
@@ -68,7 +70,7 @@ public class DataRepository {
                         return Maybe.just(dataConverter.convert(result, placeId));
                     }
                     return Maybe.empty();
-                }).flatMap(weatherData -> {
+                }).concatMap(weatherData -> {
                     weatherData.weatherTimestamp = System.currentTimeMillis();
                     database.insertWeatherData(weatherData);
                     return Maybe.just(weatherData);
@@ -96,7 +98,7 @@ public class DataRepository {
                         return Maybe.just(dataConverter.convert(result, placeId));
                     }
                     return Maybe.empty();
-                }).flatMap(forecastData -> {
+                }).concatMap(forecastData -> {
                     forecastData.forecastTimestamp = System.currentTimeMillis();
                     database.insertForecastData(forecastData);
                     return Maybe.just(forecastData);

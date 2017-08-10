@@ -1,5 +1,7 @@
 package me.maximpestryakov.yamblzweather.presentation.place;
 
+import android.support.annotation.StringRes;
+
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
@@ -16,8 +18,10 @@ public interface SelectPlaceView extends MvpView {
 
     void showPlacePredictions(List<Prediction> predictions);
 
+    void showLoading(boolean loading);
+
     @StateStrategyType(value = SkipStrategy.class)
-    void showError();
+    void showError(@StringRes int errorStrId);
 
     void close();
 }

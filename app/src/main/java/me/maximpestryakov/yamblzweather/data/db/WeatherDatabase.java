@@ -25,10 +25,10 @@ public interface WeatherDatabase {
     Single<List<PlaceData>> getAllPlaceData();
 
     @Query("DELETE FROM place WHERE place_id = :placeId")
-    void deletePlaceData(String placeId);
+    int deletePlaceData(String placeId);
 
     @Query("DELETE FROM place")
-    void deleteAllPlaceData();
+    int deleteAllPlaceData();
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -41,10 +41,10 @@ public interface WeatherDatabase {
     Single<List<WeatherData>> getAllWeatherData();
 
     @Query("DELETE FROM weather WHERE place_id = :placeId")
-    void deleteWeatherData(String placeId);
+    int deleteWeatherData(String placeId);
 
     @Query("DELETE FROM weather")
-    void deleteAllWeatherData();
+    int deleteAllWeatherData();
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -57,8 +57,8 @@ public interface WeatherDatabase {
     Single<List<ForecastData>> getAllForecastData();
 
     @Query("DELETE FROM forecast WHERE place_id = :placeId")
-    void deleteForecastData(String placeId);
+    int deleteForecastData(String placeId);
 
     @Query("DELETE FROM forecast")
-    void deleteAllForecastData();
+    int deleteAllForecastData();
 }

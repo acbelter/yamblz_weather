@@ -1,7 +1,10 @@
 package me.maximpestryakov.yamblzweather.presentation.place;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,10 +29,12 @@ import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
 import me.maximpestryakov.yamblzweather.presentation.BaseActivity;
+import me.maximpestryakov.yamblzweather.presentation.Consts;
 import me.maximpestryakov.yamblzweather.util.UiUtil;
 import timber.log.Timber;
 
-public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView {
+public class SelectPlaceActivity extends BaseActivity implements
+        SelectPlaceView, PlacesAdapter.AdapterCallback {
     private static final long TEXT_TYPE_DELAY = 300L;
 
     @BindView(R.id.toolbar)
@@ -43,6 +48,8 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
     @InjectPresenter
     SelectPlacePresenter presenter;
 
+    private boolean isSelectFirstPlace;
+
     private PlacesAdapter favoritePlacesAdapter;
     private CompositeDisposable disposable;
 
@@ -52,13 +59,18 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
         setContentView(R.layout.activity_select_place);
         ButterKnife.bind(this);
 
-        UiUtil.toolbar(this, toolbar, true);
+        if (savedInstanceState == null) {
+            isSelectFirstPlace = getIntent().getBooleanExtra(Consts.KEY_SELECT_FIRST_PLACE, false);
+        } else {
+            isSelectFirstPlace = savedInstanceState.getBoolean(Consts.KEY_SELECT_FIRST_PLACE);
+        }
+
+        UiUtil.toolbar(this, toolbar, !isSelectFirstPlace);
         title.setText(R.string.select_place);
 
-        Disposable findPlaceTextDisposable = RxTextView.textChanges(findPlaceText)
+        Disposable findPlaceDisposable = RxTextView.textChanges(findPlaceText)
                 .filter(s -> !findPlaceText.isPerformingCompletion())
                 .debounce(TEXT_TYPE_DELAY, TimeUnit.MILLISECONDS)
-                .skip(1)
                 .subscribe(s -> {
                     Timber.d("Input: %s", s);
                     if (!TextUtils.isEmpty(s)) {
@@ -66,7 +78,7 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
                     }
                 });
 
-        disposable = new CompositeDisposable(findPlaceTextDisposable);
+        disposable = new CompositeDisposable(findPlaceDisposable);
 
         findPlaceText.setOnItemClickListener((parent, view1, position, id) -> {
             Prediction prediction = (Prediction) parent.getAdapter().getItem(position);
@@ -80,8 +92,17 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(Consts.KEY_SELECT_FIRST_PLACE, isSelectFirstPlace);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (favoritePlacesAdapter != null) {
+            favoritePlacesAdapter.removeAdapterCallback();
+        }
         presenter.destroy();
         disposable.dispose();
     }
@@ -108,12 +129,30 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
 
     @Override
     public void onBackPressed() {
+        if (isSelectFirstPlace) {
+            ActivityCompat.finishAffinity(this);
+        } else {
+            close();
+        }
+    }
+
+    @Override
+    public void onItemRemoved(PlaceData place) {
+        presenter.removePlace(place);
+    }
+
+    @Override
+    public void onItemClicked(PlaceData place) {
+        Intent data = new Intent();
+        data.putExtra(Consts.KEY_SELECTED_PLACE, place);
+        setResult(RESULT_OK, data);
         close();
     }
 
     @Override
     public void showFavoritePlaces(List<PlaceData> places) {
         favoritePlacesAdapter = new PlacesAdapter(places);
+        favoritePlacesAdapter.setAdapterCallback(this);
         favoritePlacesList.setAdapter(favoritePlacesAdapter);
     }
 
@@ -130,9 +169,13 @@ public class SelectPlaceActivity extends BaseActivity implements SelectPlaceView
     }
 
     @Override
-    public void showError() {
-        Snackbar.make(findViewById(android.R.id.content),
-                R.string.error_place_predictions_api, Snackbar.LENGTH_LONG).show();
+    public void showLoading(boolean loading) {
+
+    }
+
+    @Override
+    public void showError(@StringRes int errorStrId) {
+        Snackbar.make(findViewById(android.R.id.content), errorStrId, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

@@ -7,7 +7,7 @@
 
     <string name="about_text">Иконки задизайнили Freepik и Vignesh Oviyan с Flaticon</string>
 
-    <string name="hint_find_place">Поиск</string>
+    <string name="hint_find_place">Найти другую локацию</string>
 
     <string name="error_no_internet">Отсутствует подключение к интернету</string>
     <string name="error_place_predictions_api">Ошибка при загрузке подсказок о месте</string>

@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="@dimen/card_elevation"
+    android:clickable="true"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -30,9 +29,11 @@
             android:id="@+id/deletePlaceImage"
             android:layout_width="52dp"
             android:layout_height="match_parent"
+            android:background="@drawable/item_selector"
+            android:clickable="true"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:src="@drawable/ic_close"
-            android:tint="@color/colorLightGray"/>
+            android:tint="@color/colorTextDefault"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -11,7 +11,7 @@ public class Place {
     @SerializedName("place_id")
     @Expose
     public String placeId;
-    @SerializedName("vicinity")
+    @SerializedName("formatted_address")
     @Expose
     public String name;
 }

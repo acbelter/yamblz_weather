@@ -2,6 +2,7 @@ package me.maximpestryakov.yamblzweather.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -45,5 +46,9 @@ public class UiUtil {
             DrawableCompat.setTint(wrappedDrawable.mutate(), color);
             item.setIcon(wrappedDrawable);
         }
+    }
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
