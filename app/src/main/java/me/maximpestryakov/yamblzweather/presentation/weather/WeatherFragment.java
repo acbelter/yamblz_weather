@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
@@ -19,7 +18,7 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.Disposable;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
-import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
+import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 
 //import android.support.design.widget.Snackbar;
 
@@ -66,7 +65,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
     }
 
     @Override
-    public void showPlaceSelectionUi() {
+    public void requestPlaceSelection() {
 //        Intent intent = new Intent(getActivity(), SelectPlaceActivity.class);
 //        startActivity(intent);
     }
@@ -82,12 +81,7 @@ public class WeatherFragment extends Fragment implements WeatherView {
     }
 
     @Override
-    public void showPlacePredictions(List<Prediction> predictions) {
-
-    }
-
-    @Override
-    public void showWeather(FullWeatherData weatherData) {
+    public void showWeather(FullWeatherData data, DataConverter converter) {
 //        Gson gson = new Gson();
 //        WeatherResult weather = weatherData.getWeather().getParsedWeatherData(gson);
 //        int temperature = Math.round(weather.main.temp);

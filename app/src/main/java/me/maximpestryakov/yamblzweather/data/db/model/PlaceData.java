@@ -21,6 +21,8 @@ public class PlaceData implements Parcelable {
     public String placeName;
     @ColumnInfo(name = "lang")
     public String lang;
+    @Ignore
+    public boolean fromCache;
 
     public PlaceData() {
     }

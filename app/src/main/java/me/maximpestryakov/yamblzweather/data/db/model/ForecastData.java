@@ -24,6 +24,8 @@ public class ForecastData {
     public long forecastTimestamp;
     @ColumnInfo(name = "forecast_data")
     public String forecastData;
+    @Ignore
+    public boolean fromCache;
 
     public ForecastData() {
     }

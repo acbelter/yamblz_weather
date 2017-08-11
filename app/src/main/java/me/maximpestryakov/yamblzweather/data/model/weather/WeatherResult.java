@@ -1,5 +1,7 @@
 package me.maximpestryakov.yamblzweather.data.model.weather;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,7 +21,7 @@ public class WeatherResult implements Result {
     public Coord coord;
     @SerializedName("weather")
     @Expose
-    public List<Weather> weather = new ArrayList<>();
+    protected List<Weather> weather = new ArrayList<>();
     @SerializedName("base")
     @Expose
     public String base;
@@ -48,9 +50,16 @@ public class WeatherResult implements Result {
     @Expose
     public int code;
 
+    public @Nullable Weather getWeather() {
+        if (!weather.isEmpty()) {
+            return weather.get(0);
+        }
+        return null;
+    }
+
     @Override
     public boolean success() {
-        return code == 200 && !weather.isEmpty();
+        return code == 200;
     }
 
     @Override

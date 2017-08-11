@@ -36,13 +36,28 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
     private String lang;
     private String currentPlaceId;
 
-    private CompositeDisposable disposable;
+    private Disposable placePredictionsDisposable;
+    private CompositeDisposable disposables;
 
     public SelectPlacePresenter() {
         App.getAppComponent().inject(this);
         lang = prefs.getLang();
         currentPlaceId = prefs.getPlaceId();
-        disposable = new CompositeDisposable();
+        disposables = new CompositeDisposable();
+    }
+
+    public void start() {
+        if (disposables.isDisposed()) {
+            disposables = new CompositeDisposable();
+        }
+    }
+
+    public void stop() {
+        if (placePredictionsDisposable != null) {
+            placePredictionsDisposable.dispose();
+            placePredictionsDisposable = null;
+        }
+        disposables.dispose();
     }
 
     public void loadFavoritePlaces() {
@@ -53,15 +68,15 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
                     getViewState().showFavoritePlaces(favoritePlaces);
                 }, Timber::d);
 
-        disposable.add(favoritePlacesDisposable);
-    }
-
-    public void destroy() {
-        disposable.dispose();
+        disposables.add(favoritePlacesDisposable);
     }
 
     public void loadPlacePredictions(String input) {
-        Disposable placePredictionsDisposable = placesApi.getPlacePredictions(input, lang)
+        if (placePredictionsDisposable != null) {
+            placePredictionsDisposable.dispose();
+        }
+
+        placePredictionsDisposable = placesApi.getPlacePredictions(input, lang)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(predictionsResult -> {
@@ -76,7 +91,6 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
                     getViewState().showPlacePredictions(new ArrayList<>(0));
                     getViewState().showError(R.string.error_place_predictions_api);
                 });
-        disposable.add(placePredictionsDisposable);
     }
 
     public void selectPlacePrediction(Prediction prediction) {
@@ -84,17 +98,20 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
         currentPlaceId = prediction.placeId;
         prefs.setPlaceId(currentPlaceId);
 
+        getViewState().showLoading(true);
         Disposable placeDataDisposable = dataRepository.getPlaceData(prediction.placeId, lang, false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(placeData -> {
                     Timber.d("Obtained place data %s", placeData);
-                    getViewState().close();
+                    getViewState().showLoading(false);
+                    getViewState().close(placeData);
                 }, throwable -> {
                     Timber.d(throwable);
+                    getViewState().showLoading(false);
                     getViewState().showError(R.string.error_place_api);
                 });
-        disposable.add(placeDataDisposable);
+        disposables.add(placeDataDisposable);
     }
 
     public void removePlace(PlaceData place) {
@@ -107,6 +124,6 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> Timber.d("Removed place: " + place.placeName), Timber::d);
-        disposable.add(removePlaceDisposable);
+        disposables.add(removePlaceDisposable);
     }
 }

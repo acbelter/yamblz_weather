@@ -26,18 +26,24 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/cloud"/>
+                android:id="@+id/cloudinessImage"
+                android:layout_width="@dimen/stat_image_size"
+                android:layout_height="@dimen/stat_image_size"
+                android:visibility="invisible"
+                android:src="@drawable/cloudiness"/>
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:id="@+id/windImage"
+                android:layout_width="@dimen/stat_image_size"
+                android:layout_height="@dimen/stat_image_size"
+                android:visibility="invisible"
                 android:src="@drawable/wind"/>
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:id="@+id/humidityImage"
+                android:layout_width="@dimen/stat_image_size"
+                android:layout_height="@dimen/stat_image_size"
+                android:visibility="invisible"
                 android:src="@drawable/humidity"/>
         </TableRow>
 

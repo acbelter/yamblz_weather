@@ -19,6 +19,8 @@ public class WeatherData {
     public long weatherTimestamp;
     @ColumnInfo(name = "weather_data")
     public String weatherData;
+    @Ignore
+    public boolean fromCache;
 
     public WeatherData() {
     }

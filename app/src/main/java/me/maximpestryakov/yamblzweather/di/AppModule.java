@@ -109,11 +109,12 @@ public class AppModule {
 
     @Singleton
     @Provides
-    DataRepository provideDataRepository(DataConverter dataConverter,
-                                         WeatherDatabase database,
+    DataRepository provideDataRepository(WeatherDatabase database,
                                          PlacesApi placesApi,
-                                         WeatherApi weatherApi) {
-        return new DataRepository(dataConverter, database, placesApi, weatherApi);
+                                         WeatherApi weatherApi,
+                                         DataConverter dataConverter,
+                                         Gson gson) {
+        return new DataRepository(database, placesApi, weatherApi, dataConverter, gson);
     }
 
     @Singleton

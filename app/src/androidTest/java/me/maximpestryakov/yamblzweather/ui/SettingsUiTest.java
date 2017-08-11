@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.presentation.WeatherActivity;
+import me.maximpestryakov.yamblzweather.presentation.weather.WeatherActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

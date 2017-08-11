@@ -7,4 +7,5 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
     <dimen name="item_height">64dp</dimen>
+    <dimen name="stat_image_size">48dp</dimen>
 </resources>

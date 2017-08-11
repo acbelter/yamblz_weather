@@ -23,5 +23,5 @@ public interface SelectPlaceView extends MvpView {
     @StateStrategyType(value = SkipStrategy.class)
     void showError(@StringRes int errorStrId);
 
-    void close();
+    void close(PlaceData selectedPlace);
 }

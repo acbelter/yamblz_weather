@@ -29,4 +29,10 @@
     <string name="wind">Wind</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
+
+    <string name="temperature_value">%d°</string>
+    <string name="cloudiness_value">%d%%</string>
+    <string name="wind_value">%d m/s</string>
+    <string name="humidity_value">%d%%</string>
+    <string name="pressure_value">%d mm Hg</string>
 </resources>

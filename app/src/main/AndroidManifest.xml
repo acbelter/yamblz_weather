@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".presentation.WeatherActivity">
+            android:name=".presentation.weather.WeatherActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

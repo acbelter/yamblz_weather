@@ -18,7 +18,7 @@ import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
 import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.di.TestAppModule;
-import me.maximpestryakov.yamblzweather.presentation.WeatherActivity;
+import me.maximpestryakov.yamblzweather.presentation.weather.WeatherActivity;
 import me.maximpestryakov.yamblzweather.util.DbTestUtils;
 import me.maximpestryakov.yamblzweather.util.TestUtils;
 

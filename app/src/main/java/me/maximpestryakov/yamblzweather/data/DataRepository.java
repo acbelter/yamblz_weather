@@ -1,6 +1,7 @@
 package me.maximpestryakov.yamblzweather.data;
 
 import com.fernandocejas.frodo.annotation.RxLogObservable;
+import com.google.gson.Gson;
 
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -14,19 +15,22 @@ import me.maximpestryakov.yamblzweather.data.db.model.WeatherData;
 import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 
 public class DataRepository {
-    private DataConverter dataConverter;
     private WeatherDatabase database;
     private PlacesApi placesApi;
     private WeatherApi weatherApi;
+    private DataConverter dataConverter;
+    private Gson gson;
 
-    public DataRepository(DataConverter dataConverter,
-                          WeatherDatabase database,
+    public DataRepository(WeatherDatabase database,
                           PlacesApi placesApi,
-                          WeatherApi weatherApi) {
-        this.dataConverter = dataConverter;
+                          WeatherApi weatherApi,
+                          DataConverter dataConverter,
+                          Gson gson) {
         this.database = database;
         this.placesApi = placesApi;
         this.weatherApi = weatherApi;
+        this.dataConverter = dataConverter;
+        this.gson = gson;
     }
 
     @RxLogObservable(RxLogObservable.Scope.STREAM)
@@ -34,7 +38,11 @@ public class DataRepository {
                                           String lang,
                                           boolean forceNetwork) {
         Maybe<PlaceData> databaseData = database.getPlaceData(placeId)
-                .filter(placeData -> placeData.lang.equals(lang));
+                .filter(placeData -> placeData.lang.equals(lang))
+                .concatMap(placeData -> {
+                    placeData.fromCache = true;
+                    return Maybe.just(placeData);
+                });
 
         Maybe<PlaceData> networkData =
                 placesApi.getPlaceData(placeId, lang)
@@ -45,11 +53,9 @@ public class DataRepository {
                             }
                             return Maybe.empty();
                         }).doOnSuccess(placeData -> database.insertPlaceData(placeData));
-//                        })
-//                        .concatMap(placeData -> database.insertPlaceData(placeData).toMaybe());
 
         if (forceNetwork) {
-            return networkData.toSingle();
+            return Maybe.concat(networkData, databaseData).firstOrError();
         } else {
             return Maybe.concat(databaseData, networkData).firstOrError();
         }
@@ -61,7 +67,11 @@ public class DataRepository {
                                               float lng,
                                               String lang,
                                               boolean forceNetwork) {
-        Maybe<WeatherData> databaseData = database.getWeatherData(placeId);
+        Maybe<WeatherData> databaseData = database.getWeatherData(placeId)
+                .concatMap(weatherData -> {
+                    weatherData.fromCache = true;
+                    return Maybe.just(weatherData);
+                });
 
         Maybe<WeatherData> networkData = weatherApi.getWeather(lat, lng, lang)
                 .toMaybe()
@@ -77,7 +87,7 @@ public class DataRepository {
                 });
 
         if (forceNetwork) {
-            return networkData.toSingle();
+            return Maybe.concat(networkData, databaseData).firstOrError();
         } else {
             return Maybe.concat(databaseData, networkData).firstOrError();
         }
@@ -89,7 +99,11 @@ public class DataRepository {
                                                 float lng,
                                                 String lang,
                                                 boolean forceNetwork) {
-        Maybe<ForecastData> databaseData = database.getForecastData(placeId);
+        Maybe<ForecastData> databaseData = database.getForecastData(placeId)
+                .concatMap(forecastData -> {
+                    forecastData.fromCache = true;
+                    return Maybe.just(forecastData);
+                });
 
         Maybe<ForecastData> networkData = weatherApi.getForecast(lat, lng, lang)
                 .toMaybe()
@@ -105,7 +119,7 @@ public class DataRepository {
                 });
 
         if (forceNetwork) {
-            return networkData.toSingle();
+            return Maybe.concat(networkData, databaseData).firstOrError();
         } else {
             return Maybe.concat(databaseData, networkData).firstOrError();
         }
@@ -122,6 +136,7 @@ public class DataRepository {
         Single<ForecastData> forecast =
                 getForecastData(placeId, lat, lng, lang, forceNetwork).retry(2);
 
-        return Single.zip(weather, forecast, FullWeatherData::new);
+        return Single.zip(weather, forecast,
+                (weatherData, forecastData) -> new FullWeatherData(gson, weatherData, forecastData));
     }
 }

@@ -51,7 +51,7 @@ public class SelectPlaceActivity extends BaseActivity implements
     private boolean isSelectFirstPlace;
 
     private PlacesAdapter favoritePlacesAdapter;
-    private CompositeDisposable disposable;
+    private CompositeDisposable disposables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class SelectPlaceActivity extends BaseActivity implements
         title.setText(R.string.select_place);
 
         Disposable findPlaceDisposable = RxTextView.textChanges(findPlaceText)
-                .filter(s -> !findPlaceText.isPerformingCompletion())
+                .filter(s -> s.length() > 0 && !findPlaceText.isPerformingCompletion())
                 .debounce(TEXT_TYPE_DELAY, TimeUnit.MILLISECONDS)
                 .subscribe(s -> {
                     Timber.d("Input: %s", s);
@@ -78,7 +78,7 @@ public class SelectPlaceActivity extends BaseActivity implements
                     }
                 });
 
-        disposable = new CompositeDisposable(findPlaceDisposable);
+        disposables = new CompositeDisposable(findPlaceDisposable);
 
         findPlaceText.setOnItemClickListener((parent, view1, position, id) -> {
             Prediction prediction = (Prediction) parent.getAdapter().getItem(position);
@@ -88,6 +88,7 @@ public class SelectPlaceActivity extends BaseActivity implements
         favoritePlacesList.setHasFixedSize(true);
         favoritePlacesList.setLayoutManager(new LinearLayoutManager(this));
 
+        presenter.start();
         presenter.loadFavoritePlaces();
     }
 
@@ -98,13 +99,28 @@ public class SelectPlaceActivity extends BaseActivity implements
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStart() {
+        Timber.d("Start select place activity");
+        super.onStart();
+        if (favoritePlacesAdapter != null) {
+            favoritePlacesAdapter.setAdapterCallback(this);
+        }
+        presenter.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if (favoritePlacesAdapter != null) {
             favoritePlacesAdapter.removeAdapterCallback();
         }
-        presenter.destroy();
-        disposable.dispose();
+        presenter.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
     }
 
     @Override
@@ -118,7 +134,7 @@ public class SelectPlaceActivity extends BaseActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                close();
+                close(null);
                 return true;
             }
             default: {
@@ -130,9 +146,10 @@ public class SelectPlaceActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         if (isSelectFirstPlace) {
+            setResult(RESULT_CANCELED);
             ActivityCompat.finishAffinity(this);
         } else {
-            close();
+            close(null);
         }
     }
 
@@ -143,10 +160,7 @@ public class SelectPlaceActivity extends BaseActivity implements
 
     @Override
     public void onItemClicked(PlaceData place) {
-        Intent data = new Intent();
-        data.putExtra(Consts.KEY_SELECTED_PLACE, place);
-        setResult(RESULT_OK, data);
-        close();
+        close(place);
     }
 
     @Override
@@ -179,7 +193,14 @@ public class SelectPlaceActivity extends BaseActivity implements
     }
 
     @Override
-    public void close() {
+    public void close(PlaceData selectedPlace) {
+        if (selectedPlace != null) {
+            Intent data = new Intent();
+            data.putExtra(Consts.KEY_SELECTED_PLACE, selectedPlace);
+            setResult(RESULT_OK, data);
+        } else {
+            setResult(RESULT_CANCELED);
+        }
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

@@ -38,7 +38,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
     @InjectPresenter
     SettingsPresenter presenter;
 
-    private CompositeDisposable disposable;
+    private CompositeDisposable disposables;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
                             presenter.setUpdateIntervalByPosition(position);
                         });
 
-        disposable = new CompositeDisposable(switchDisposable, seekBarDisposable);
+        disposables = new CompositeDisposable(switchDisposable, seekBarDisposable);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disposable.dispose();
+        disposables.dispose();
     }
 
     @Override

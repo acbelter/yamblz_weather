@@ -1,19 +1,63 @@
 package me.maximpestryakov.yamblzweather.data.db.model;
 
-public class FullWeatherData {
-    protected WeatherData weather;
-    protected ForecastData forecast;
+import com.google.gson.Gson;
 
-    public FullWeatherData(WeatherData weather, ForecastData forecast) {
-        this.weather = weather;
-        this.forecast = forecast;
+import java.util.Collections;
+import java.util.List;
+
+import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
+import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
+
+public class FullWeatherData {
+    private boolean fromCache;
+    private String placeId;
+    private long weatherTimestamp;
+    private WeatherResult weather;
+    private long forecastTimestamp;
+    private List<ForecastItem> forecast;
+
+    public FullWeatherData(Gson gson,
+                           WeatherData weatherData,
+                           ForecastData forecastData) {
+        fromCache = weatherData.fromCache || forecastData.fromCache;
+        placeId = weatherData.placeId;
+        weatherTimestamp = weatherData.weatherTimestamp;
+        weather = weatherData.getParsedWeatherData(gson);
+        forecastTimestamp = forecastData.forecastTimestamp;
+        forecast = forecastData.getParsedForecastData(gson);
+
+        Collections.sort(forecast, (item1, item2) -> {
+            if (item1.dataTimestamp < item2.dataTimestamp) {
+                return -1;
+            }
+            if (item1.dataTimestamp > item2.dataTimestamp) {
+                return 1;
+            }
+            return 0;
+        });
     }
 
-    public WeatherData getWeather() {
+    public boolean isFromCache() {
+        return fromCache;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public long getWeatherTimestamp() {
+        return weatherTimestamp;
+    }
+
+    public WeatherResult getWeather() {
         return weather;
     }
 
-    public ForecastData getForecast() {
+    public long getForecastTimestamp() {
+        return forecastTimestamp;
+    }
+
+    public List<ForecastItem> getForecast() {
         return forecast;
     }
 }

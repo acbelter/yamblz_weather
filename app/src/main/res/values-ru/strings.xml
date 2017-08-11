@@ -29,4 +29,10 @@
     <string name="wind">Ветер</string>
     <string name="humidity">Влажность</string>
     <string name="pressure">Давление</string>
+
+    <string name="temperature_value">%d°</string>
+    <string name="cloudiness_value">%d%%</string>
+    <string name="wind_value">%d м/с</string>
+    <string name="humidity_value">%d%%</string>
+    <string name="pressure_value">%d мм рт.ст.</string>
 </resources>
