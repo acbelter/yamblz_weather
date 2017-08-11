@@ -83,26 +83,6 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
         forecasts.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    private void initTestUi() {
-//        title.setText("Moscow");
-//        weatherImage.setImageResource(R.drawable.sun);
-//        temperature.setText("+21°");
-//        dayOfWeek.setText("Sunday");
-//        date.setText("21 July 2017");
-//        humidity.setText("50%");
-//        wind.setText("21 m/s");
-//        cloudiness.setText("30%");
-//
-//        List<PlaceData> places = new ArrayList<>();
-//        for (int i = 0; i < 25; i++) {
-//            PlaceData data = new PlaceData(Integer.toString(i));
-//            data.placeName = "Place name " + i;
-//            places.add(data);
-//        }
-//
-//        forecasts.setAdapter(new PlacesAdapter(places));
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -162,7 +142,9 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
         weatherImage.setImageResource(
                 UiUtil.getWeatherImageDrawable(converter.getWeatherType(weather)));
         temperature.setText(getString(R.string.temperature_value, converter.getTemperatureC(weather)));
-        dayOfWeek.setText(converter.getFormattedDayOfWeek(weather));
+        String temp = converter.getFormattedDayOfWeek(weather);
+        temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
+        dayOfWeek.setText(temp);
         date.setText(converter.getFormattedDate(weather));
 
         cloudinessImage.setVisibility(View.VISIBLE);
