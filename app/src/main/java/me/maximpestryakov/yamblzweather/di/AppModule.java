@@ -16,6 +16,7 @@ import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
 import me.maximpestryakov.yamblzweather.data.db.AppDatabase;
 import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
 import me.maximpestryakov.yamblzweather.data.model.DataConverter;
+import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
 import me.maximpestryakov.yamblzweather.util.NetworkUtil;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import okhttp3.OkHttpClient;
@@ -94,6 +95,12 @@ public class AppModule {
     @Provides
     DataConverter provideDataConverter(Gson gson) {
         return new DataConverter(gson);
+    }
+
+    @Singleton
+    @Provides
+    DataFormatter provideDataFormatter() {
+        return new DataFormatter();
     }
 
     @Singleton

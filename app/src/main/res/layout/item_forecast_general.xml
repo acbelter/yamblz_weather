@@ -3,26 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/item_height">
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_margin="16dp"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:maxLines="1"
         android:singleLine="true"
         android:textSize="@dimen/text_size_small"
-        tools:text="15:00"/>
+        tools:text="21 July"/>
 
     <TextView
         android:id="@+id/temperature"
         android:layout_width="64dp"
-        android:layout_height="24dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_margin="16dp"
-        android:gravity="right|center_vertical"
+        android:gravity="right"
         android:maxLines="1"
         android:singleLine="true"
         android:textSize="@dimen/text_size_small"
@@ -32,8 +34,9 @@
         android:id="@+id/weatherImage"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="12dp"
         android:layout_toLeftOf="@id/temperature"
         tools:src="@drawable/snow"/>
 </RelativeLayout>

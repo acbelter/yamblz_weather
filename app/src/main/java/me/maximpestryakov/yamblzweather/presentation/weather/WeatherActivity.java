@@ -15,17 +15,21 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
 import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
-import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.presentation.BaseActivity;
 import me.maximpestryakov.yamblzweather.presentation.Consts;
+import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
 import me.maximpestryakov.yamblzweather.presentation.place.SelectPlaceActivity;
 import me.maximpestryakov.yamblzweather.presentation.settings.SettingsActivity;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastsAdapter;
 import me.maximpestryakov.yamblzweather.util.UiUtil;
 import timber.log.Timber;
 
@@ -64,9 +68,12 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
     @InjectPresenter
     WeatherPresenter presenter;
 
+    @Inject
+    DataFormatter formatter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        App.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
@@ -136,24 +143,24 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
     }
 
     @Override
-    public void showWeather(FullWeatherData data, DataConverter converter) {
+    public void showWeather(FullWeatherData data) {
         Timber.d("Show weather. Use cache: %s", data.isFromCache());
         WeatherResult weather = data.getWeather();
-        weatherImage.setImageResource(
-                UiUtil.getWeatherImageDrawable(converter.getWeatherType(weather)));
-        temperature.setText(getString(R.string.temperature_value, converter.getTemperatureC(weather)));
-        String temp = converter.getFormattedDayOfWeek(weather);
-        temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
-        dayOfWeek.setText(temp);
-        date.setText(converter.getFormattedDate(weather));
+        weatherImage.setImageResource(formatter.getWeatherImageDrawableId(weather));
+        temperature.setText(getString(R.string.temperature_value, formatter.getTemperatureC(weather)));
+        dayOfWeek.setText(formatter.getFormattedDayOfWeek(weather));
+        date.setText(formatter.getFormattedDate(weather));
 
         cloudinessImage.setVisibility(View.VISIBLE);
         windImage.setVisibility(View.VISIBLE);
         humidityImage.setVisibility(View.VISIBLE);
 
-        cloudiness.setText(getString(R.string.cloudiness_value, converter.getCloudiness(weather)));
-        wind.setText(getString(R.string.wind_value, converter.getWind(weather)));
-        humidity.setText(getString(R.string.humidity_value, converter.getHumidity(weather)));
+        cloudiness.setText(getString(R.string.cloudiness_value, formatter.getCloudiness(weather)));
+        wind.setText(getString(R.string.wind_value, formatter.getWind(weather)));
+        humidity.setText(getString(R.string.humidity_value, formatter.getHumidity(weather)));
+
+
+        forecasts.setAdapter(new GeneralForecastsAdapter(data.getForecast()));
     }
 
     @Override

@@ -20,6 +20,7 @@ import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.db.WeatherDatabase;
 import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
 import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
+import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import timber.log.Timber;
 
 @InjectViewState
@@ -89,7 +90,11 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
                 }, throwable -> {
                     Timber.d(throwable);
                     getViewState().showPlacePredictions(new ArrayList<>(0));
-                    getViewState().showError(R.string.error_place_predictions_api);
+                    if (throwable instanceof NoInternetException) {
+                        getViewState().showError(R.string.error_no_internet);
+                    } else {
+                        getViewState().showError(R.string.error_place_predictions_api);
+                    }
                 });
     }
 
@@ -109,7 +114,11 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
                 }, throwable -> {
                     Timber.d(throwable);
                     getViewState().showLoading(false);
-                    getViewState().showError(R.string.error_place_api);
+                    if (throwable instanceof NoInternetException) {
+                        getViewState().showError(R.string.error_no_internet);
+                    } else {
+                        getViewState().showError(R.string.error_place_api);
+                    }
                 });
         disposables.add(placeDataDisposable);
     }

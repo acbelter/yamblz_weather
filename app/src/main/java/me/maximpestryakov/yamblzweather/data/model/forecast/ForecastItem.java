@@ -1,5 +1,7 @@
 package me.maximpestryakov.yamblzweather.data.model.forecast;
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -27,4 +29,12 @@ public class ForecastItem {
     @SerializedName("wind")
     @Expose
     public Wind wind;
+    @SerializedName("dt_txt")
+    @Expose
+    public String dataTimestampStr;
+
+    @Nullable
+    public Weather getWeather() {
+        return !weather.isEmpty() ? weather.get(0) : null;
+    }
 }

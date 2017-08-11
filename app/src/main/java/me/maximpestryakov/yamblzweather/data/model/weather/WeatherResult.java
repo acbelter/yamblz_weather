@@ -50,11 +50,9 @@ public class WeatherResult implements Result {
     @Expose
     public int code;
 
-    public @Nullable Weather getWeather() {
-        if (!weather.isEmpty()) {
-            return weather.get(0);
-        }
-        return null;
+    @Nullable
+    public Weather getWeather() {
+        return !weather.isEmpty() ? weather.get(0) : null;
     }
 
     @Override

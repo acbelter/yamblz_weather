@@ -17,7 +17,6 @@ import me.maximpestryakov.yamblzweather.data.DataRepository;
 import me.maximpestryakov.yamblzweather.data.PrefsRepository;
 import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
 import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
-import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 import me.maximpestryakov.yamblzweather.util.NoInternetException;
 import timber.log.Timber;
 
@@ -33,8 +32,6 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     WeatherApi weatherApi;
     @Inject
     PlacesApi placesApi;
-    @Inject
-    DataConverter dataConverter;
     @Inject
     Gson gson;
 
@@ -87,7 +84,7 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(fullWeather -> {
                     getViewState().showLoading(false);
-                    getViewState().showWeather(fullWeather, dataConverter);
+                    getViewState().showWeather(fullWeather);
                     if (forceUpdateWeather && fullWeather.isFromCache()) {
                         getViewState().showError(R.string.error_no_internet);
                     }

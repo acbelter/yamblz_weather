@@ -8,7 +8,6 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
-import me.maximpestryakov.yamblzweather.data.model.DataConverter;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 interface WeatherView extends MvpView {
@@ -19,7 +18,7 @@ interface WeatherView extends MvpView {
 
     void showPlaceName(String name);
 
-    void showWeather(FullWeatherData data, DataConverter converter);
+    void showWeather(FullWeatherData data);
 
     @StateStrategyType(value = SkipStrategy.class)
     void showError(@StringRes int errorStrId);

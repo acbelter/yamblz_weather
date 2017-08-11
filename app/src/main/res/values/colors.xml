@@ -1,8 +1,6 @@
 <resources>
     <color name="colorPrimary">#FFDC61</color>
     <color name="colorPrimaryDark">#E1C255</color>
-    <!--<color name="colorPrimary">@android:color/white</color>-->
-    <!--<color name="colorPrimaryDark">@android:color/white</color>-->
     <color name="colorAccent">#FFDC61</color>
 
     <color name="colorItemFocused">#80FFDC61</color>
