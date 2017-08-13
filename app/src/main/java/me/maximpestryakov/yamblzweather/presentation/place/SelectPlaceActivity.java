@@ -223,6 +223,6 @@ public class SelectPlaceActivity extends BaseActivity implements
             setResult(RESULT_CANCELED);
         }
         finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.anim_enter_from_right, R.anim.anim_exit_to_left);
     }
 }

@@ -58,12 +58,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         prefs.setPlaceId(currentPlaceId);
     }
 
-    public void updateCurrentPlaceWeather() {
+    public void updateCurrentPlaceWeather(boolean force) {
         Timber.d("Update weather for current place id: %s", currentPlaceId);
         if (currentPlaceId == null) {
             getViewState().requestPlaceSelection();
         } else {
-            getWeatherForPlace(false, true);
+            getWeatherForPlace(false, force);
         }
     }
 

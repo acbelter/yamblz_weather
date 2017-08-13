@@ -1,3 +1,3 @@
 <resources>
-    <integer name="anim_fade_duration">300</integer>
+    <integer name="slide_animation_duration">@android:integer/config_mediumAnimTime</integer>
 </resources>

@@ -132,6 +132,6 @@ public class SettingsActivity extends BaseActivity implements SettingsView {
     @Override
     public void close() {
         finish();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.anim_enter_from_left, R.anim.anim_exit_to_right);
     }
 }

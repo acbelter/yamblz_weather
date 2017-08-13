@@ -111,12 +111,8 @@ public class WeatherActivity extends BaseActivity implements
             forecastDetailed.setHasFixedSize(true);
             forecastDetailed.setLayoutManager(new LinearLayoutManager(this));
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.updateCurrentPlaceWeather();
+        presenter.updateCurrentPlaceWeather(false);
     }
 
     @Override
@@ -137,7 +133,7 @@ public class WeatherActivity extends BaseActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh: {
-                presenter.updateCurrentPlaceWeather();
+                presenter.updateCurrentPlaceWeather(true);
                 return true;
             }
             case R.id.action_settings: {
@@ -235,13 +231,13 @@ public class WeatherActivity extends BaseActivity implements
         Intent intent = new Intent(WeatherActivity.this, SelectPlaceActivity.class);
         intent.putExtra(Consts.KEY_SELECT_FIRST_PLACE, forced);
         startActivityForResult(intent, Consts.REQUEST_CODE_SELECT_PLACE);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.anim_enter_from_left, R.anim.anim_exit_to_right);
     }
 
     private void showSettingsUi() {
         Intent intent = new Intent(WeatherActivity.this, SettingsActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.anim_enter_from_right, R.anim.anim_exit_to_left);
     }
 
     @Override
@@ -252,7 +248,7 @@ public class WeatherActivity extends BaseActivity implements
                     PlaceData selectedPlace = data.getParcelableExtra(Consts.KEY_SELECTED_PLACE);
                     showPlaceName(selectedPlace.placeName);
                     presenter.updateCurrentPlace(selectedPlace.placeId);
-                    presenter.updateCurrentPlaceWeather();
+                    presenter.updateCurrentPlaceWeather(true);
                     break;
             }
         }
