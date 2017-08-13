@@ -32,7 +32,7 @@ public class AppModule {
     private final Context appContext;
 
     public AppModule(Context appContext) {
-        this.appContext = appContext.getApplicationContext();
+        this.appContext = appContext;
     }
 
     @Provides

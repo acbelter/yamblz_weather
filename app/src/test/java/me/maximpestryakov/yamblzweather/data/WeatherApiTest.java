@@ -75,6 +75,12 @@ public class WeatherApiTest {
         assertThat(result.dataTimestamp).isEqualTo(1435658272L);
         assertThat(result.main).isNotNull();
         assertThat(result.main.temp).isEqualTo(293.25f);
+        assertThat(result.main.pressure).isEqualTo(1019);
+        assertThat(result.main.humidity).isEqualTo(83);
+        assertThat(result.wind).isNotNull();
+        assertThat(result.wind.speed).isEqualTo(5.1f);
+        assertThat(result.clouds).isNotNull();
+        assertThat(result.clouds.all).isEqualTo(75);
     }
 
     @Test
@@ -110,6 +116,13 @@ public class WeatherApiTest {
         assertThat(forecast.dataTimestamp).isEqualTo(1406106000L);
         assertThat(forecast.main).isNotNull();
         assertThat(forecast.main.temp).isEqualTo(298.77f);
+        assertThat(forecast.main.pressure).isEqualTo(1005.93f);
+        assertThat(forecast.main.humidity).isEqualTo(87);
+        assertThat(forecast.wind).isNotNull();
+        assertThat(forecast.wind.speed).isEqualTo(5.71f);
+        assertThat(forecast.clouds).isNotNull();
+        assertThat(forecast.clouds.all).isEqualTo(88);
+        assertThat(forecast.dataTimestampStr).isEqualTo("2014-07-23 09:00:00");
     }
 
     @Test

@@ -29,7 +29,6 @@ import okhttp3.mockwebserver.MockWebServer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-// FIXME TEST DEPRECATED
 public class PlacesApiTest {
     private static final float LATITUDE = -33.8669710f;
     private static final float LONGITUDE = 151.1958750f;
