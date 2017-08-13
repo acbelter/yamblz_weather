@@ -86,6 +86,8 @@ public class WeatherActivity extends BaseActivity implements
 
     AlertDialog progress;
 
+    boolean firstResume;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         App.getAppComponent().inject(this);
@@ -112,7 +114,26 @@ public class WeatherActivity extends BaseActivity implements
             forecastDetailed.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        presenter.updateCurrentPlaceWeather(false);
+        if (savedInstanceState != null) {
+            firstResume = savedInstanceState.getBoolean("first_resume");
+        } else {
+            firstResume = true;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("first_resume", firstResume);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firstResume) {
+            presenter.updateCurrentPlaceWeather(false);
+            firstResume = false;
+        }
     }
 
     @Override
