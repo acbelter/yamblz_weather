@@ -1,41 +1,41 @@
 package me.maximpestryakov.yamblzweather.presentation.weather.forecast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
 import me.maximpestryakov.yamblzweather.presentation.weather.TimeTag;
-import timber.log.Timber;
 
 public class GeneralAdapterData {
     private List<GeneralForecastItem> items;
-    private HashMap<String, List<ForecastItem>> itemsMap;
+    private LinkedHashMap<String, List<ForecastItem>> itemsMap;
 
     public GeneralAdapterData(List<ForecastItem> forecast) {
         items = new ArrayList<>();
-        itemsMap = new HashMap<>();
+        itemsMap = new LinkedHashMap<>();
 
         if (forecast.isEmpty()) {
             return;
         }
 
+        GeneralForecastItem itemCandidate = null;
         String currentDateTag = forecast.get(0).getDateTag();
-        boolean inCurrentItemInitialized = false;
-
         for (ForecastItem item : forecast) {
-            // Take first item with current date tag
-            if (currentDateTag.equals(item.getDateTag())) {
-                if (inCurrentItemInitialized) {
-                    continue;
-                }
-                inCurrentItemInitialized = true;
-                items.add(new GeneralForecastItem(item.getDateTag(), item.getWeather(),
-                        item.main.temp, item.dataTimestamp));
+            // New tag
+            if (!item.getDateTag().equals(currentDateTag)) {
+                currentDateTag = item.getDateTag();
+                itemCandidate = null;
+            }
+
+            if (itemCandidate == null) {
+                itemCandidate = new GeneralForecastItem(item);
+                items.add(itemCandidate);
             } else if (TimeTag.TIME_12.equals(item.getTimeTag())) {
                 // Take weather at noon
-                items.add(new GeneralForecastItem(item.getDateTag(), item.getWeather(),
-                        item.main.temp, item.dataTimestamp));
+                int index = items.indexOf(itemCandidate);
+                itemCandidate = new GeneralForecastItem(item);
+                items.set(index, itemCandidate);
             }
 
             if (!itemsMap.containsKey(item.getDateTag())) {
@@ -43,7 +43,6 @@ public class GeneralAdapterData {
             }
             itemsMap.get(item.getDateTag()).add(item);
         }
-        Timber.d("General items count: %s", items.size());
     }
 
     public int getItemCount() {

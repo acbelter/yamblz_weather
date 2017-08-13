@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.evernote.android.job.JobManager;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import javax.inject.Inject;
 
 import me.maximpestryakov.yamblzweather.data.PrefsRepository;
@@ -34,6 +36,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JodaTimeAndroid.init(this);
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/Roboto-Thin.ttf")
                         .setFontAttrId(R.attr.fontPath)

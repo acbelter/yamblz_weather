@@ -3,10 +3,11 @@ package me.maximpestryakov.yamblzweather.presentation;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.List;
-import java.util.Locale;
 
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.model.WeatherType;
@@ -22,13 +23,13 @@ public class DataFormatter {
     private static final float K_TO_C_COEFF = 273.15f;
     private static final double HPA_TO_MM_HG_FACTOR = 0.75006375541921d;
 
-    private SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-    private SimpleDateFormat shortDateFormat = new SimpleDateFormat("EEE, dd MMM", Locale.getDefault());
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private DateTimeFormatter weekDayFormat = DateTimeFormat.forPattern("EEEE");
+    private DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
+    private DateTimeFormatter shortDateFormat = DateTimeFormat.forPattern("EEE, dd MMM");
+    private DateTimeFormatter timeFormat = DateTimeFormat.forPattern("HH:mm");
 
-    private Date getDate(long dataTimestamp) {
-        return new Date(dataTimestamp * 1000);
+    private LocalDateTime getDate(long dataTimestamp) {
+        return new LocalDateTime(dataTimestamp * 1000);
     }
 
     private float fromKtoC(float temperature) {
@@ -174,13 +175,13 @@ public class DataFormatter {
     }
 
     public String getFormattedDayOfWeek(WeatherResult weather) {
-        String str = weekDayFormat.format(getDate(weather.dataTimestamp));
+        String str = weekDayFormat.print(getDate(weather.dataTimestamp));
         str = str.substring(0, 1).toUpperCase() + str.substring(1);
         return str;
     }
 
     public String getFormattedDate(WeatherResult weather) {
-        return dateFormat.format(getDate(weather.dataTimestamp));
+        return dateFormat.print(getDate(weather.dataTimestamp));
     }
 
 
@@ -191,7 +192,7 @@ public class DataFormatter {
     }
 
     public String getTime(ForecastItem item) {
-        return timeFormat.format(getDate(item.dataTimestamp));
+        return timeFormat.print(getDate(item.dataTimestamp));
     }
 
     public int getTemperatureC(ForecastItem item) {
@@ -226,7 +227,7 @@ public class DataFormatter {
     }
 
     public String getDate(GeneralForecastItem item) {
-        String str = shortDateFormat.format(getDate(item.dataTimestamp));
+        String str = shortDateFormat.print(getDate(item.dataTimestamp));
         str = str.substring(0, 1).toUpperCase() + str.substring(1);
         return str;
     }
