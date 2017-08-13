@@ -22,6 +22,7 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     private final String[] updateIntervalTitles;
     private final int[] updateIntervalValues;
 
+    private int updatePosition;
     private boolean updateBySchedule;
     private int updateInterval;
 
@@ -67,12 +68,13 @@ public class SettingsPresenter extends MvpPresenter<SettingsView> {
     }
 
     public void setUpdateIntervalByPosition(int position) {
+        updatePosition = position;
         updateInterval = updateIntervalValues[position];
         getViewState().showUpdateInterval(position, updateIntervalTitles[position]);
     }
 
     public void saveChanges() {
-        Timber.d("Save settings changes");
+        updateInterval = updateIntervalValues[updatePosition];
         prefs.setUpdateBySchedule(updateBySchedule);
         prefs.setUpdateInterval(updateInterval);
 

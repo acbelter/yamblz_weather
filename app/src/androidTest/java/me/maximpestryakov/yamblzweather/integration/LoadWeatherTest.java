@@ -27,6 +27,7 @@ import me.maximpestryakov.yamblzweather.util.TestUtils;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 
 @RunWith(AndroidJUnit4.class)
+// FIXME TEST DEPRECATED
 public class LoadWeatherTest {
     private static final String TEST_PLACE_PREDICTION =
             "Paris Avenue, Earlwood, New South Wales, Australia";

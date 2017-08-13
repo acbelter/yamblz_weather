@@ -1,5 +1,6 @@
 package me.maximpestryakov.yamblzweather.presentation.place;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dmax.dialog.SpotsDialog;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.maximpestryakov.yamblzweather.R;
@@ -43,15 +45,17 @@ public class SelectPlaceActivity extends BaseActivity implements
     TextView title;
     @BindView(R.id.findPlaceText)
     AutoCompleteTextView findPlaceText;
-    @BindView(R.id.favoritePlacesList)
-    RecyclerView favoritePlacesList;
+    @BindView(R.id.placesList)
+    RecyclerView placesList;
     @InjectPresenter
     SelectPlacePresenter presenter;
 
     private boolean isSelectFirstPlace;
 
-    private PlacesAdapter favoritePlacesAdapter;
+    private PlacesAdapter placesAdapter;
     private CompositeDisposable disposables;
+
+    AlertDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +89,11 @@ public class SelectPlaceActivity extends BaseActivity implements
             presenter.selectPlacePrediction(prediction);
         });
 
-        favoritePlacesList.setHasFixedSize(true);
-        favoritePlacesList.setLayoutManager(new LinearLayoutManager(this));
+        placesList.setHasFixedSize(true);
+        placesList.setLayoutManager(new LinearLayoutManager(this));
 
         presenter.start();
-        presenter.loadFavoritePlaces();
+        presenter.loadPlaces();
     }
 
     @Override
@@ -102,8 +106,8 @@ public class SelectPlaceActivity extends BaseActivity implements
     protected void onStart() {
         Timber.d("Start select place activity");
         super.onStart();
-        if (favoritePlacesAdapter != null) {
-            favoritePlacesAdapter.setAdapterCallback(this);
+        if (placesAdapter != null) {
+            placesAdapter.setAdapterCallback(this);
         }
         presenter.start();
     }
@@ -111,16 +115,10 @@ public class SelectPlaceActivity extends BaseActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        if (favoritePlacesAdapter != null) {
-            favoritePlacesAdapter.removeAdapterCallback();
+        if (placesAdapter != null) {
+            placesAdapter.removeAdapterCallback();
         }
         presenter.stop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disposables.dispose();
     }
 
     @Override
@@ -164,10 +162,10 @@ public class SelectPlaceActivity extends BaseActivity implements
     }
 
     @Override
-    public void showFavoritePlaces(List<PlaceData> places) {
-        favoritePlacesAdapter = new PlacesAdapter(places);
-        favoritePlacesAdapter.setAdapterCallback(this);
-        favoritePlacesList.setAdapter(favoritePlacesAdapter);
+    public void showPlaces(List<PlaceData> places) {
+        placesAdapter = new PlacesAdapter(places);
+        placesAdapter.setAdapterCallback(this);
+        placesList.setAdapter(placesAdapter);
     }
 
     @Override
@@ -183,8 +181,31 @@ public class SelectPlaceActivity extends BaseActivity implements
     }
 
     @Override
-    public void showLoading(boolean loading) {
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+        if (progress != null) {
+            progress.dismiss();
+        }
+    }
 
+    @Override
+    public void showLoading(boolean loading) {
+        if (loading) {
+            if (progress == null) {
+                progress = new SpotsDialog(this);
+                progress.show();
+                progress.setMessage(getString(R.string.updating));
+            } else {
+                if (!progress.isShowing()) {
+                    progress.show();
+                }
+            }
+        } else {
+            if (progress != null) {
+                progress.dismiss();
+            }
+        }
     }
 
     @Override

@@ -14,7 +14,7 @@ import me.maximpestryakov.yamblzweather.data.model.prediction.Prediction;
 
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface SelectPlaceView extends MvpView {
-    void showFavoritePlaces(List<PlaceData> places);
+    void showPlaces(List<PlaceData> places);
 
     void showPlacePredictions(List<Prediction> predictions);
 

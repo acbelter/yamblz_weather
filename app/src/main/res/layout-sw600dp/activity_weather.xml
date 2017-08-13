@@ -30,7 +30,10 @@
                 tools:listitem="@layout/item_forecast_general"/>
         </LinearLayout>
 
-        <include layout="@layout/divider_vertical"/>
+        <include
+            android:id="@+id/verticalDivider"
+            layout="@layout/divider_vertical"
+            android:visibility="invisible"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/forecastDetailed"

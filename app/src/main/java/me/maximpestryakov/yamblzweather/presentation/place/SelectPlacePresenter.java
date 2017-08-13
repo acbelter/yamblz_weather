@@ -61,15 +61,15 @@ public class SelectPlacePresenter extends MvpPresenter<SelectPlaceView> {
         disposables.dispose();
     }
 
-    public void loadFavoritePlaces() {
-        Disposable favoritePlacesDisposable = weatherDatabase.getAllPlaceData()
+    public void loadPlaces() {
+        Disposable placesDisposable = weatherDatabase.getAllPlaceData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(favoritePlaces -> {
-                    getViewState().showFavoritePlaces(favoritePlaces);
+                .subscribe(places -> {
+                    getViewState().showPlaces(places);
                 }, Timber::d);
 
-        disposables.add(favoritePlacesDisposable);
+        disposables.add(placesDisposable);
     }
 
     public void loadPlacePredictions(String input) {

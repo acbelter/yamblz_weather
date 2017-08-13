@@ -1,5 +1,6 @@
 package me.maximpestryakov.yamblzweather.presentation.weather;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dmax.dialog.SpotsDialog;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
@@ -73,6 +75,7 @@ public class WeatherActivity extends BaseActivity implements
     @BindView(R.id.forecast)
     RecyclerView forecast;
 
+    View verticalDivider;
     RecyclerView forecastDetailed;
 
     @InjectPresenter
@@ -81,6 +84,8 @@ public class WeatherActivity extends BaseActivity implements
     @Inject
     DataFormatter formatter;
 
+    AlertDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         App.getAppComponent().inject(this);
@@ -88,6 +93,7 @@ public class WeatherActivity extends BaseActivity implements
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
 
+        verticalDivider = findViewById(R.id.verticalDivider);
         forecastDetailed = findViewById(R.id.forecastDetailed);
 
         UiUtil.toolbar(this, toolbar, true);
@@ -105,7 +111,11 @@ public class WeatherActivity extends BaseActivity implements
             forecastDetailed.setHasFixedSize(true);
             forecastDetailed.setLayoutManager(new LinearLayoutManager(this));
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         presenter.updateCurrentPlaceWeather();
     }
 
@@ -142,12 +152,35 @@ public class WeatherActivity extends BaseActivity implements
 
     @Override
     public void requestPlaceSelection() {
+        Timber.d("Request place selection");
         showSelectPlaceUi(true);
     }
 
     @Override
-    public void showLoading(boolean loading) {
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progress != null) {
+            progress.dismiss();
+        }
+    }
 
+    @Override
+    public void showLoading(boolean loading) {
+        if (loading) {
+            if (progress == null) {
+                progress = new SpotsDialog(this);
+                progress.show();
+                progress.setMessage(getString(R.string.updating));
+            } else {
+                if (!progress.isShowing()) {
+                    progress.show();
+                }
+            }
+        } else {
+            if (progress != null) {
+                progress.dismiss();
+            }
+        }
     }
 
     @Override
@@ -158,6 +191,10 @@ public class WeatherActivity extends BaseActivity implements
     @Override
     public void showWeather(FullWeatherData data) {
         Timber.d("Show weather. Use cache: %s", data.isFromCache());
+        if (verticalDivider != null && verticalDivider.getVisibility() != View.VISIBLE) {
+            verticalDivider.setVisibility(View.VISIBLE);
+        }
+
         WeatherResult weather = data.getWeather();
         weatherImage.setImageResource(formatter.getWeatherImageDrawableId(weather));
         temperature.setText(getString(R.string.temperature_value, formatter.getTemperatureC(weather)));

@@ -29,6 +29,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
+// FIXME TEST DEPRECATED
 public class SettingsUiTest {
     @Rule
     public ActivityTestRule<WeatherActivity> activityRule =

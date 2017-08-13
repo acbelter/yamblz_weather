@@ -14,8 +14,8 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".presentation.weather.WeatherActivity">
-
+            android:name=".presentation.weather.WeatherActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

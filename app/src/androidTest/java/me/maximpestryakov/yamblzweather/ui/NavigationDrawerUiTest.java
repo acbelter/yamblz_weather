@@ -23,6 +23,7 @@ import me.maximpestryakov.yamblzweather.util.TestUtils;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 
 @RunWith(AndroidJUnit4.class)
+// FIXME TEST DEPRECATED
 public class NavigationDrawerUiTest {
     @Rule
     public ActivityTestRule<WeatherActivity> activityRule =
