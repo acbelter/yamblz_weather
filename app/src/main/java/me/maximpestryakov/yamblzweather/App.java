@@ -35,7 +35,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/app_font.ttf")
+                        .setDefaultFontPath("fonts/Roboto-Thin.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build());
 

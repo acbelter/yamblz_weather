@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/weatherImage"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/forecast_image_size"
+        android:layout_height="@dimen/forecast_image_size"
         android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
         android:layout_toLeftOf="@id/temperature"

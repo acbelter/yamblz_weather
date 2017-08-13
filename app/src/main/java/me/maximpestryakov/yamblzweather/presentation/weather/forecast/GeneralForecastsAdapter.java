@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,8 +20,7 @@ import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
 
 public class GeneralForecastsAdapter extends
         RecyclerView.Adapter<GeneralForecastsAdapter.ViewHolder> {
-    private List<GeneralForecastItem> items;
-    private HashMap<String, List<ForecastItem>> itemsMap;
+    private GeneralAdapterData generalAdapterData;
     private AdapterCallback callback;
 
     @Inject
@@ -35,23 +32,7 @@ public class GeneralForecastsAdapter extends
 
     public GeneralForecastsAdapter(List<ForecastItem> forecast) {
         App.getAppComponent().inject(this);
-        items = new ArrayList<>();
-        itemsMap = new HashMap<>();
-
-        for (ForecastItem item : forecast) {
-            // Example of string to split: "2017-01-30 11:00:00"
-            String[] tags = item.dataTimestampStr.split(" ");
-            // Average weather is at noon
-            if ("12:00:00".equals(tags[1])) {
-                items.add(new GeneralForecastItem(
-                        tags[0], item.getWeather(), item.main.temp, item.dataTimestamp));
-            }
-
-            if (!itemsMap.containsKey(tags[0])) {
-                itemsMap.put(tags[0], new ArrayList<>());
-            }
-            itemsMap.get(tags[0]).add(item);
-        }
+        generalAdapterData = new GeneralAdapterData(forecast);
     }
 
     public void setAdapterCallback(AdapterCallback callback) {
@@ -85,7 +66,7 @@ public class GeneralForecastsAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        GeneralForecastItem item = items.get(position);
+        GeneralForecastItem item = generalAdapterData.getGeneralItem(position);
         holder.date.setText(formatter.getDate(item));
         String temperature = holder.itemView.getResources()
                 .getString(R.string.temperature_value, formatter.getTemperatureC(item));
@@ -96,8 +77,10 @@ public class GeneralForecastsAdapter extends
             int adapterPos = holder.getAdapterPosition();
             if (adapterPos != RecyclerView.NO_POSITION) {
                 if (callback != null) {
-                    GeneralForecastItem clickedItem = items.get(adapterPos);
-                    callback.onItemClicked(clickedItem, itemsMap.get(clickedItem.dateTag));
+                    GeneralForecastItem clickedItem =
+                            generalAdapterData.getGeneralItem(adapterPos);
+                    callback.onItemClicked(clickedItem,
+                            generalAdapterData.getForecastItems(clickedItem.dateTag));
                 }
             }
         });
@@ -105,6 +88,6 @@ public class GeneralForecastsAdapter extends
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return generalAdapterData.getItemCount();
     }
 }

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
@@ -64,7 +65,9 @@ public class AppModule {
     @Singleton
     @Provides
     Gson provideGson() {
-        return new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        return builder.create();
     }
 
     @Singleton

@@ -45,22 +45,16 @@
         <TextView
             android:id="@+id/cloudiness"
             style="@style/StatTextStyle"
-            android:layout_weight="1"
-            android:gravity="center"
             tools:text="50%"/>
 
         <TextView
             android:id="@+id/wind"
             style="@style/StatTextStyle"
-            android:layout_weight="1"
-            android:gravity="center"
             tools:text="25 m/s"/>
 
         <TextView
             android:id="@+id/humidity"
             style="@style/StatTextStyle"
-            android:layout_weight="1"
-            android:gravity="center"
             tools:text="50%"/>
     </TableRow>
 </TableLayout>

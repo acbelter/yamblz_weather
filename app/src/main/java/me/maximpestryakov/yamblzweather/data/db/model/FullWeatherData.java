@@ -26,6 +26,10 @@ public class FullWeatherData {
         forecastTimestamp = forecastData.forecastTimestamp;
         forecast = forecastData.getParsedForecastData(gson);
 
+        for (ForecastItem item : forecast) {
+            item.prepareTags();
+        }
+
         Collections.sort(forecast, (item1, item2) -> {
             if (item1.dataTimestamp < item2.dataTimestamp) {
                 return -1;

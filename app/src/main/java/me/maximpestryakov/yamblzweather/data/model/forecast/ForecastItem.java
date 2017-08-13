@@ -33,6 +33,26 @@ public class ForecastItem {
     @Expose
     public String dataTimestampStr;
 
+    private String dateTag;
+    private String timeTag;
+
+    public void prepareTags() {
+        // Example of string to split: "2017-01-30 11:00:00"
+        if (dataTimestampStr != null) {
+            String[] tags = dataTimestampStr.split(" ");
+            dateTag = tags[0];
+            timeTag = tags[1];
+        }
+    }
+
+    public String getDateTag() {
+        return dateTag;
+    }
+
+    public String getTimeTag() {
+        return timeTag;
+    }
+
     @Nullable
     public Weather getWeather() {
         return !weather.isEmpty() ? weather.get(0) : null;

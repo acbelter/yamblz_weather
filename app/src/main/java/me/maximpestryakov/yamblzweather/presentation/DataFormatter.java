@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import me.maximpestryakov.yamblzweather.R;
@@ -12,6 +13,8 @@ import me.maximpestryakov.yamblzweather.data.model.WeatherType;
 import me.maximpestryakov.yamblzweather.data.model.common.Weather;
 import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
+import me.maximpestryakov.yamblzweather.presentation.weather.TimeTag;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.AverageWeather;
 import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastItem;
 
 // TODO Refactor this class. Added selecting units for temperature and pressure.
@@ -30,6 +33,10 @@ public class DataFormatter {
 
     private float fromKtoC(float temperature) {
         return temperature - K_TO_C_COEFF;
+    }
+
+    public int convertToC(float temperature) {
+        return (int) fromKtoC(temperature);
     }
 
     // See https://openweathermap.org/weather-conditions
@@ -88,7 +95,16 @@ public class DataFormatter {
             return 0;
         }
 
+        return getWeatherImageDrawableId(type);
+    }
+
+    @DrawableRes
+    public int getWeatherImageDrawableId(WeatherType type) {
         switch (type) {
+            case NIGHT:
+                return R.drawable.night;
+            case NIGHT_CLOUDS:
+                return R.drawable.night_clouds;
             case SUN:
                 return R.drawable.sun;
             case CLOUDS:
@@ -99,15 +115,38 @@ public class DataFormatter {
                 return R.drawable.snow;
             case STORM:
                 return R.drawable.storm;
-            case NIGHT:
-                return R.drawable.night;
-            case NIGHT_CLOUDS:
-                return R.drawable.night_clouds;
         }
         return 0;
     }
 
+    public WeatherType getWorstWeatherType(WeatherType... types) {
+        if (types.length == 0 || types.length > 2) {
+            return null;
+        }
 
+        if (types.length == 1) {
+            return types[0];
+        }
+
+        WeatherType first = types[0];
+        WeatherType second = types[1];
+
+        if (first == null && second == null) {
+            return null;
+        } else if (first != null && second != null) {
+            if (first.priority() > second.priority()) {
+                return first;
+            } else if (first.priority() < second.priority()) {
+                return second;
+            } else {
+                return first;
+            }
+        } else if (first == null) {
+            return second;
+        } else {
+            return first;
+        }
+    }
 
     @DrawableRes
     public int getWeatherImageDrawableId(WeatherResult weather) {
@@ -187,7 +226,9 @@ public class DataFormatter {
     }
 
     public String getDate(GeneralForecastItem item) {
-        return shortDateFormat.format(getDate(item.dataTimestamp));
+        String str = shortDateFormat.format(getDate(item.dataTimestamp));
+        str = str.substring(0, 1).toUpperCase() + str.substring(1);
+        return str;
     }
 
     public int getTemperatureC(GeneralForecastItem item) {
@@ -196,5 +237,66 @@ public class DataFormatter {
 
     public int getTemperatureK(GeneralForecastItem item) {
         return (int) item.temperature;
+    }
+
+    public AverageWeather[] getAverageWeathers(List<ForecastItem> forecast) {
+        // result[0] - morning weather
+        // result[1] - day weather
+        // result[2] - evening weather
+        // result[3] - night weather
+        AverageWeather[] weathers = new AverageWeather[4];
+        for (ForecastItem item : forecast) {
+            switch (item.getTimeTag()) {
+                // Morning
+                case TimeTag.TIME_06:
+                case TimeTag.TIME_09:
+                    if (weathers[0] == null) {
+                        weathers[0] = new AverageWeather();
+                    }
+                    appendItemToAverageWeather(weathers[0], item);
+                    break;
+                // Day
+                case TimeTag.TIME_12:
+                case TimeTag.TIME_15:
+                    if (weathers[1] == null) {
+                        weathers[1] = new AverageWeather();
+                    }
+                    appendItemToAverageWeather(weathers[1], item);
+                    break;
+                // Evening
+                case TimeTag.TIME_18:
+                case TimeTag.TIME_21:
+                    if (weathers[2] == null) {
+                        weathers[2] = new AverageWeather();
+                    }
+                    appendItemToAverageWeather(weathers[2], item);
+                    break;
+                // Night
+                case TimeTag.TIME_00:
+                case TimeTag.TIME_03:
+                    if (weathers[3] == null) {
+                        weathers[3] = new AverageWeather();
+                    }
+                    appendItemToAverageWeather(weathers[3], item);
+                    // Fix weather type from sun to night
+                    if (weathers[3].worstWeatherType != null) {
+                        if (weathers[3].worstWeatherType == WeatherType.SUN) {
+                            weathers[3].worstWeatherType = WeatherType.NIGHT;
+                        } else if (weathers[3].worstWeatherType == WeatherType.CLOUDS) {
+                            weathers[3].worstWeatherType = WeatherType.NIGHT_CLOUDS;
+                        }
+                    }
+                    break;
+            }
+        }
+        return weathers;
+    }
+
+    private void appendItemToAverageWeather(AverageWeather weather, ForecastItem item) {
+            weather.temperaturesSum += item.main.temp;
+            weather.temperaturesCount++;
+            weather.worstWeatherType =
+                    getWorstWeatherType(weather.worstWeatherType,
+                            getWeatherType(item.getWeather()));
     }
 }

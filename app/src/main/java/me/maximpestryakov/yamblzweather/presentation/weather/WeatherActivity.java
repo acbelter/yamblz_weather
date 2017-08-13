@@ -29,7 +29,7 @@ import me.maximpestryakov.yamblzweather.presentation.Consts;
 import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
 import me.maximpestryakov.yamblzweather.presentation.place.SelectPlaceActivity;
 import me.maximpestryakov.yamblzweather.presentation.settings.SettingsActivity;
-import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastsAdapter;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.FullForecastsAdapter;
 import me.maximpestryakov.yamblzweather.util.UiUtil;
 import timber.log.Timber;
 
@@ -88,11 +88,7 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
 
         forecasts.setHasFixedSize(true);
         forecasts.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         presenter.updateCurrentPlaceWeather();
     }
 
@@ -159,8 +155,7 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
         wind.setText(getString(R.string.wind_value, formatter.getWind(weather)));
         humidity.setText(getString(R.string.humidity_value, formatter.getHumidity(weather)));
 
-
-        forecasts.setAdapter(new GeneralForecastsAdapter(data.getForecast()));
+        forecasts.setAdapter(new FullForecastsAdapter(data.getForecast()));
     }
 
     @Override

@@ -35,4 +35,9 @@
     <string name="wind_value">%d м/с</string>
     <string name="humidity_value">%d%%</string>
     <string name="pressure_value">%d мм рт.ст.</string>
+
+    <string name="morning">Утро</string>
+    <string name="day">День</string>
+    <string name="evening">Вечер</string>
+    <string name="night">Ночь</string>
 </resources>

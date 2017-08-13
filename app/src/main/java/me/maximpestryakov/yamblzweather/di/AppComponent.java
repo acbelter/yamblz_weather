@@ -9,6 +9,7 @@ import me.maximpestryakov.yamblzweather.presentation.place.SelectPlacePresenter;
 import me.maximpestryakov.yamblzweather.presentation.settings.SettingsPresenter;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherActivity;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherPresenter;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.FullForecastsAdapter;
 import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastsAdapter;
 
 @Singleton
@@ -19,6 +20,8 @@ public interface AppComponent {
     void inject(SyncWeatherJob job);
 
     void inject(WeatherActivity activity);
+
+    void inject(FullForecastsAdapter adapter);
 
     void inject(GeneralForecastsAdapter adapter);
 
