@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -23,17 +25,23 @@ import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.db.model.FullWeatherData;
 import me.maximpestryakov.yamblzweather.data.db.model.PlaceData;
+import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
 import me.maximpestryakov.yamblzweather.data.model.weather.WeatherResult;
 import me.maximpestryakov.yamblzweather.presentation.BaseActivity;
 import me.maximpestryakov.yamblzweather.presentation.Consts;
 import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
 import me.maximpestryakov.yamblzweather.presentation.place.SelectPlaceActivity;
 import me.maximpestryakov.yamblzweather.presentation.settings.SettingsActivity;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.DetailedForecastsAdapter;
 import me.maximpestryakov.yamblzweather.presentation.weather.forecast.FullForecastsAdapter;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralAdapterData;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastItem;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastsAdapter;
 import me.maximpestryakov.yamblzweather.util.UiUtil;
 import timber.log.Timber;
 
-public class WeatherActivity extends BaseActivity implements WeatherView {
+public class WeatherActivity extends BaseActivity implements
+        WeatherView, GeneralForecastsAdapter.AdapterCallback {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.title)
@@ -63,7 +71,9 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
     TextView humidity;
 
     @BindView(R.id.forecast)
-    RecyclerView forecasts;
+    RecyclerView forecast;
+
+    RecyclerView forecastDetailed;
 
     @InjectPresenter
     WeatherPresenter presenter;
@@ -78,6 +88,8 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
 
+        forecastDetailed = findViewById(R.id.forecastDetailed);
+
         UiUtil.toolbar(this, toolbar, true);
 
         toolbar.setNavigationIcon(R.drawable.ic_select_place);
@@ -86,8 +98,13 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
 
         title.setOnClickListener(view -> showSelectPlaceUi(false));
 
-        forecasts.setHasFixedSize(true);
-        forecasts.setLayoutManager(new LinearLayoutManager(this));
+        forecast.setHasFixedSize(true);
+        forecast.setLayoutManager(new LinearLayoutManager(this));
+
+        if (forecastDetailed != null) {
+            forecastDetailed.setHasFixedSize(true);
+            forecastDetailed.setLayoutManager(new LinearLayoutManager(this));
+        }
 
         presenter.updateCurrentPlaceWeather();
     }
@@ -155,7 +172,21 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
         wind.setText(getString(R.string.wind_value, formatter.getWind(weather)));
         humidity.setText(getString(R.string.humidity_value, formatter.getHumidity(weather)));
 
-        forecasts.setAdapter(new FullForecastsAdapter(data.getForecast()));
+        if (forecastDetailed != null) {
+            GeneralForecastsAdapter generalAdapter = new GeneralForecastsAdapter(data.getForecast());
+            generalAdapter.setAdapterCallback(this);
+            forecast.setAdapter(generalAdapter);
+
+            GeneralAdapterData adapterData = generalAdapter.getData();
+            if (adapterData.getItemCount() > 0) {
+                List<ForecastItem> detailedForecastItems =
+                        adapterData.getForecastItems(adapterData.getGeneralItem(0).dateTag);
+                forecastDetailed.setAdapter(new DetailedForecastsAdapter(detailedForecastItems));
+            }
+        } else {
+            FullForecastsAdapter fullAdapter = new FullForecastsAdapter(data.getForecast());
+            forecast.setAdapter(fullAdapter);
+        }
     }
 
     @Override
@@ -184,8 +215,16 @@ public class WeatherActivity extends BaseActivity implements WeatherView {
                     PlaceData selectedPlace = data.getParcelableExtra(Consts.KEY_SELECTED_PLACE);
                     showPlaceName(selectedPlace.placeName);
                     presenter.updateCurrentPlace(selectedPlace.placeId);
+                    presenter.updateCurrentPlaceWeather();
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onItemClicked(GeneralForecastItem item, List<ForecastItem> forecast) {
+        if (forecastDetailed != null) {
+            forecastDetailed.setAdapter(new DetailedForecastsAdapter(forecast));
         }
     }
 }

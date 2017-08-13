@@ -35,6 +35,10 @@ public class GeneralForecastsAdapter extends
         generalAdapterData = new GeneralAdapterData(forecast);
     }
 
+    public GeneralAdapterData getData() {
+        return generalAdapterData;
+    }
+
     public void setAdapterCallback(AdapterCallback callback) {
         this.callback = callback;
     }
@@ -44,8 +48,8 @@ public class GeneralForecastsAdapter extends
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.date)
-        public TextView date;
+        @BindView(R.id.dateTime)
+        public TextView dateTime;
         @BindView(R.id.temperature)
         public TextView temperature;
         @BindView(R.id.weatherImage)
@@ -67,7 +71,7 @@ public class GeneralForecastsAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GeneralForecastItem item = generalAdapterData.getGeneralItem(position);
-        holder.date.setText(formatter.getDate(item));
+        holder.dateTime.setText(formatter.getDate(item));
         String temperature = holder.itemView.getResources()
                 .getString(R.string.temperature_value, formatter.getTemperatureC(item));
         holder.temperature.setText(temperature);

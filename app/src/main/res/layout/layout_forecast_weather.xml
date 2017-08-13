@@ -47,7 +47,7 @@
         <ImageView
             android:id="@+id/dayWeatherImage"
             style="@style/WeatherDetailImageStyle"
-            tools:src="@drawable/clouds"/>
+            android:src="@drawable/clouds"/>
 
         <ImageView
             android:id="@+id/eveningWeatherImage"

@@ -19,7 +19,6 @@ import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
 import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
-import timber.log.Timber;
 
 public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_GENERAL_FORECAST = 0;
@@ -51,8 +50,8 @@ public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public static class GeneralForecastViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.date)
-        public TextView date;
+        @BindView(R.id.dateTime)
+        public TextView dateTime;
         @BindView(R.id.temperature)
         public TextView temperature;
         @BindView(R.id.weatherImage)
@@ -123,7 +122,6 @@ public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
-        Timber.d("Create view holder for type %s", viewType);
         switch (viewType) {
             case TYPE_GENERAL_FORECAST:
                 view = inflater.inflate(R.layout.item_forecast_general, parent, false);
@@ -151,7 +149,7 @@ public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private void bindGeneralViewHolder(GeneralForecastViewHolder holder,
                                        GeneralForecastItem item) {
-        holder.date.setText(formatter.getDate(item));
+        holder.dateTime.setText(formatter.getDate(item));
         String temperature = holder.itemView.getResources()
                 .getString(R.string.temperature_value, formatter.getTemperatureC(item));
         holder.temperature.setText(temperature);
@@ -162,12 +160,12 @@ public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (adapterPos != RecyclerView.NO_POSITION) {
                 if (adapterPos == items.size() - 1 ||
                         items.get(adapterPos + 1) instanceof GeneralForecastItem) {
-                    // Detailed forecast isn't show
+                    // Detailed forecast isn't showed
                     GeneralForecastItem currentItem = (GeneralForecastItem) items.get(adapterPos);
                     items.add(adapterPos + 1, generalAdapterData.getForecastItems(currentItem.dateTag));
                     notifyItemInserted(adapterPos + 1);
                 } else {
-                    // Detailed forecast is show
+                    // Detailed forecast is showed
                     items.remove(adapterPos + 1);
                     notifyItemRemoved(adapterPos + 1);
                 }

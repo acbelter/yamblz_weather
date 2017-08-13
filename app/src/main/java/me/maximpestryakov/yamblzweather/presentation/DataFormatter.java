@@ -3,7 +3,8 @@ package me.maximpestryakov.yamblzweather.presentation;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -23,13 +24,14 @@ public class DataFormatter {
     private static final float K_TO_C_COEFF = 273.15f;
     private static final double HPA_TO_MM_HG_FACTOR = 0.75006375541921d;
 
+    private DateTimeFormatter dateTagFormat = DateTimeFormat.forPattern("yyyy-MM-dd");
     private DateTimeFormatter weekDayFormat = DateTimeFormat.forPattern("EEEE");
     private DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd MMM yyyy");
     private DateTimeFormatter shortDateFormat = DateTimeFormat.forPattern("EEE, dd MMM");
     private DateTimeFormatter timeFormat = DateTimeFormat.forPattern("HH:mm");
 
-    private LocalDateTime getDate(long dataTimestamp) {
-        return new LocalDateTime(dataTimestamp * 1000);
+    public DateTime getDateTime(long dataTimestamp) {
+        return new DateTime(dataTimestamp * 1000, DateTimeZone.UTC);
     }
 
     private float fromKtoC(float temperature) {
@@ -175,13 +177,13 @@ public class DataFormatter {
     }
 
     public String getFormattedDayOfWeek(WeatherResult weather) {
-        String str = weekDayFormat.print(getDate(weather.dataTimestamp));
+        String str = weekDayFormat.print(getDateTime(weather.dataTimestamp));
         str = str.substring(0, 1).toUpperCase() + str.substring(1);
         return str;
     }
 
     public String getFormattedDate(WeatherResult weather) {
-        return dateFormat.print(getDate(weather.dataTimestamp));
+        return dateFormat.print(getDateTime(weather.dataTimestamp));
     }
 
 
@@ -192,7 +194,7 @@ public class DataFormatter {
     }
 
     public String getTime(ForecastItem item) {
-        return timeFormat.print(getDate(item.dataTimestamp));
+        return timeFormat.print(getDateTime(item.dataTimestamp));
     }
 
     public int getTemperatureC(ForecastItem item) {
@@ -227,7 +229,10 @@ public class DataFormatter {
     }
 
     public String getDate(GeneralForecastItem item) {
-        String str = shortDateFormat.print(getDate(item.dataTimestamp));
+        // FIXME Small hack. Add one day a day when parsing the date at midnight
+        DateTime dateTime = dateTagFormat.parseDateTime(item.dateTag);
+
+        String str = shortDateFormat.print(dateTime);
         str = str.substring(0, 1).toUpperCase() + str.substring(1);
         return str;
     }

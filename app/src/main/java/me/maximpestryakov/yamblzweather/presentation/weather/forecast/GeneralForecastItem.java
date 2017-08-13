@@ -9,6 +9,7 @@ public class GeneralForecastItem {
     public final Weather weather;
     public final float temperature;
     public final long dataTimestamp;
+    public final ForecastItem item;
 
     public GeneralForecastItem(ForecastItem item) {
         this.dateTag = item.getDateTag();
@@ -16,6 +17,7 @@ public class GeneralForecastItem {
         this.weather = item.getWeather();
         this.temperature = item.main.temp;
         this.dataTimestamp = item.dataTimestamp;
+        this.item = item;
     }
 
     @Override

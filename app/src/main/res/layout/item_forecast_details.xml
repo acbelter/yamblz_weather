@@ -1,83 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/cloudinessTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/time"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/cloudiness"
-        android:text="@string/cloudiness"/>
+    <include layout="@layout/divider_horizontal"/>
 
-    <TextView
-        android:id="@id/cloudiness"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/cloudinessTitle"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        tools:text="30%"/>
+    <include layout="@layout/layout_forecast_details"/>
 
-    <TextView
-        android:id="@+id/windTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cloudiness"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/wind"
-        android:text="@string/wind"/>
-
-    <TextView
-        android:id="@id/wind"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/windTitle"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        tools:text="21 m/s"/>
-
-    <TextView
-        android:id="@+id/humidityTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/windTitle"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/humidity"
-        android:text="@string/humidity"/>
-
-    <TextView
-        android:id="@id/humidity"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/humidityTitle"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        tools:text="70%"/>
-
-    <TextView
-        android:id="@+id/pressureTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/humidityTitle"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/pressure"
-        android:text="@string/pressure"/>
-
-    <TextView
-        android:id="@id/pressure"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/pressureTitle"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        tools:text="121 mm Hg"/>
-</RelativeLayout>
+    <include layout="@layout/divider_horizontal"/>
+</LinearLayout>

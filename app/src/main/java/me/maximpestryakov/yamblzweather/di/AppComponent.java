@@ -9,6 +9,7 @@ import me.maximpestryakov.yamblzweather.presentation.place.SelectPlacePresenter;
 import me.maximpestryakov.yamblzweather.presentation.settings.SettingsPresenter;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherActivity;
 import me.maximpestryakov.yamblzweather.presentation.weather.WeatherPresenter;
+import me.maximpestryakov.yamblzweather.presentation.weather.forecast.DetailedForecastsAdapter;
 import me.maximpestryakov.yamblzweather.presentation.weather.forecast.FullForecastsAdapter;
 import me.maximpestryakov.yamblzweather.presentation.weather.forecast.GeneralForecastsAdapter;
 
@@ -24,6 +25,8 @@ public interface AppComponent {
     void inject(FullForecastsAdapter adapter);
 
     void inject(GeneralForecastsAdapter adapter);
+
+    void inject(DetailedForecastsAdapter adapter);
 
     void inject(SettingsPresenter presenter);
 

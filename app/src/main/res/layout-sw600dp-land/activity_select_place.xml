@@ -10,8 +10,9 @@
 
     <AutoCompleteTextView
         android:id="@+id/findPlaceText"
-        android:layout_width="match_parent"
+        android:layout_width="460dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="16dp"
         android:completionThreshold="1"
         android:hint="@string/hint_find_place"
@@ -21,8 +22,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/favoritePlacesList"
-        android:layout_width="match_parent"
+        android:layout_width="460dp"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         tools:listitem="@layout/item_place"/>

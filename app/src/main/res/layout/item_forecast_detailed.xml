@@ -8,7 +8,7 @@
 
     <include layout="@layout/layout_forecast_weather"/>
 
-    <include layout="@layout/item_forecast_details"/>
+    <include layout="@layout/layout_forecast_details"/>
 
     <include layout="@layout/divider_horizontal"/>
 </LinearLayout>
