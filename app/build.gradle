@@ -1,11 +1,10 @@
 apply from: 'versions.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.fernandocejas.frodo'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "me.maximpestryakov.yamblzweather"
         minSdkVersion 16
@@ -36,9 +35,6 @@ android {
             shrinkResources false
             debuggable true
             applicationIdSuffix ".debug"
-            frodo {
-                enabled = true
-            }
         }
         prodDebug {
             minifyEnabled true
@@ -47,9 +43,6 @@ android {
             applicationIdSuffix ".prodDebug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-debug.pro'
             signingConfig signingConfigs.release
-            frodo {
-                enabled = true
-            }
         }
         release {
             minifyEnabled true
@@ -57,9 +50,6 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-            frodo {
-                enabled = false
-            }
         }
     }
 

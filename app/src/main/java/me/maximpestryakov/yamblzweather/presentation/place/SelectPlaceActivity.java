@@ -1,6 +1,7 @@
 package me.maximpestryakov.yamblzweather.presentation.place;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -55,13 +57,17 @@ public class SelectPlaceActivity extends BaseActivity implements
     private PlacesAdapter placesAdapter;
     private CompositeDisposable disposables;
 
-    AlertDialog progress;
+    private AlertDialog progress;
+
+    private InputMethodManager inputMethodManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_place);
         ButterKnife.bind(this);
+
+        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (savedInstanceState == null) {
             isSelectFirstPlace = getIntent().getBooleanExtra(Consts.KEY_SELECT_FIRST_PLACE, false);
@@ -191,6 +197,7 @@ public class SelectPlaceActivity extends BaseActivity implements
 
     @Override
     public void showLoading(boolean loading) {
+        inputMethodManager.hideSoftInputFromWindow(findPlaceText.getWindowToken(), 0);
         if (loading) {
             if (progress == null) {
                 progress = new SpotsDialog(this);

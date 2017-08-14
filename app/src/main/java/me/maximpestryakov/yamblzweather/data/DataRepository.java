@@ -1,6 +1,5 @@
 package me.maximpestryakov.yamblzweather.data;
 
-import com.fernandocejas.frodo.annotation.RxLogObservable;
 import com.google.gson.Gson;
 
 import io.reactivex.Maybe;
@@ -33,7 +32,6 @@ public class DataRepository {
         this.gson = gson;
     }
 
-    @RxLogObservable(RxLogObservable.Scope.STREAM)
     public Single<PlaceData> getPlaceData(String placeId,
                                           String lang,
                                           boolean forceNetwork) {
@@ -61,7 +59,6 @@ public class DataRepository {
         }
     }
 
-    @RxLogObservable(RxLogObservable.Scope.STREAM)
     public Single<WeatherData> getWeatherData(String placeId,
                                               float lat,
                                               float lng,
@@ -93,7 +90,6 @@ public class DataRepository {
         }
     }
 
-    @RxLogObservable(RxLogObservable.Scope.STREAM)
     public Single<ForecastData> getForecastData(String placeId,
                                                 float lat,
                                                 float lng,

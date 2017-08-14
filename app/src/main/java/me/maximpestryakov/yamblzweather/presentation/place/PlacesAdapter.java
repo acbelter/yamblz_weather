@@ -63,7 +63,9 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
                 PlaceData place = places.get(adapterPos);
                 places.remove(adapterPos);
                 notifyItemRemoved(adapterPos);
-                notifyItemChanged(0);
+                if (places.size() == 1) {
+                    notifyItemChanged(0);
+                }
                 if (callback != null) {
                     callback.onItemRemoved(place);
                 }

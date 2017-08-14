@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,6 +50,9 @@ public class WeatherActivity extends BaseActivity implements
     @BindView(R.id.title)
     TextView title;
 
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
+
     @BindView(R.id.weatherImage)
     ImageView weatherImage;
     @BindView(R.id.temperature)
@@ -84,9 +88,7 @@ public class WeatherActivity extends BaseActivity implements
     @Inject
     DataFormatter formatter;
 
-    AlertDialog progress;
-
-    boolean firstResume;
+    private AlertDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,10 @@ public class WeatherActivity extends BaseActivity implements
 
         title.setOnClickListener(view -> showSelectPlaceUi(false));
 
+        if (appBarLayout != null) {
+            appBarLayout.setExpanded(false);
+        }
+
         forecast.setHasFixedSize(true);
         forecast.setLayoutManager(new LinearLayoutManager(this));
 
@@ -113,27 +119,12 @@ public class WeatherActivity extends BaseActivity implements
             forecastDetailed.setHasFixedSize(true);
             forecastDetailed.setLayoutManager(new LinearLayoutManager(this));
         }
-
-        if (savedInstanceState != null) {
-            firstResume = savedInstanceState.getBoolean("first_resume");
-        } else {
-            firstResume = true;
-        }
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("first_resume", firstResume);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (firstResume) {
-            presenter.updateCurrentPlaceWeather(false);
-            firstResume = false;
-        }
+    protected void onStart() {
+        super.onStart();
+        presenter.updateCurrentPlaceWeather(false);
     }
 
     @Override
@@ -183,6 +174,7 @@ public class WeatherActivity extends BaseActivity implements
 
     @Override
     public void showLoading(boolean loading) {
+        Timber.d("Show weather loading: " + loading);
         if (loading) {
             if (progress == null) {
                 progress = new SpotsDialog(this);
@@ -208,6 +200,11 @@ public class WeatherActivity extends BaseActivity implements
     @Override
     public void showWeather(FullWeatherData data) {
         Timber.d("Show weather. Use cache: %s", data.isFromCache());
+
+        if (appBarLayout != null) {
+            appBarLayout.setExpanded(true, true);
+        }
+
         if (verticalDivider != null && verticalDivider.getVisibility() != View.VISIBLE) {
             verticalDivider.setVisibility(View.VISIBLE);
         }
