@@ -7,11 +7,11 @@
 
     <string name="about_text">Иконки задизайнил Alfredo Hernandez с Flaticon</string>
 
-    <string name="hint_find_place">Найти другую локацию</string>
+    <string name="hint_find_place">Найти локацию</string>
 
     <string name="error_no_internet">Отсутствует подключение к интернету</string>
-    <string name="error_place_predictions_api">Ошибка при загрузке подсказок о месте</string>
-    <string name="error_place_api">Ошибка при загрузке данных о месте</string>
+    <string name="error_place_predictions_api">Ошибка при загрузке подсказок для локации</string>
+    <string name="error_place_api">Ошибка при загрузке данных о локации</string>
     <string name="error_weather_api">Данные о погоде недоступны</string>
 
     <string name="update_on_schedule">Обновлять погоду по расписанию</string>
