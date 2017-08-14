@@ -23,7 +23,7 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
+                app:layout_scrollFlags="scroll">
 
                 <View
                     android:id="@+id/collapsingBg"
@@ -35,7 +35,7 @@
 
             <include
                 layout="@layout/layout_stat"
-                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                app:layout_scrollFlags="scroll"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView

@@ -23,6 +23,7 @@
             android:layout_weight="1"
             android:completionThreshold="1"
             android:hint="@string/hint_find_place"
+            android:imeOptions="flagNoFullscreen"
             android:maxLines="1"
             android:singleLine="true"/>
 
