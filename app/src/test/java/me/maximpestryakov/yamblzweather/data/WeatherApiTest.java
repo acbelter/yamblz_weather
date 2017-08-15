@@ -28,8 +28,6 @@ import okhttp3.mockwebserver.MockWebServer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-// TODO Add additional parameters testing: wind, pressure...
-// FIXME TEST DEPRECATED
 public class WeatherApiTest {
     private static final float W_LATITUDE = -16.92f;
     private static final float W_LONGITUDE = 145.77f;

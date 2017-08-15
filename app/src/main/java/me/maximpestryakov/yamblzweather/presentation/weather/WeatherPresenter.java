@@ -36,14 +36,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
     Gson gson;
 
     private String lang;
-    private String currentPlaceId;
 
     private Disposable updateDisposable;
 
     public WeatherPresenter() {
         App.getAppComponent().inject(this);
         lang = prefs.getLang();
-        currentPlaceId = prefs.getPlaceId();
     }
 
     public void stop() {
@@ -54,11 +52,12 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
 
     public void updateCurrentPlace(String placeId) {
         Timber.d("Update current place id: %s", placeId);
-        currentPlaceId = placeId;
-        prefs.setPlaceId(currentPlaceId);
+        prefs.setPlaceId(placeId);
     }
 
     public void updateCurrentPlaceWeather(boolean force) {
+        String currentPlaceId = prefs.getPlaceId();
+
         Timber.d("Update weather for current place id: %s", currentPlaceId);
         if (currentPlaceId == null) {
             getViewState().requestPlaceSelection();
@@ -73,6 +72,8 @@ public class WeatherPresenter extends MvpPresenter<WeatherView> {
         if (updateDisposable != null) {
             updateDisposable.dispose();
         }
+
+        String currentPlaceId = prefs.getPlaceId();
 
         updateDisposable = dataRepository.getPlaceData(currentPlaceId, lang, forceUpdatePlace)
                 .observeOn(AndroidSchedulers.mainThread())

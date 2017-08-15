@@ -19,7 +19,6 @@ import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
 import me.maximpestryakov.yamblzweather.data.model.forecast.ForecastItem;
 import me.maximpestryakov.yamblzweather.presentation.DataFormatter;
-import timber.log.Timber;
 
 public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_GENERAL_FORECAST = 0;
@@ -161,13 +160,11 @@ public class FullForecastsAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (adapterPos != RecyclerView.NO_POSITION) {
                 if (adapterPos == items.size() - 1 ||
                         items.get(adapterPos + 1) instanceof GeneralForecastItem) {
-                    Timber.d("NOT SHOWED " + adapterPos);
                     // Detailed forecast isn't showed
                     GeneralForecastItem currentItem = (GeneralForecastItem) items.get(adapterPos);
                     items.add(adapterPos + 1, generalAdapterData.getForecastItems(currentItem.dateTag));
                     notifyItemInserted(adapterPos + 1);
                 } else {
-                    Timber.d("SHOWED " + adapterPos);
                     // Detailed forecast is showed
                     items.remove(adapterPos + 1);
                     notifyItemRemoved(adapterPos + 1);

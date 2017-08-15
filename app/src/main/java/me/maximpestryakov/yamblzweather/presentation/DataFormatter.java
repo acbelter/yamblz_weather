@@ -34,12 +34,12 @@ public class DataFormatter {
         return new DateTime(dataTimestamp * 1000, DateTimeZone.UTC);
     }
 
-    private float fromKtoC(float temperature) {
-        return temperature - K_TO_C_COEFF;
-    }
-
     public int convertToC(float temperature) {
         return (int) fromKtoC(temperature);
+    }
+
+    private float fromKtoC(float temperature) {
+        return temperature - K_TO_C_COEFF;
     }
 
     // See https://openweathermap.org/weather-conditions
@@ -118,8 +118,9 @@ public class DataFormatter {
                 return R.drawable.snow;
             case STORM:
                 return R.drawable.storm;
+            default:
+                return 0;
         }
-        return 0;
     }
 
     public WeatherType getWorstWeatherType(WeatherType... types) {
