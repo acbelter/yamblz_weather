@@ -3,6 +3,7 @@ package me.maximpestryakov.yamblzweather.presentation.weather;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
@@ -50,6 +51,7 @@ public class WeatherActivity extends BaseActivity implements
     @BindView(R.id.title)
     TextView title;
 
+    @Nullable
     @BindView(R.id.appBarLayout)
     AppBarLayout appBarLayout;
 
@@ -79,7 +81,12 @@ public class WeatherActivity extends BaseActivity implements
     @BindView(R.id.forecast)
     RecyclerView forecast;
 
+    @Nullable
+    @BindView(R.id.verticalDivider)
     View verticalDivider;
+
+    @Nullable
+    @BindView(R.id.forecastDetailed)
     RecyclerView forecastDetailed;
 
     @InjectPresenter
@@ -96,9 +103,6 @@ public class WeatherActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
-
-        verticalDivider = findViewById(R.id.verticalDivider);
-        forecastDetailed = findViewById(R.id.forecastDetailed);
 
         UiUtil.toolbar(this, toolbar, true);
 
