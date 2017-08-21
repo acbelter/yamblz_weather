@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class NetworkUtil {
-
     private final Context context;
 
     public NetworkUtil(Context context) {

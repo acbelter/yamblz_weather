@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:better="http://schemas.android.com/apk/lib/me.maximpestryakov.yamblzweather"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:width="512dp"
+        android:height="512dp"
+        android:viewportHeight="512"
+        android:viewportWidth="512"
+        better:viewportHeight="512"
+        better:viewportWidth="512"
+        tools:ignore="NewApi">
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M191.24 271.508l-65.16 -33.112 65.16 -33.12z"
+        better:fillColor="#ffcc67"
+        better:pathData="M191.24 271.508l-65.16 -33.112 65.16 -33.12z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M446.84 271.508L512 238.396 446.84 205.276Z"
+        better:fillColor="#ffcc67"
+        better:pathData="M446.84 271.508L512 238.396 446.84 205.276Z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M189.776 190.044l-34.824 -64.256 72.44 9.72z"
+        better:fillColor="#ffcc67"
+        better:pathData="M189.776 190.044l-34.824 -64.256 72.44 9.72z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M448.296 190.044l34.832 -64.256 -72.448 9.72z"
+        better:fillColor="#ffcc67"
+        better:pathData="M448.296 190.044l34.832 -64.256 -72.448 9.72z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M330.784 104.14l55.184 -47.928 6.2 72.832z"
+        better:fillColor="#ffcc67"
+        better:pathData="M330.784 104.14l55.184 -47.928 6.2 72.832z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M307.288 104.14l-55.184 -47.928 -6.2 72.832z"
+        better:fillColor="#ffcc67"
+        better:pathData="M307.288 104.14l-55.184 -47.928 -6.2 72.832z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M189.776 288.892l-34.824 64.256 72.44 -9.72z"
+        better:fillColor="#ffcc67"
+        better:pathData="M189.776 288.892l-34.824 64.256 72.44 -9.72z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M448.296 288.892l34.832 64.256 -72.448 -9.72z"
+        better:fillColor="#ffcc67"
+        better:pathData="M448.296 288.892l34.832 64.256 -72.448 -9.72z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M330.784 374.796l55.184 47.92 6.2 -72.824z"
+        better:fillColor="#ffcc67"
+        better:pathData="M330.784 374.796l55.184 47.92 6.2 -72.824z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M307.288 374.796l-55.184 47.92 -6.2 -72.824z"
+        better:fillColor="#ffcc67"
+        better:pathData="M307.288 374.796l-55.184 47.92 -6.2 -72.824z"/>
+    <path
+        android:fillColor="#ffcc67"
+        android:pathData="M317.904 129.044c-60.992 0 -110.424 49.432 -110.424 110.424 0 60.992 49.432 110.424 110.424 110.424 60.992 0 110.424 -49.432 110.424 -110.424 0 -60.992 -49.432 -110.424 -110.424 -110.424l0 0z"
+        better:fillColor="#ffcc67"
+        better:pathData="M317.904 129.044c-60.992 0 -110.424 49.432 -110.424 110.424 0 60.992 49.432 110.424 110.424 110.424 60.992 0 110.424 -49.432 110.424 -110.424 0 -60.992 -49.432 -110.424 -110.424 -110.424l0 0z"/>
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M332.304 305.9l-6.04 0c-6.008 -25.256 -28.768 -44.184 -55.992 -44.184 -6.616 0 -13.312 1.456 -18.864 3.304 -13.312 -37.792 -49.376 -64.928 -91.904 -64.928 -53.84 0 -97.48 43.424 -97.48 96.992 0 3.376 0.184 6.704 0.512 9.992C27.16 313.164 0 343.964 0 380.836c0 41.216 33.888 74.952 75.312 74.952l256.96 0c41.424 0 75.312 -33.72 75.312 -74.952 0.032 -41.2 -33.856 -74.936 -75.28 -74.936z"
+        better:fillColor="#629fd6"
+        better:pathData="M332.304 305.9l-6.04 0c-6.008 -25.256 -28.768 -44.184 -55.992 -44.184 -6.616 0 -13.312 1.456 -18.864 3.304 -13.312 -37.792 -49.376 -64.928 -91.904 -64.928 -53.84 0 -97.48 43.424 -97.48 96.992 0 3.376 0.184 6.704 0.512 9.992C27.16 313.164 0 343.964 0 380.836c0 41.216 33.888 74.952 75.312 74.952l256.96 0c41.424 0 75.312 -33.72 75.312 -74.952 0.032 -41.2 -33.856 -74.936 -75.28 -74.936z"/>
+</vector>

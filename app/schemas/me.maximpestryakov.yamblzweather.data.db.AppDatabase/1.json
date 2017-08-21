@@ -1,0 +1,137 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "d7f8670f4c9757435c70aee32d7b7810",
+    "entities": [
+      {
+        "tableName": "place",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`place_id` TEXT, `lat` REAL, `lng` REAL, `place_name` TEXT, `lang` TEXT, PRIMARY KEY(`place_id`))",
+        "fields": [
+          {
+            "fieldPath": "placeId",
+            "columnName": "place_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lat",
+            "columnName": "lat",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "lng",
+            "columnName": "lng",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "placeName",
+            "columnName": "place_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lang",
+            "columnName": "lang",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "place_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_place_place_id",
+            "unique": false,
+            "columnNames": [
+              "place_id"
+            ],
+            "createSql": "CREATE  INDEX `index_place_place_id` ON `${TABLE_NAME}` (`place_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "weather",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`place_id` TEXT, `weather_timestamp` INTEGER, `weather_data` TEXT, PRIMARY KEY(`place_id`))",
+        "fields": [
+          {
+            "fieldPath": "placeId",
+            "columnName": "place_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "weatherTimestamp",
+            "columnName": "weather_timestamp",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "weatherData",
+            "columnName": "weather_data",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "place_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_weather_place_id",
+            "unique": false,
+            "columnNames": [
+              "place_id"
+            ],
+            "createSql": "CREATE  INDEX `index_weather_place_id` ON `${TABLE_NAME}` (`place_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "forecast",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`place_id` TEXT, `forecast_timestamp` INTEGER, `forecast_data` TEXT, PRIMARY KEY(`place_id`))",
+        "fields": [
+          {
+            "fieldPath": "placeId",
+            "columnName": "place_id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "forecastTimestamp",
+            "columnName": "forecast_timestamp",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "forecastData",
+            "columnName": "forecast_data",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "place_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_forecast_place_id",
+            "unique": false,
+            "columnNames": [
+              "place_id"
+            ],
+            "createSql": "CREATE  INDEX `index_forecast_place_id` ON `${TABLE_NAME}` (`place_id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d7f8670f4c9757435c70aee32d7b7810\")"
+    ]
+  }
+}

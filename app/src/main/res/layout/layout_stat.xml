@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:stretchColumns="*"
+    app:layout_scrollFlags="scroll|enterAlways|snap">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cloudinessImage"
+            android:layout_width="@dimen/stat_image_size"
+            android:layout_height="@dimen/stat_image_size"
+            android:src="@drawable/cloudiness"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/windImage"
+            android:layout_width="@dimen/stat_image_size"
+            android:layout_height="@dimen/stat_image_size"
+            android:src="@drawable/wind"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/humidityImage"
+            android:layout_width="@dimen/stat_image_size"
+            android:layout_height="@dimen/stat_image_size"
+            android:src="@drawable/humidity"
+            android:visibility="invisible"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/cloudiness"
+            style="@style/StatTextStyle"
+            tools:text="50%"/>
+
+        <TextView
+            android:id="@+id/wind"
+            style="@style/StatTextStyle"
+            tools:text="25 m/s"/>
+
+        <TextView
+            android:id="@+id/humidity"
+            style="@style/StatTextStyle"
+            tools:text="50%"/>
+    </TableRow>
+</TableLayout>

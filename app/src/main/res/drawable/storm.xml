@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:better="http://schemas.android.com/apk/lib/me.maximpestryakov.yamblzweather"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:width="512.008dp"
+        android:height="512.008dp"
+        android:viewportHeight="512.008"
+        android:viewportWidth="512.008"
+        better:viewportHeight="512.008"
+        better:viewportWidth="512.008"
+        tools:ignore="NewApi">
+    <path
+        android:fillColor="#629fd6"
+        android:pathData="M417.44 163.98l-7.584 0c-7.544 -31.728 -36.136 -55.504 -70.336 -55.504 -8.312 0 -16.728 1.832 -23.696 4.152C299.096 65.156 253.792 31.06 200.376 31.06 132.744 31.06 77.92 85.604 77.92 152.9c0 4.24 0.232 8.416 0.64 12.552C34.112 173.1 0 211.796 0 258.116c0 51.776 42.576 94.16 94.608 94.16l322.792 0c52.032 0 94.608 -42.36 94.608 -94.16 0.032 -51.76 -42.536 -94.136 -94.568 -94.136z"
+        better:fillColor="#629fd6"
+        better:pathData="M417.44 163.98l-7.584 0c-7.544 -31.728 -36.136 -55.504 -70.336 -55.504 -8.312 0 -16.728 1.832 -23.696 4.152C299.096 65.156 253.792 31.06 200.376 31.06 132.744 31.06 77.92 85.604 77.92 152.9c0 4.24 0.232 8.416 0.64 12.552C34.112 173.1 0 211.796 0 258.116c0 51.776 42.576 94.16 94.608 94.16l322.792 0c52.032 0 94.608 -42.36 94.608 -94.16 0.032 -51.76 -42.536 -94.136 -94.568 -94.136z"/>
+    <path
+        android:fillColor="#ffd07d"
+        android:pathData="M204.752 311.412L109.08 480.948 316.088 273.94l-85.008 0 60.088 -118.136 -182.088 155.608z"
+        better:fillColor="#ffd07d"
+        better:pathData="M204.752 311.412L109.08 480.948 316.088 273.94l-85.008 0 60.088 -118.136 -182.088 155.608z"/>
+</vector>

@@ -1,5 +1,14 @@
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FFDC61</color>
+    <color name="colorPrimaryDark">#E1C255</color>
+    <color name="colorAccent">#FFDC61</color>
+
+    <color name="colorItemFocused">#80FFDC61</color>
+    <color name="colorItemPressed">#80FFDC61</color>
+
+    <color name="colorToolbarContent">@android:color/black</color>
+    <color name="colorTextDefault">@android:color/black</color>
+
+    <color name="colorDivider">#80CBCBCB</color>
+    <color name="colorDarkGray">#858E98</color>
 </resources>

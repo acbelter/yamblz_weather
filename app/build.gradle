@@ -1,26 +1,25 @@
-buildscript {
-    apply from: 'versions.gradle'
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "me.tatarka:gradle-retrolambda:$retrolambda_version"
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        maven { url 'https://maven.google.com' }
-    }
-}
-
+apply from: 'versions.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "me.maximpestryakov.yamblzweather"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "me.maximpestryakov.CustomRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
     signingConfigs {
         release {
             keyAlias 'key'
@@ -29,17 +28,7 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
-    defaultConfig {
-        applicationId "me.maximpestryakov.yamblzweather"
-        minSdkVersion 19
-        //noinspection OldTargetApi
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -63,46 +52,111 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force "com.google.code.findbugs:jsr305:3.0.1"
+            force "com.android.support:support-annotations:$support_version"
+            force "com.android.support:support-compat:$support_version"
+            force "com.android.support:support-core-utils:$support_version"
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    sourceSets {
+        String sharedTestSrcDir = 'src/sharedTest/java'
+        test {
+            java.srcDir sharedTestSrcDir
+        }
+        androidTest {
+            java.srcDir sharedTestSrcDir
+            assets.srcDirs += files("$projectDir/schemas".toString())
+        }
     }
 }
 
+android.applicationVariants.all {
+    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+}
+
 dependencies {
-    // Support Library
+    testCompile "com.android.support:appcompat-v7:$support_version"
+    testCompile "com.android.support:recyclerview-v7:$support_version"
+    testCompile "com.android.support:design:$support_version"
+    testCompile "com.android.support:cardview-v7:$support_version"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.assertj:assertj-core:$assertj_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    testCompile "com.squareup.okhttp3:mockwebserver:3.8.0"
+    testCompile "android.arch.persistence.room:testing:$room_version"
+    // Dagger for test
+    testCompile "com.google.dagger:dagger-android:$dagger_version"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    androidTestCompile "com.android.support:appcompat-v7:$support_version"
+    androidTestCompile "com.android.support:recyclerview-v7:$support_version"
+    androidTestCompile "com.android.support:design:$support_version"
+    androidTestCompile "com.android.support:cardview-v7:$support_version"
+
+    androidTestCompile "org.assertj:assertj-core:$assertj_version"
+    androidTestCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmaker_version"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmaker_version"
+    androidTestCompile "com.android.support.test:runner:1.0.0"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+    androidTestCompile "android.arch.persistence.room:testing:$room_version"
+    // Dagger for androidTest
+    androidTestCompile "com.google.dagger:dagger-android:$dagger_version"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:design:$support_version"
-    compile "com.android.support:preference-v7:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
+    compile "uk.co.chrisjenx:calligraphy:2.3.0"
+    compile "com.github.d-max:spots-dialog:0.7@aar"
 
-    // Moxy
     compile "com.arello-mobile:moxy:$moxy_version"
     compile "com.arello-mobile:moxy-app-compat:$moxy_version"
     annotationProcessor "com.arello-mobile:moxy-compiler:$moxy_version"
 
-    // Butter Knife
     compile "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    // Gson
-    compile "com.google.code.gson:gson:$gson_version"
+    compile "com.google.code.gson:gson:2.8.0"
+    compile "net.danlew:android.joda:2.9.9"
 
-    // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 
-    // RxJava 2
-    compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    compile "io.reactivex.rxjava2:rxjava:2.1.1"
+    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
+    compile "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
-    // RxAndroid
-    compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-
-    // Dagger
     compile "com.google.dagger:dagger-android:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
-    // Android Job
-    compile "com.evernote:android-job:$androidjob_version"
+    compile "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    compile "android.arch.persistence.room:rxjava2:$room_version"
+
+    compile "com.evernote:android-job:1.1.11"
+
+    compile "com.jakewharton.timber:timber:4.5.1"
 }

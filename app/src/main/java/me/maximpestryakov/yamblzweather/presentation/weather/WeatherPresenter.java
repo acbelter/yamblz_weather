@@ -6,68 +6,97 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.maximpestryakov.yamblzweather.App;
 import me.maximpestryakov.yamblzweather.R;
-import me.maximpestryakov.yamblzweather.data.OpenWeatherMapService;
-import me.maximpestryakov.yamblzweather.data.model.Weather;
-import me.maximpestryakov.yamblzweather.util.StringUtil;
+import me.maximpestryakov.yamblzweather.data.DataRepository;
+import me.maximpestryakov.yamblzweather.data.PrefsRepository;
+import me.maximpestryakov.yamblzweather.data.api.PlacesApi;
+import me.maximpestryakov.yamblzweather.data.api.WeatherApi;
+import me.maximpestryakov.yamblzweather.util.NoInternetException;
+import timber.log.Timber;
 
 @InjectViewState
 public class WeatherPresenter extends MvpPresenter<WeatherView> {
-
-    private static final int MOSCOW_ID = 524901;
-
-    private static final String FILE_NAME = "weather.json";
-
     @Inject
     Context context;
-
     @Inject
-    OpenWeatherMapService api;
-
+    PrefsRepository prefs;
+    @Inject
+    DataRepository dataRepository;
+    @Inject
+    WeatherApi weatherApi;
+    @Inject
+    PlacesApi placesApi;
     @Inject
     Gson gson;
 
-    @Inject
-    StringUtil stringUtil;
+    private String lang;
 
-    WeatherPresenter() {
+    private Disposable updateDisposable;
+
+    public WeatherPresenter() {
         App.getAppComponent().inject(this);
-        fetchWeather();
+        lang = prefs.getLang();
     }
 
-    void onUpdateWeather() {
-        fetchWeather();
+    public void stop() {
+        if (updateDisposable != null) {
+            updateDisposable.dispose();
+        }
     }
 
-    private void fetchWeather() {
-        getViewState().setLoading(true);
-        Weather localWeather = null;
-        try {
-            String json = stringUtil.readFromFile(FILE_NAME);
-            localWeather = gson.fromJson(json, Weather.class);
-        } catch (IOException e) {
-            // empty
+    public void updateCurrentPlace(String placeId) {
+        Timber.d("Update current place id: %s", placeId);
+        prefs.setPlaceId(placeId);
+    }
+
+    public void updateCurrentPlaceWeather(boolean force) {
+        String currentPlaceId = prefs.getPlaceId();
+
+        Timber.d("Update weather for current place id: %s", currentPlaceId);
+        if (currentPlaceId == null) {
+            getViewState().requestPlaceSelection();
+        } else {
+            getWeatherForPlace(false, force);
         }
-        if (localWeather != null) {
-            getViewState().showWeather(localWeather);
+    }
+
+    private void getWeatherForPlace(boolean forceUpdatePlace, boolean forceUpdateWeather) {
+        getViewState().showLoading(true);
+
+        if (updateDisposable != null) {
+            updateDisposable.dispose();
         }
-        api.getWeather(MOSCOW_ID, "metric", context.getString(R.string.lang))
+
+        String currentPlaceId = prefs.getPlaceId();
+
+        updateDisposable = dataRepository.getPlaceData(currentPlaceId, lang, forceUpdatePlace)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess(placeData -> getViewState().showPlaceName(placeData.placeName))
+                .observeOn(Schedulers.io())
+                .flatMap(placeData -> dataRepository.getFullWeatherData(
+                        placeData.placeId, placeData.lat, placeData.lng, lang, forceUpdateWeather))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weather -> {
-                    getViewState().setLoading(false);
-                    getViewState().showWeather(weather);
-                    stringUtil.writeToFile(FILE_NAME, gson.toJson(weather));
+                .subscribe(fullWeather -> {
+                    getViewState().showLoading(false);
+                    getViewState().showWeather(fullWeather);
+                    if (forceUpdateWeather && fullWeather.isFromCache()) {
+                        getViewState().showError(R.string.error_no_internet);
+                    }
                 }, throwable -> {
-                    getViewState().setLoading(false);
-                    getViewState().showError(stringUtil.getErrorMessage(throwable));
+                    Timber.d(throwable);
+                    getViewState().showLoading(false);
+                    if (throwable instanceof NoInternetException) {
+                        getViewState().showError(R.string.error_no_internet);
+                    } else {
+                        getViewState().showError(R.string.error_weather_api);
+                    }
                 });
     }
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/morningWeatherTitle"
+            android:paddingTop="4dp"
+            style="@style/WeatherDetailTextStyle"
+            android:text="@string/morning"/>
+
+        <TextView
+            android:id="@+id/dayWeatherTitle"
+            android:paddingTop="4dp"
+            style="@style/WeatherDetailTextStyle"
+            android:text="@string/day"/>
+
+        <TextView
+            android:id="@+id/eveningWeatherTitle"
+            android:paddingTop="4dp"
+            style="@style/WeatherDetailTextStyle"
+            android:text="@string/evening"/>
+
+        <TextView
+            android:id="@+id/nightWeatherTitle"
+            android:paddingTop="4dp"
+            style="@style/WeatherDetailTextStyle"
+            android:text="@string/night"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/morningWeatherImage"
+            style="@style/WeatherDetailImageStyle"
+            tools:src="@drawable/sun"/>
+
+        <ImageView
+            android:id="@+id/dayWeatherImage"
+            style="@style/WeatherDetailImageStyle"
+            android:src="@drawable/clouds"/>
+
+        <ImageView
+            android:id="@+id/eveningWeatherImage"
+            style="@style/WeatherDetailImageStyle"
+            tools:src="@drawable/rain"/>
+
+        <ImageView
+            android:id="@+id/nightWeatherImage"
+            style="@style/WeatherDetailImageStyle"
+            tools:src="@drawable/snow"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/morningTemperature"
+            style="@style/WeatherDetailTextStyle"
+            tools:text="21°"/>
+
+        <TextView
+            android:id="@+id/dayTemperature"
+            style="@style/WeatherDetailTextStyle"
+            tools:text="23°"/>
+
+        <TextView
+            android:id="@+id/eveningTemperature"
+            style="@style/WeatherDetailTextStyle"
+            tools:text="25°"/>
+
+        <TextView
+            android:id="@+id/nightTemperature"
+            style="@style/WeatherDetailTextStyle"
+            tools:text="27°"/>
+    </TableRow>
+</TableLayout>

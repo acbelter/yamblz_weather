@@ -1,18 +1,21 @@
-<resources>
-    <string name="app_name">Погода</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Weathere</string>
 
-    <string name="nav_weather">Погода</string>
-    <string name="nav_settings">Настройки</string>
-    <string name="nav_about">О приложении</string>
+    <string name="select_place">Выбор локации</string>
+    <string name="settings">Настройки</string>
+    <string name="refresh">Обновить</string>
 
-    <string name="lang">ru</string>
+    <string name="about_text">Иконки задизайнил Alfredo Hernandez с Flaticon</string>
+
+    <string name="hint_find_place">Найти локацию</string>
 
     <string name="error_no_internet">Отсутствует подключение к интернету</string>
-    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="error_place_predictions_api">Ошибка при загрузке подсказок для локации</string>
+    <string name="error_place_api">Ошибка при загрузке данных о локации</string>
+    <string name="error_weather_api">Данные о погоде недоступны</string>
 
-    <string name="weather_settings">Настройки погоды</string>
-    <string name="update_on_schedule">Обновление по расписанию</string>
-    <string name="update_interval">Промежуток обновления</string>
+    <string name="update_on_schedule">Обновлять погоду по расписанию</string>
+    <string name="update_interval">Интервал обновления</string>
 
     <string name="interval_30_minutes">30 минут</string>
     <string name="interval_1_hour">1 час</string>
@@ -22,6 +25,20 @@
     <string name="interval_12_hours">12 часов</string>
     <string name="interval_1_day">1 день</string>
 
-    <string name="temperature">Температура: %d</string>
-    <string name="time">Время: %s</string>
+    <string name="cloudiness">Облачность</string>
+    <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+
+    <string name="temperature_value">%d°</string>
+    <string name="cloudiness_value">%d%%</string>
+    <string name="wind_value">%d м/с</string>
+    <string name="humidity_value">%d%%</string>
+    <string name="pressure_value">%d мм рт.ст.</string>
+
+    <string name="morning">Утро</string>
+    <string name="day">День</string>
+    <string name="evening">Вечер</string>
+    <string name="night">Ночь</string>
+    <string name="updating" tools:ignore="TypographyEllipsis">Обновление...</string>
 </resources>

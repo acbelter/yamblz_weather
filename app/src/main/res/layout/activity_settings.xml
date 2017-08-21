@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/updateByScheduleTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="16dp"
+        android:layout_toLeftOf="@+id/updateByScheduleSwitch"
+        android:text="@string/update_on_schedule"
+        android:textColor="@color/colorTextDefault"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@id/updateByScheduleSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/updateByScheduleTitle"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"/>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/updateByScheduleTitle"
+        android:background="@color/colorDivider"/>
+
+    <TextView
+        android:id="@+id/updateIntervalTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/update_interval"
+        android:textColor="@color/colorTextDefault"/>
+
+    <TextView
+        android:id="@+id/updateIntervalValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateIntervalTitle"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/colorDarkGray"
+        tools:text="1 hour"/>
+
+    <SeekBar
+        android:id="@+id/updateIntervalSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateIntervalValue"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/updateIntervalSeekBar"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorDivider"/>
+
+    <TextView
+        android:id="@+id/aboutText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="16dp"
+        android:gravity="center"
+        android:text="@string/about_text"
+        android:textColor="@color/colorTextDefault"/>
+</RelativeLayout>
